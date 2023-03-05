@@ -64,7 +64,7 @@ kmpConfiguration {
         common {
             sourceSetMain {
                 dependencies {
-                    implementation("$group:bom:$version")
+                    implementation(platform("$group:bom:$version"))
                     implementation("$group:hmac")
                     implementation("$group:hmac-md5")
                     implementation("$group:hmac-sha1")
