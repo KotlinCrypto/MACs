@@ -25,6 +25,38 @@
 
 Message Authentication Code algorithms for Kotlin Multiplatform
 
+If you are looking for hashing algorithms (e.g. `SHA-256`, `SHA-512`, etc), see the [hash repo][url-hash].
+
+If you are looking for Encoding (`Base16` a.k.a. `hex`, `Base32`, `Base64`, etc), see the [encoding repo][url-encoding].
+
+### Usage
+
+```kotlin
+
+fun main() {
+    val (random, key) = Random.Default.let { r -> Pair(r.nextBytes(615), r.nextBytes(50)) }
+
+    HmacMD5(key).apply { update(random) }.doFinal()
+
+    HmacSHA1(key).doFinal(random)
+
+    HmacSHA256(key).apply { update(random) }.doFinal(random)
+
+    val hMacSha512 = HmacSHA512(key)
+
+    val hMacSha512Bytes = hMacSha512.apply {
+        update(random[0])
+        update(random[20])
+        update(random, 25, 88)
+    }.doFinal() // is automatically reset for re-use when doFinal() is called
+
+    // All Mac's are copyable
+    val hMacSha512Copy = hMacSha512.apply { update(random) }.copy()
+    val copyBytes = hMacSha512Copy.doFinal()
+    val resetBytes = hMacSha512.reset().doFinal()
+}
+```
+
 ### Get Started
 
 <!-- TAG_VERSION -->
@@ -47,7 +79,7 @@ dependencies {
 
 <!-- TAG_VERSION -->
 
-| macs  | kotlin |
+| MACs  | kotlin |
 |:-----:|:------:|
 | 0.1.0 | 1.8.10 |
 
@@ -83,3 +115,4 @@ dependencies {
 [url-kotlin]: https://kotlinlang.org
 [url-core]: https://github.com/KotlinCrypto/core
 [url-hash]: https://github.com/KotlinCrypto/hash
+[url-encoding]: https://github.com/05nelsonm/encoding
