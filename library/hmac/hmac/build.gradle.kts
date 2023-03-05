@@ -49,7 +49,7 @@ kmpConfiguration {
 
             sourceSetMain {
                 dependencies {
-                    api(libs.kotlincrypto.core.digest)
+                    implementation(libs.kotlincrypto.core.digest)
                     api(libs.kotlincrypto.core.mac)
                 }
             }
