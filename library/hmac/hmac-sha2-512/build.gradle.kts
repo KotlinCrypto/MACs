@@ -49,8 +49,8 @@ kmpConfiguration {
 
             sourceSetMain {
                 dependencies {
+                    implementation(libs.kotlincrypto.hash.sha512)
                     api(project(":library:hmac:hmac"))
-                    api(libs.kotlincrypto.hash.sha512)
                 }
             }
             sourceSetTest {
