@@ -78,7 +78,7 @@ public abstract class Hmac: Mac {
 
         public override fun update(input: Byte) { state.digest.update(input) }
         public override fun update(input: ByteArray) { state.digest.update(input) }
-        public override fun update(input: ByteArray, offset: Int, len: Int) { state.digest.update(input) }
+        public override fun update(input: ByteArray, offset: Int, len: Int) { state.digest.update(input, offset, len) }
 
         public override fun doFinal(): ByteArray {
             return with(state) {
