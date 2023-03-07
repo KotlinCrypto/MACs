@@ -25,7 +25,7 @@ open class HmacSHA512UnitTest: MacUnitTest() {
     final override val expectedResetMediumHash: String = "cb1f5b16b684cef7ac0b073a35ca26201d8c573d27ffebcd63c16afe5ed21918ae1b32439ad862e4617058ce8fa93ee744f35afb2390cb386bed0e371b16b833"
     final override val expectedResetLargeHash: String = "406d191d785a3419a66f38344cc567824eebcaad6a8c53cd461b92814c909dff610e4bf398e9a1461a92cfc1b107dbe7c7f0880b649eb8398d7dfab4b0dbaab4"
     final override val expectedUpdateSmallHash: String = "43cd3fe09d77f4ede22b25030edd246cde22f30e4ac4aa75c413bd0e255e5baebd42f463dbf4000b32556faf73e4f3885127702757a8d08c59b6c0cb83c52056"
-    final override val expectedUpdateMediumHash: String = "ceabadd43c9a7987904a1b4a6206b188645e546d165d957016128e81769296235a106ff7cd3ccb490a3187bfeeb822dac1bb7e015a637e46190c2f95c1143ff7"
+    final override val expectedUpdateMediumHash: String = "aa4c727c998f8b82f005bd60dc32dbc638adf2485e1902ab90b0f7a6c1c057fea43c04e24bcfc0a2cad777c7a5058ab502aeafab0ca6c35b6d31236c88ce91af"
 
     @Test
     override fun givenMac_whenResetSmallKey_thenDoFinalReturnsExpected() {
