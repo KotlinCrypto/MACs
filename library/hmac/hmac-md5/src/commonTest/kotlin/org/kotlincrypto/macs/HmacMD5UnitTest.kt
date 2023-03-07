@@ -25,7 +25,7 @@ open class HmacMD5UnitTest: MacUnitTest() {
     final override val expectedResetMediumHash: String = "067ddb79789e7716dc1571d394bddf55"
     final override val expectedResetLargeHash: String = "721f3a9c5d28202e42d9c104f197efb0"
     final override val expectedUpdateSmallHash: String = "5b964b6691857e0c94307b8dc5a67bc3"
-    final override val expectedUpdateMediumHash: String = "c690a1db88cd97970dc08f5df7109ca0"
+    final override val expectedUpdateMediumHash: String = "f290224f2908b34a632f0c5b81dda9c2"
 
     @Test
     override fun givenMac_whenResetSmallKey_thenDoFinalReturnsExpected() {

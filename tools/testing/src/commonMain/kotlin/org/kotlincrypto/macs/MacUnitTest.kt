@@ -62,14 +62,16 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenUpdatedSmall_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_SMALL)
-        mac.update(TestData.BYTES_SMALL)
-        val actual = mac.doFinal().encodeToString(TestData.base16)
+        val actual = mac.doFinal(TestData.BYTES_SMALL).encodeToString(TestData.base16)
         assertEquals(expectedUpdateSmallHash, actual)
     }
 
     open fun givenMac_whenUpdatedMedium_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_MEDIUM)
+        mac.update(TestData.BYTES_MEDIUM[3])
         mac.update(TestData.BYTES_MEDIUM)
+        mac.update(TestData.BYTES_MEDIUM, 5, 500)
+
         val actual = mac.doFinal().encodeToString(TestData.base16)
         assertEquals(expectedUpdateMediumHash, actual)
     }
@@ -77,11 +79,10 @@ abstract class MacUnitTest {
     open fun givenMac_whenCopied_thenIsDifferentInstance() {
         val mac = mac(KEY_SMALL)
         val copy = mac.copy()
-        mac.update(TestData.BYTES_SMALL)
 
         assertNotEquals(copy, mac)
         assertEquals(expectedResetSmallHash, copy.doFinal().encodeToString(TestData.base16))
-        assertEquals(expectedUpdateSmallHash, mac.doFinal().encodeToString(TestData.base16))
+        assertEquals(expectedUpdateSmallHash, mac.doFinal(TestData.BYTES_SMALL).encodeToString(TestData.base16))
         assertEquals(expectedUpdateSmallHash, copy.doFinal(TestData.BYTES_SMALL).encodeToString(TestData.base16))
     }
 
