@@ -65,7 +65,7 @@ fun main() {
 // build.gradle.kts
 dependencies {
     // define the BOM and its version
-    implementation(platform("org.kotlincrypto.macs:bom:0.1.0"))
+    implementation(platform("org.kotlincrypto.macs:bom:0.1.1"))
 
     // define artifacts without version
     implementation("org.kotlincrypto.macs:hmac-md5")
@@ -81,10 +81,10 @@ dependencies {
 
 | MACs  | kotlin |
 |:-----:|:------:|
-| 0.1.0 | 1.8.10 |
+| 0.1.1 | 1.8.10 |
 
 <!-- TAG_VERSION -->
-[badge-latest-release]: https://img.shields.io/badge/latest--release-0.1.0-blue.svg?style=flat
+[badge-latest-release]: https://img.shields.io/badge/latest--release-0.1.1-blue.svg?style=flat
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
 
 <!-- TAG_DEPENDENCIES -->
