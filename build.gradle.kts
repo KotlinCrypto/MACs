@@ -47,14 +47,6 @@ allprojects {
 
     repositories {
         mavenCentral()
-        maven("https://s01.oss.sonatype.org/content/groups/staging") {
-            val p = rootProject.properties
-
-            credentials {
-                username = p["mavenCentralUsername"]?.toString()
-                password = p["mavenCentralPassword"]?.toString()
-            }
-        }
     }
 
     tasks.withType<Test> {
