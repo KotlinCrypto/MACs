@@ -23,6 +23,11 @@ import org.kotlincrypto.hash.Sha512
 
 public class HmacSHA512: Hmac {
 
+    /**
+     * Instantiates a new instance of [HmacSHA512].
+     *
+     * @throws [IllegalArgumentException] if [key] is empty.
+     * */
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
     public constructor(key: ByteArray): super(key, "HmacSHA512", Sha512())
