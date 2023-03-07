@@ -23,6 +23,11 @@ import org.kotlincrypto.hash.Md5
 
 public class HmacMD5: Hmac {
 
+    /**
+     * Instantiates a new instance of [HmacMD5].
+     *
+     * @throws [IllegalArgumentException] if [key] is empty.
+     * */
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
     public constructor(key: ByteArray): super(key, "HmacMD5", Md5())

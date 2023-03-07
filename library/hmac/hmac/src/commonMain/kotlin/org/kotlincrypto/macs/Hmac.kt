@@ -32,6 +32,11 @@ import kotlin.jvm.JvmSynthetic
  * */
 public abstract class Hmac: Mac {
 
+    /**
+     * Primary constructor for creating a new [Hmac] instance
+     *
+     * @throws [IllegalArgumentException] if [key] is empty.
+     * */
     @InternalKotlinCryptoApi
     @Throws(IllegalArgumentException::class)
     protected constructor(
@@ -40,6 +45,12 @@ public abstract class Hmac: Mac {
         digest: Digest,
     ): super(algorithm, Engine.instance(key, digest))
 
+    /**
+     * Secondary constructor for implementing [copy].
+     *
+     * Implementors of [Hmac] should have a private secondary constructor
+     * that is utilized by its [copy] implementation.
+     * */
     @InternalKotlinCryptoApi
     protected constructor(
         algorithm: String,
