@@ -18,15 +18,27 @@ plugins {
     id("java-platform")
 }
 
+val exclude = listOf(
+    ":library:hmac:hmac"
+)
+
 dependencies {
     constraints {
         rootProject.subprojects.forEach {
-            if (
-                it.path.startsWith(":library:")
-                && evaluationDependsOn(it.path).plugins.hasPlugin("configuration")
-            ) {
-                println("BOM project >>> ${it.path}")
-                api(project(it.path))
+            if (it.path.startsWith(":library:")) {
+                var msg = "BOM "
+
+                if (
+                    evaluationDependsOn(it.path).plugins.hasPlugin("configuration")
+                    && !exclude.contains(it.path)
+                ) {
+                    api(project(it.path))
+                    msg += "(  added )"
+                } else {
+                    msg += "(excluded)"
+                }
+
+                println("$msg >>> ${it.path}")
             }
         }
     }
