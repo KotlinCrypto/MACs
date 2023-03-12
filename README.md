@@ -42,7 +42,12 @@ fun main() {
 
     HmacSHA1(key).doFinal(random)
 
+    // SHA2
+    HmacSHA224(key).doFinal(random)
+
     HmacSHA256(key).apply { update(random) }.doFinal(random)
+    
+    HmacSha384(key).doFinal(random)
 
     val hMacSha512 = HmacSHA512(key)
 
@@ -56,6 +61,9 @@ fun main() {
     val hMacSha512Copy = hMacSha512.apply { update(random) }.copy()
     val copyBytes = hMacSha512Copy.doFinal()
     val resetBytes = hMacSha512.reset().doFinal()
+    
+    HmacSHA512_224(key).doFinal(random)
+    HmacSHA512_256(key).doFinal(random)
 }
 ```
 
@@ -63,32 +71,33 @@ fun main() {
 
 <!-- TAG_VERSION -->
 
-<!-- TODO: Add hmac-sha2 -->
-<!-- TODO: Remove hmac-sha2-256 -->
-<!-- TODO: Remove hmac-sha2-512 -->
-
 ```kotlin
 // build.gradle.kts
 dependencies {
     // define the BOM and its version
-    implementation(platform("org.kotlincrypto.macs:bom:0.1.1"))
+    implementation(platform("org.kotlincrypto.macs:bom:0.2.0"))
 
     // define artifacts without version
+    
+    // HmacMD5
     implementation("org.kotlincrypto.macs:hmac-md5")
+    
+    // HmacSHA1
     implementation("org.kotlincrypto.macs:hmac-sha1")
-    implementation("org.kotlincrypto.macs:hmac-sha2-256")
-    implementation("org.kotlincrypto.macs:hmac-sha2-512")
+    
+    // HmacSHA224, HmacSHA256, HmacSHA384, HmacSHA512, HmacSHA512/224, HmacSHA512/256
+    implementation("org.kotlincrypto.macs:hmac-sha2")
 }
 ```
 
 <!-- TAG_VERSION -->
-[badge-latest-release]: https://img.shields.io/badge/latest--release-0.1.1-blue.svg?style=flat
+[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.0-blue.svg?style=flat
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
 
 <!-- TAG_DEPENDENCIES -->
 [badge-kotlin]: https://img.shields.io/badge/kotlin-1.8.10-blue.svg?logo=kotlin
 [badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.1.1-blue.svg
-[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.1.2-blue.svg
+[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.0-blue.svg
 
 <!-- TAG_PLATFORMS -->
 [badge-platform-android]: http://img.shields.io/badge/-android-6EDB8D.svg?style=flat
