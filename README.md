@@ -31,6 +31,8 @@ If you are looking for Encoding (`Base16` a.k.a. `hex`, `Base32`, `Base64`, etc)
 
 ### Usage
 
+<!-- TODO: Update examples with new sha2 algorithms -->
+
 ```kotlin
 
 fun main() {
@@ -60,6 +62,10 @@ fun main() {
 ### Get Started
 
 <!-- TAG_VERSION -->
+
+<!-- TODO: Add hmac-sha2 -->
+<!-- TODO: Remove hmac-sha2-256 -->
+<!-- TODO: Remove hmac-sha2-512 -->
 
 ```kotlin
 // build.gradle.kts

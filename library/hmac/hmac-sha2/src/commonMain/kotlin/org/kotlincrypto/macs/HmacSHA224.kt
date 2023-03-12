@@ -19,24 +19,24 @@ package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.Mac
-import org.kotlincrypto.hash.md.MD5
+import org.kotlincrypto.hash.sha2.SHA224
 
 /**
- * HmacMD5 implementation
+ * HmacSHA224 implementation
  * */
-public class HmacMD5: Hmac {
+public class HmacSHA224: Hmac {
 
     /**
-     * Instantiates a new instance of [HmacMD5].
+     * Instantiates a new instance of [HmacSHA224].
      *
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray): super(key, "HmacMD5", MD5())
+    public constructor(key: ByteArray): super(key, "HmacSHA224", SHA224())
 
     @OptIn(InternalKotlinCryptoApi::class)
     private constructor(algorithm: String, engine: Engine): super(algorithm, engine)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacMD5(algorithm(), engineCopy as Engine)
+    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA224(algorithm(), engineCopy as Engine)
 }

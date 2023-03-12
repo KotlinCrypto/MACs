@@ -18,14 +18,14 @@ package org.kotlincrypto.macs
 import org.kotlincrypto.core.Mac
 import kotlin.test.Test
 
-open class HmacSHA1UnitTest: MacUnitTest() {
-    override fun mac(key: ByteArray): Mac = HmacSHA1(key)
+open class HmacSHA512UnitTest: MacUnitTest() {
+    override fun mac(key: ByteArray): Mac = HmacSHA512(key)
 
-    final override val expectedResetSmallHash: String = "649492f2dbb7fd5d4d9299e7ad96c33d23c30855"
-    final override val expectedResetMediumHash: String = "4bee82f6c3b3c782ddc5eb6e776c47891646081b"
-    final override val expectedResetLargeHash: String = "6c8532ecb2060cda58e72f8cd8d45ffd2ca01858"
-    final override val expectedUpdateSmallHash: String = "c48bce2bd2c036eebf08aeb1b5c57b5387632b0e"
-    final override val expectedUpdateMediumHash: String = "d816e1912ba2cddf758d27fef55354b2bbf29bb7"
+    final override val expectedResetSmallHash: String = "d21c3e4d7d75cede2fc2507697847d0f8b20d76863758fd4c57ce76fc39b1c2bc8f48e635448e1d26c6365f0ae6ceed37e8b2dcb0813394b3d63e16a546ed578"
+    final override val expectedResetMediumHash: String = "cb1f5b16b684cef7ac0b073a35ca26201d8c573d27ffebcd63c16afe5ed21918ae1b32439ad862e4617058ce8fa93ee744f35afb2390cb386bed0e371b16b833"
+    final override val expectedResetLargeHash: String = "406d191d785a3419a66f38344cc567824eebcaad6a8c53cd461b92814c909dff610e4bf398e9a1461a92cfc1b107dbe7c7f0880b649eb8398d7dfab4b0dbaab4"
+    final override val expectedUpdateSmallHash: String = "43cd3fe09d77f4ede22b25030edd246cde22f30e4ac4aa75c413bd0e255e5baebd42f463dbf4000b32556faf73e4f3885127702757a8d08c59b6c0cb83c52056"
+    final override val expectedUpdateMediumHash: String = "aa4c727c998f8b82f005bd60dc32dbc638adf2485e1902ab90b0f7a6c1c057fea43c04e24bcfc0a2cad777c7a5058ab502aeafab0ca6c35b6d31236c88ce91af"
 
     @Test
     final override fun givenMac_whenResetSmallKey_thenDoFinalReturnsExpected() {

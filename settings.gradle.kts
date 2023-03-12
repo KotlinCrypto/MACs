@@ -19,8 +19,9 @@ if (CHECK_PUBLICATION != null) {
         "hmac:hmac",
         "hmac:hmac-md5",
         "hmac:hmac-sha1",
-        "hmac:hmac-sha2-256",
-        "hmac:hmac-sha2-512",
+        "hmac:hmac-sha2",
+        "hmac:hmac-sha2:hmac-sha2-256",
+        "hmac:hmac-sha2:hmac-sha2-512",
     ).forEach { name ->
         include(":library:$name")
     }

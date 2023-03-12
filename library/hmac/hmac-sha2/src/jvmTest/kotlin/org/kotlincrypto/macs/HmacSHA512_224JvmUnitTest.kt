@@ -13,10 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+@file:Suppress("ClassName")
+
 package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.Mac
 
-class HmacSHA1JvmUnitTest: HmacSHA1UnitTest() {
+class HmacSHA512_224JvmUnitTest: HmacSHA512_224UnitTest() {
     override fun mac(key: ByteArray): Mac = TestJvmMac(super.mac(key).algorithm(), key)
 }

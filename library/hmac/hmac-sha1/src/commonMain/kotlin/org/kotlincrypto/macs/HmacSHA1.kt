@@ -19,8 +19,11 @@ package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.Mac
-import org.kotlincrypto.hash.Sha1
+import org.kotlincrypto.hash.sha1.SHA1
 
+/**
+ * HmacSHA1 implementation
+ * */
 public class HmacSHA1: Hmac {
 
     /**
@@ -30,10 +33,10 @@ public class HmacSHA1: Hmac {
      * */
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray): super(key, "HmacSHA1", Sha1())
+    public constructor(key: ByteArray): super(key, "HmacSHA1", SHA1())
 
     @OptIn(InternalKotlinCryptoApi::class)
-    private constructor(engine: Engine): super("HmacSHA1", engine)
+    private constructor(algorithm: String, engine: Engine): super(algorithm, engine)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA1(engineCopy as Engine)
+    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA1(algorithm(), engineCopy as Engine)
 }

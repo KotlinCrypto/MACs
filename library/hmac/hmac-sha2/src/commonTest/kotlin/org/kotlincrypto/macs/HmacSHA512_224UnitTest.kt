@@ -13,19 +13,21 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+@file:Suppress("ClassName")
+
 package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.Mac
 import kotlin.test.Test
 
-open class HmacSHA1UnitTest: MacUnitTest() {
-    override fun mac(key: ByteArray): Mac = HmacSHA1(key)
+open class HmacSHA512_224UnitTest: MacUnitTest() {
+    override fun mac(key: ByteArray): Mac = HmacSHA512_224(key)
 
-    final override val expectedResetSmallHash: String = "649492f2dbb7fd5d4d9299e7ad96c33d23c30855"
-    final override val expectedResetMediumHash: String = "4bee82f6c3b3c782ddc5eb6e776c47891646081b"
-    final override val expectedResetLargeHash: String = "6c8532ecb2060cda58e72f8cd8d45ffd2ca01858"
-    final override val expectedUpdateSmallHash: String = "c48bce2bd2c036eebf08aeb1b5c57b5387632b0e"
-    final override val expectedUpdateMediumHash: String = "d816e1912ba2cddf758d27fef55354b2bbf29bb7"
+    final override val expectedResetSmallHash: String = "22c57dcc73cdacef1ebb24d9870dce63a8b0948400be51023743cfe0"
+    final override val expectedResetMediumHash: String = "53e7ffd5bb5e3a93d9bac8966ed9728c3311010c6bc62be9793640a5"
+    final override val expectedResetLargeHash: String = "3702635500e25c0831e1adf9ea7af501c0253782495dacbb69b2aaf3"
+    final override val expectedUpdateSmallHash: String = "1ed0d1b7f21b649bd7db9cd0fe617b0940711537d34e8c36f582a0a9"
+    final override val expectedUpdateMediumHash: String = "3cfd795031e641cd7e7173b595e4ecbcf3f909e2c8eb67dca641cca4"
 
     @Test
     final override fun givenMac_whenResetSmallKey_thenDoFinalReturnsExpected() {
