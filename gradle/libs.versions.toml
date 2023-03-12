@@ -2,7 +2,7 @@
 binaryCompat = "0.13.0"
 configuration = "0.1.0-beta02"
 cryptoCore = "0.1.1"
-cryptoHash = "0.1.2"
+cryptoHash = "0.2.0"
 encoding = "1.2.1"
 gradleVersions = "0.46.0"
 kotlin = "1.8.10"
@@ -13,8 +13,7 @@ kotlincrypto-core-digest = { module = "org.kotlincrypto.core:digest", version.re
 kotlincrypto-core-mac = { module = "org.kotlincrypto.core:mac", version.ref = "cryptoCore" }
 kotlincrypto-hash-md5 = { module = "org.kotlincrypto.hash:md5", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha1 = { module = "org.kotlincrypto.hash:sha1", version.ref = "cryptoHash" }
-kotlincrypto-hash-sha256 = { module = "org.kotlincrypto.hash:sha2-256", version.ref = "cryptoHash" }
-kotlincrypto-hash-sha512 = { module = "org.kotlincrypto.hash:sha2-512", version.ref = "cryptoHash" }
+kotlincrypto-hash-sha2 = { module = "org.kotlincrypto.hash:sha2", version.ref = "cryptoHash" }
 gradle-kmp-configuration = { module = "io.matthewnelson:gradle-kmp-configuration-plugin", version.ref = "configuration" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-maven-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "publish" }
