@@ -19,8 +19,11 @@ package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.Mac
-import org.kotlincrypto.hash.Md5
+import org.kotlincrypto.hash.md.MD5
 
+/**
+ * HmacMD5 implementation
+ * */
 public class HmacMD5: Hmac {
 
     /**
@@ -30,10 +33,10 @@ public class HmacMD5: Hmac {
      * */
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray): super(key, "HmacMD5", Md5())
+    public constructor(key: ByteArray): super(key, "HmacMD5", MD5())
 
     @OptIn(InternalKotlinCryptoApi::class)
-    private constructor(engine: Engine): super("HmacMD5", engine)
+    private constructor(algorithm: String, engine: Engine): super(algorithm, engine)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacMD5(engineCopy as Engine)
+    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacMD5(algorithm(), engineCopy as Engine)
 }
