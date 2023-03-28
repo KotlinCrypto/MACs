@@ -27,11 +27,11 @@ Message Authentication Code algorithms for Kotlin Multiplatform
 
 If you are looking for hashing algorithms (e.g. `SHA-256`, `SHA-512`, etc), see the [hash repo][url-hash].
 
-If you are looking for Encoding (`Base16` a.k.a. `hex`, `Base32`, `Base64`, etc), see the [encoding repo][url-encoding].
+If you are looking for `Encoding` (`Base16` a.k.a. `hex`, `Base32`, `Base64`, etc), see the [encoding repo][url-encoding].
+
+If you are looking for `SecureRandom`, see the [secure-random repo][url-secure-random].
 
 ### Usage
-
-<!-- TODO: Update examples with new sha2 algorithms -->
 
 ```kotlin
 
@@ -75,7 +75,7 @@ fun main() {
 // build.gradle.kts
 dependencies {
     // define the BOM and its version
-    implementation(platform("org.kotlincrypto.macs:bom:0.2.0"))
+    implementation(platform("org.kotlincrypto.macs:bom:0.2.1"))
 
     // define artifacts without version
     
@@ -91,13 +91,13 @@ dependencies {
 ```
 
 <!-- TAG_VERSION -->
-[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.0-blue.svg?style=flat
+[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.1-blue.svg?style=flat
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
 
 <!-- TAG_DEPENDENCIES -->
 [badge-kotlin]: https://img.shields.io/badge/kotlin-1.8.10-blue.svg?logo=kotlin
-[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.1.1-blue.svg
-[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.0-blue.svg
+[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.2.0-blue.svg
+[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.1-blue.svg
 
 <!-- TAG_PLATFORMS -->
 [badge-platform-android]: http://img.shields.io/badge/-android-6EDB8D.svg?style=flat
@@ -123,3 +123,4 @@ dependencies {
 [url-core]: https://github.com/KotlinCrypto/core
 [url-hash]: https://github.com/KotlinCrypto/hash
 [url-encoding]: https://github.com/05nelsonm/encoding
+[url-secure-random]: https://github.com/KotlinCrypto/secure-random
