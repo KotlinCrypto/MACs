@@ -69,6 +69,11 @@ fun main() {
 
 ### Get Started
 
+
+The best way to keep `KotlinCrypto` dependencies up to date is by using the 
+[version-catalog][url-version-catalog]. Alternatively, you can use the BOM as 
+shown below.
+
 <!-- TAG_VERSION -->
 
 ```kotlin
@@ -123,4 +128,5 @@ dependencies {
 [url-core]: https://github.com/KotlinCrypto/core
 [url-hash]: https://github.com/KotlinCrypto/hash
 [url-encoding]: https://github.com/05nelsonm/encoding
+[url-version-catalog]: https://github.com/KotlinCrypto/version-catalog
 [url-secure-random]: https://github.com/KotlinCrypto/secure-random
