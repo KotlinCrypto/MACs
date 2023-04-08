@@ -17,11 +17,11 @@
 
 package org.kotlincrypto.macs
 
+import org.kotlincrypto.core.Algorithm
 import org.kotlincrypto.core.Digest
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.Mac
 import kotlin.experimental.xor
-import kotlin.jvm.JvmSynthetic
 
 /**
  * Core abstraction for Hash-based Message Authentication
@@ -35,7 +35,7 @@ public abstract class Hmac: Mac {
     /**
      * Primary constructor for creating a new [Hmac] instance
      *
-     * @throws [IllegalArgumentException] if [key] is empty.
+     * @throws [IllegalArgumentException] if [key] is empty or [algorithm] is blank.
      * */
     @InternalKotlinCryptoApi
     @Throws(IllegalArgumentException::class)
@@ -43,26 +43,30 @@ public abstract class Hmac: Mac {
         key: ByteArray,
         algorithm: String,
         digest: Digest,
-    ): super(algorithm, Engine.instance(key, digest))
+    ): super(algorithm, Hmac.Engine(key, algorithm, digest))
 
     /**
      * Secondary constructor for implementing [copy].
      *
      * Implementors of [Hmac] should have a private secondary constructor
      * that is utilized by its [copy] implementation.
+     *
+     * @throws [ClassCastException] if [engine] is not [Hmac.Engine]
      * */
     @InternalKotlinCryptoApi
-    protected constructor(
-        algorithm: String,
-        engine: Hmac.Engine,
-    ): super(algorithm, engine)
+    @Throws(ClassCastException::class)
+    protected constructor(engine: Mac.Engine): super((engine as Hmac.Engine).algorithm(), engine)
 
-    protected class Engine: Mac.Engine {
+    private class Engine: Mac.Engine, Algorithm {
 
-        private val state: State
+        private val algorithm: String
+        private val iKey: ByteArray
+        private val oKey: ByteArray
+        private val digest: Digest
 
         @OptIn(InternalKotlinCryptoApi::class)
-        private constructor(key: ByteArray, digest: Digest): super(key) {
+        constructor(key: ByteArray, algorithm: String, digest: Digest): super(key) {
+            this.algorithm = algorithm
             digest.reset()
 
             val preparedKey = if (key.size > digest.blockSize()) {
@@ -73,61 +77,50 @@ public abstract class Hmac: Mac {
                 key
             }
 
-            state = State(
-                iKey = ByteArray(digest.blockSize()) { i -> preparedKey[i] xor I_PAD },
-                oKey = ByteArray(digest.blockSize()) { i -> preparedKey[i] xor O_PAD },
-                digest = digest,
-            )
+            this.iKey = ByteArray(digest.blockSize()) { i -> preparedKey[i] xor I_PAD }
+            this.oKey = ByteArray(digest.blockSize()) { i -> preparedKey[i] xor O_PAD }
 
-            digest.update(state.iKey)
+            digest.update(iKey)
+            this.digest = digest
         }
 
         @OptIn(InternalKotlinCryptoApi::class)
-        private constructor(state: State): super(state) {
-            this.state = State(state.iKey, state.oKey, state.digest.copy())
+        private constructor(state: State, engine: Engine): super(state) {
+            this.algorithm = engine.algorithm
+            this.iKey = engine.iKey
+            this.oKey = engine.oKey
+            this.digest = engine.digest.copy()
         }
 
-        public override fun update(input: Byte) { state.digest.update(input) }
-        public override fun update(input: ByteArray) { state.digest.update(input) }
-        public override fun update(input: ByteArray, offset: Int, len: Int) { state.digest.update(input, offset, len) }
+        override fun update(input: Byte) { digest.update(input) }
+        override fun update(input: ByteArray) { digest.update(input) }
+        override fun update(input: ByteArray, offset: Int, len: Int) { digest.update(input, offset, len) }
 
-        public override fun doFinal(): ByteArray {
-            return with(state) {
-                val iFinal = digest.digest()
-                digest.update(oKey)
+        override fun doFinal(): ByteArray {
+            val iFinal = digest.digest()
+            digest.update(oKey)
 
-                val oFinal = digest.digest(iFinal)
+            val oFinal = digest.digest(iFinal)
 
-                // Prepare digest for reuse
-                digest.update(iKey)
+            // Prepare digest for reuse
+            digest.update(iKey)
 
-                oFinal
-            }
+            return oFinal
         }
 
-        public override fun reset() {
-            with(state) {
-                digest.reset()
-                digest.update(iKey)
-            }
+        override fun reset() {
+            digest.reset()
+            digest.update(iKey)
         }
 
-        public override fun macLength(): Int = state.digest.digestLength()
+        override fun algorithm(): String = algorithm
+        override fun macLength(): Int = digest.digestLength()
 
-        public override fun copy(): Engine = Engine(state)
+        override fun copy(): Engine = Engine(object : State() {}, this)
 
-        private inner class State(
-            val iKey: ByteArray,
-            val oKey: ByteArray,
-            val digest: Digest,
-        ): Mac.Engine.State()
-
-        internal companion object {
+        private companion object {
             private const val I_PAD: Byte = 0x36
             private const val O_PAD: Byte = 0x5C
-
-            @JvmSynthetic
-            internal fun instance(key: ByteArray, digest: Digest): Engine = Engine(key, digest)
         }
     }
 }

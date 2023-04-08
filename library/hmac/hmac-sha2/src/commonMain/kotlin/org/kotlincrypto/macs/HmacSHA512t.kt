@@ -59,7 +59,7 @@ public class HmacSHA512t: Hmac {
     public constructor(key: ByteArray, t: Int): super(key, "HmacSHA512/$t", SHA512t(t))
 
     @OptIn(InternalKotlinCryptoApi::class)
-    private constructor(algorithm: String, engine: Engine): super(algorithm, engine)
+    private constructor(engine: Mac.Engine): super(engine)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA512t(algorithm(), engineCopy as Engine)
+    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA512t(engineCopy)
 }

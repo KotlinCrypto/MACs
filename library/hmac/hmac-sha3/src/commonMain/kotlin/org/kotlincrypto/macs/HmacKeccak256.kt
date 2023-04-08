@@ -13,30 +13,30 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("UnnecessaryOptInAnnotation")
+@file:Suppress("ClassName", "UnnecessaryOptInAnnotation")
 
 package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.Mac
-import org.kotlincrypto.hash.sha2.SHA384
+import org.kotlincrypto.hash.sha3.Keccak256
 
 /**
- * HmacSHA384 implementation
+ * HmacKeccak256 implementation
  * */
-public class HmacSHA384: Hmac {
+public class HmacKeccak256: Hmac {
 
     /**
-     * Instantiates a new instance of [HmacSHA384].
+     * Instantiates a new instance of [HmacKeccak256].
      *
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray): super(key, "HmacSHA384", SHA384())
+    public constructor(key: ByteArray): super(key, "HmacKeccak256", Keccak256())
 
     @OptIn(InternalKotlinCryptoApi::class)
     private constructor(engine: Mac.Engine): super(engine)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA384(engineCopy)
+    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacKeccak256(engineCopy)
 }
