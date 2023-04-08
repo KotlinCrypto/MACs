@@ -99,13 +99,7 @@ public abstract class Hmac: Mac {
         override fun doFinal(): ByteArray {
             val iFinal = digest.digest()
             digest.update(oKey)
-
-            val oFinal = digest.digest(iFinal)
-
-            // Prepare digest for reuse
-            digest.update(iKey)
-
-            return oFinal
+            return digest.digest(iFinal)
         }
 
         override fun reset() {

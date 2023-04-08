@@ -62,12 +62,14 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenUpdatedSmall_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_SMALL)
+        mac.doFinal()
         val actual = mac.doFinal(TestData.BYTES_SMALL).encodeToString(TestData.base16)
         assertEquals(expectedUpdateSmallHash, actual)
     }
 
     open fun givenMac_whenUpdatedMedium_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_MEDIUM)
+        mac.doFinal()
         mac.update(TestData.BYTES_MEDIUM[3])
         mac.update(TestData.BYTES_MEDIUM)
         mac.update(TestData.BYTES_MEDIUM, 5, 500)
