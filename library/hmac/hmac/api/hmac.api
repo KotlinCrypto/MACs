@@ -1,15 +1,3 @@
 public abstract class org/kotlincrypto/macs/Hmac : org/kotlincrypto/core/Mac {
 }
 
-protected final class org/kotlincrypto/macs/Hmac$Engine : org/kotlincrypto/core/Mac$Engine {
-	public synthetic fun <init> ([BLorg/kotlincrypto/core/Digest;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun copy ()Ljava/lang/Object;
-	public fun copy ()Lorg/kotlincrypto/macs/Hmac$Engine;
-	public fun doFinal ()[B
-	public fun macLength ()I
-	public fun reset ()V
-	public fun update (B)V
-	public fun update ([B)V
-	public fun update ([BII)V
-}
-

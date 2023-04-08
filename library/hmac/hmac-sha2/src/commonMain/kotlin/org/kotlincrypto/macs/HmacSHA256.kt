@@ -36,7 +36,7 @@ public class HmacSHA256: Hmac {
     public constructor(key: ByteArray): super(key, "HmacSHA256", SHA256())
 
     @OptIn(InternalKotlinCryptoApi::class)
-    private constructor(algorithm: String, engine: Engine): super(algorithm, engine)
+    private constructor(engine: Mac.Engine): super(engine)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA256(algorithm(), engineCopy as Engine)
+    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA256(engineCopy)
 }

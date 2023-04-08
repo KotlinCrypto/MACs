@@ -25,7 +25,7 @@
 
 Message Authentication Code algorithms for Kotlin Multiplatform
 
-If you are looking for hashing algorithms (e.g. `SHA-256`, `SHA-512`, etc), see the [hash repo][url-hash].
+If you are looking for hashing algorithms (e.g. `SHA-256`, `SHA3-256`, etc), see the [hash repo][url-hash].
 
 If you are looking for `Encoding` (`Base16` a.k.a. `hex`, `Base32`, `Base64`, etc), see the [encoding repo][url-encoding].
 
