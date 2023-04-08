@@ -15,24 +15,21 @@
  **/
 plugins {
     id("configuration")
+    id("bom-include")
 }
 
 kmpConfiguration {
-    configureShared(explicitApi = false) {
-        jvm {
-            sourceSetMain {
-                dependencies {
-                    api(libs.bouncyCastle)
-                }
-            }
-        }
+    configureShared(publish = true) {
         common {
             sourceSetMain {
                 dependencies {
-                    implementation(libs.kotlincrypto.core.mac)
-                    implementation(libs.encoding.base16)
-                    implementation(libs.encoding.base64)
-                    implementation(kotlin("test"))
+                    implementation(libs.kotlincrypto.hash.sha3)
+                    api(project(":library:hmac:hmac"))
+                }
+            }
+            sourceSetTest {
+                dependencies {
+                    implementation(project(":tools:testing"))
                 }
             }
         }

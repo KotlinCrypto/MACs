@@ -1,8 +1,9 @@
 [versions]
 binaryCompat = "0.13.0"
+bouncyCastle = "1.72"
 configuration = "0.1.0-beta02"
-cryptoCore = "0.2.0"
-cryptoHash = "0.2.1"
+cryptoCore = "0.2.2"
+cryptoHash = "0.2.2"
 encoding = "1.2.1"
 gradleVersions = "0.46.0"
 kotlin = "1.8.10"
@@ -11,14 +12,17 @@ publish = "0.24.0"
 [libraries]
 kotlincrypto-core-digest = { module = "org.kotlincrypto.core:digest", version.ref = "cryptoCore" }
 kotlincrypto-core-mac = { module = "org.kotlincrypto.core:mac", version.ref = "cryptoCore" }
+kotlincrypto-core-xof = { module = "org.kotlincrypto.core:xof", version.ref = "cryptoCore" }
 kotlincrypto-hash-md5 = { module = "org.kotlincrypto.hash:md5", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha1 = { module = "org.kotlincrypto.hash:sha1", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha2 = { module = "org.kotlincrypto.hash:sha2", version.ref = "cryptoHash" }
+kotlincrypto-hash-sha3 = { module = "org.kotlincrypto.hash:sha3", version.ref = "cryptoHash" }
 gradle-kmp-configuration = { module = "io.matthewnelson:gradle-kmp-configuration-plugin", version.ref = "configuration" }
 gradle-kotlin = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
 gradle-maven-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", version.ref = "publish" }
 
 # Tests
+bouncyCastle = { module = "org.bouncycastle:bcprov-ext-jdk15to18", version.ref = "bouncyCastle" }
 encoding-base16 = { module = "io.matthewnelson.kotlin-components:encoding-base16", version.ref = "encoding" }
 encoding-base64 = { module = "io.matthewnelson.kotlin-components:encoding-base64", version.ref = "encoding" }
 

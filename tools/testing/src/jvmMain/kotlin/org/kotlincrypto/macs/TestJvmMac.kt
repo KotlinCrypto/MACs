@@ -17,8 +17,11 @@
 
 package org.kotlincrypto.macs
 
+import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.Mac
+import java.security.NoSuchAlgorithmException
+import java.security.Security
 import javax.crypto.spec.SecretKeySpec
 
 /**
@@ -38,7 +41,7 @@ class TestJvmMac: Mac {
         private val delegate: javax.crypto.Mac
 
         constructor(algorithm: String, key: ByteArray): super(key) {
-            delegate = getInstance(algorithm).apply {
+            delegate = provideInstance(algorithm).apply {
                 init(SecretKeySpec(key, algorithm))
             }
         }
@@ -58,5 +61,27 @@ class TestJvmMac: Mac {
         override fun doFinal(): ByteArray = delegate.doFinal()
 
         override fun reset() { delegate.reset() }
+    }
+
+    private companion object {
+
+        /**
+         * Will fall back to using [BouncyCastleProvider] in the event
+         * an algorithm is not available via Java.
+         * */
+        @Throws(NoSuchAlgorithmException::class)
+        private fun provideInstance(algorithm: String): javax.crypto.Mac {
+            try {
+                return getInstance(algorithm)
+            } catch (_: NoSuchAlgorithmException) {
+                synchronized(this) {
+                    if (Security.getProvider(BouncyCastleProvider.PROVIDER_NAME) == null) {
+                        Security.addProvider(BouncyCastleProvider())
+                    }
+
+                    return getInstance(algorithm)
+                }
+            }
+        }
     }
 }
