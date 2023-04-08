@@ -10,7 +10,7 @@
      - `HmacSHA3_256`
      - `HmacSHA3_384`
      - `HmacSHA3_512`
- - Cleans up `Hmac` implementation [[#21]]
+ - Cleans up `Hmac` implementation [[#21]][21]
  - Updates `kotlincrypto.core` to `0.2.3` [[#23]][23]
  - Updates `kotlincrypto.hash` to `0.2.3` [[#23]][23]
 
