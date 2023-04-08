@@ -34,19 +34,29 @@ If you are looking for `SecureRandom`, see the [secure-random repo][url-secure-r
 ### Usage
 
 ```kotlin
-
 fun main() {
-    val (random, key) = Random.Default.let { r -> Pair(r.nextBytes(615), r.nextBytes(50)) }
+    // NOTE: SecureRandom is not included as a dependency in
+    //       MACs, only using it here as an example b/c one
+    //       should never derive a key using Random.
+    val key = SecureRandom().nextBytesOf(100)
+    val random = Random.Default.nextBytes(615)
 
     HmacMD5(key).apply { update(random) }.doFinal()
 
     HmacSHA1(key).doFinal(random)
+}
+```
 
-    // SHA2
+`SHA-2`
+```kotlin
+fun main() {
+    val key = SecureRandom().nextBytesOf(100)
+    val random = Random.Default.nextBytes(615)
+
     HmacSHA224(key).doFinal(random)
 
     HmacSHA256(key).apply { update(random) }.doFinal(random)
-    
+
     HmacSha384(key).doFinal(random)
 
     val hMacSha512 = HmacSHA512(key)
@@ -67,8 +77,23 @@ fun main() {
 }
 ```
 
-### Get Started
+`SHA-3`
+```kotlin
+ fun main() {
+    val key = SecureRandom().nextBytesOf(100)
 
+    HmacKeccak224(key)
+    HmacKeccak256(key)
+    HmacKeccak384(key)
+    HmacKeccak512(key)
+    HmacSHA3_224(key)
+    HmacSHA3_256(key)
+    HmacSHA3_384(key)
+    HmacSHA3_512(key)
+}
+```
+
+### Get Started
 
 The best way to keep `KotlinCrypto` dependencies up to date is by using the 
 [version-catalog][url-version-catalog]. Alternatively, you can use the BOM as 
@@ -80,7 +105,7 @@ shown below.
 // build.gradle.kts
 dependencies {
     // define the BOM and its version
-    implementation(platform("org.kotlincrypto.macs:bom:0.2.1"))
+    implementation(platform("org.kotlincrypto.macs:bom:0.2.3"))
 
     // define artifacts without version
     
@@ -92,17 +117,21 @@ dependencies {
     
     // HmacSHA224, HmacSHA256, HmacSHA384, HmacSHA512, HmacSHA512/224, HmacSHA512/256
     implementation("org.kotlincrypto.macs:hmac-sha2")
+    
+    // HmacKeccak224, HmacKeccak256, HmacKeccak384, HmacKeccak512
+    // HmacSHA3-224, HmacSHA3-256, HmacSHA3-384, HmacSHA3-512
+    implementation("org.kotlincrypto.macs:hmac-sha3")
 }
 ```
 
 <!-- TAG_VERSION -->
-[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.1-blue.svg?style=flat
+[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.3-blue.svg?style=flat
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
 
 <!-- TAG_DEPENDENCIES -->
 [badge-kotlin]: https://img.shields.io/badge/kotlin-1.8.10-blue.svg?logo=kotlin
-[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.2.0-blue.svg
-[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.1-blue.svg
+[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.2.3-blue.svg
+[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.3-blue.svg
 
 <!-- TAG_PLATFORMS -->
 [badge-platform-android]: http://img.shields.io/badge/-android-6EDB8D.svg?style=flat
