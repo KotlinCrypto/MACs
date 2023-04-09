@@ -27,6 +27,12 @@ kmpConfiguration {
                     api(libs.kotlincrypto.core.xof)
                 }
             }
+            sourceSetTest {
+                dependencies {
+                    implementation(libs.encoding.base16)
+                    implementation(project(":tools:testing"))
+                }
+            }
         }
     }
 }
