@@ -36,8 +36,8 @@ If you are looking for `SecureRandom`, see the [secure-random repo][url-secure-r
 ```kotlin
 fun main() {
     // NOTE: SecureRandom is not included as a dependency in
-    //       MACs, only using it here as an example b/c one
-    //       should never derive a key using Random.
+    //       MACs. It is only being used here as an example
+    //       because one should never derive a key using Random.
     val key = SecureRandom().nextBytesOf(100)
     val random = Random.Default.nextBytes(615)
 
@@ -93,6 +93,26 @@ fun main() {
 }
 ```
 
+<!-- TODO: Uncomment
+`KMAC`
+```kotlin
+fun main() {
+    val key = SecureRandom().nextBytesOf(100)
+    
+    KMAC128(key)     // as a Mac
+    KMAC128.xOf(key) // as a Xof (Extendable-Output Function)
+
+    KMAC256(key)
+
+    val xof = KMAC256.xOf(key)
+    xof.update(Random.Default.nextBytes(500))
+    val out1 = ByteArray(200)
+    val out2 = ByteArray(12345)
+    xof.use { read(out1); read(out2) }
+}
+```
+-->
+
 ### Get Started
 
 The best way to keep `KotlinCrypto` dependencies up to date is by using the 
@@ -100,6 +120,11 @@ The best way to keep `KotlinCrypto` dependencies up to date is by using the
 shown below.
 
 <!-- TAG_VERSION -->
+
+<!-- TODO: Add to dependencies
+    // KMAC128, KMAC256
+    implementation("org.kotlincrypto.macs:kmac")
+-->
 
 ```kotlin
 // build.gradle.kts
