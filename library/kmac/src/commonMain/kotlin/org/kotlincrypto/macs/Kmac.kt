@@ -49,15 +49,15 @@ public sealed class Kmac: Mac, XofAlgorithm {
     public sealed class KMACXofFactory<A: Kmac>: XofFactory<A>() {
         protected inner class KMACXof(delegate: A): XofDelegate(delegate) {
             override fun newReader(delegateCopy: A): Reader {
-                val cShakeReader = delegateCopy.engine.padAndProvideReader(isXofMode = true)
+                val reader = delegateCopy.engine.padAndProvideReader(isXofMode = true)
 
                 return object : Xof<A>.Reader() {
                     override fun readProtected(out: ByteArray, offset: Int, len: Int, bytesRead: Long) {
-                        cShakeReader.read(out, offset, len)
+                        reader.read(out, offset, len)
                     }
 
                     override fun closeProtected() {
-                        cShakeReader.close()
+                        reader.close()
                     }
                 }
             }
@@ -75,7 +75,6 @@ public sealed class Kmac: Mac, XofAlgorithm {
         private val initBlock: ByteArray
         private val outputLength: Int
 
-        // TODO: NIST.SP.800-185 states that key can be any length, including 0
         @OptIn(InternalKotlinCryptoApi::class)
         constructor(key: ByteArray, S: ByteArray?, bitStrength: Int): super(key) {
             this.bitStrength = bitStrength
@@ -153,7 +152,6 @@ public sealed class Kmac: Mac, XofAlgorithm {
             return xof.reader(resetXof = isXofMode)
         }
 
-        @OptIn(InternalKotlinCryptoApi::class)
         private fun ByteArray.bytepad() {
             update(this)
 
