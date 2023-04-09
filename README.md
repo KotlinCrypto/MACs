@@ -25,59 +25,45 @@
 
 Message Authentication Code algorithms for Kotlin Multiplatform
 
-If you are looking for hashing algorithms (e.g. `SHA-256`, `SHA3-256`, etc), see the [hash repo][url-hash].
-
-If you are looking for `Encoding` (`Base16` a.k.a. `hex`, `Base32`, `Base64`, etc), see the [encoding repo][url-encoding].
-
-If you are looking for `SecureRandom`, see the [secure-random repo][url-secure-random].
-
 ### Usage
 
+See [HERE][url-core-usage] for basic usage example for `Mac`.
+
 ```kotlin
+import org.kotlincrypto.SecureRandom
+
 fun main() {
     // NOTE: SecureRandom is not included as a dependency in
     //       MACs. It is only being used here as an example
     //       because one should never derive a key using Random.
     val key = SecureRandom().nextBytesOf(100)
-    val random = Random.Default.nextBytes(615)
-
-    HmacMD5(key).apply { update(random) }.doFinal()
-
-    HmacSHA1(key).doFinal(random)
+    
+    // Hmacs that may be needed for backward compatibility but
+    // should no longer be utilized because they have been broken.
+    HmacMD5(key)
+    HmacSHA1(key)
 }
 ```
 
-`SHA-2`
+`SHA2 Hmac`
+
 ```kotlin
 fun main() {
     val key = SecureRandom().nextBytesOf(100)
-    val random = Random.Default.nextBytes(615)
 
-    HmacSHA224(key).doFinal(random)
+    HmacSHA224(key)
+    HmacSHA256(key)
+    HmacSha384(key)
+    HmacSHA512(key)
 
-    HmacSHA256(key).apply { update(random) }.doFinal(random)
-
-    HmacSha384(key).doFinal(random)
-
-    val hMacSha512 = HmacSHA512(key)
-
-    val hMacSha512Bytes = hMacSha512.apply {
-        update(random[0])
-        update(random[20])
-        update(random, 25, 88)
-    }.doFinal() // is automatically reset for re-use when doFinal() is called
-
-    // All Mac's are copyable
-    val hMacSha512Copy = hMacSha512.apply { update(random) }.copy()
-    val copyBytes = hMacSha512Copy.doFinal()
-    val resetBytes = hMacSha512.reset().doFinal()
-    
-    HmacSHA512_224(key).doFinal(random)
-    HmacSHA512_256(key).doFinal(random)
+    HmacSHA512_224(key)
+    HmacSHA512_256(key)
+    HmacSHA512t(key, 504)
 }
 ```
 
-`SHA-3`
+`SHA3 Hmac`
+
 ```kotlin
  fun main() {
     val key = SecureRandom().nextBytesOf(100)
@@ -94,7 +80,10 @@ fun main() {
 ```
 
 <!-- TODO: Uncomment
-`KMAC`
+`SHA3 KMAC & XOFs` (i.e. [Extendable-Output Functions][url-pub-xof])
+
+See [HERE][url-core-usage] for details on what XOFs are, and a basic usage example for Xof.
+
 ```kotlin
 fun main() {
     val key = SecureRandom().nextBytesOf(100)
@@ -103,12 +92,7 @@ fun main() {
     KMAC128.xOf(key) // as a Xof (Extendable-Output Function)
 
     KMAC256(key)
-
-    val xof = KMAC256.xOf(key)
-    xof.update(Random.Default.nextBytes(500))
-    val out1 = ByteArray(200)
-    val out2 = ByteArray(12345)
-    xof.use { read(out1); read(out2) }
+    KMAC256.xOf(key)
 }
 ```
 -->
@@ -180,7 +164,7 @@ dependencies {
 [url-license]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [url-kotlin]: https://kotlinlang.org
 [url-core]: https://github.com/KotlinCrypto/core
+[url-core-usage]: https://github.com/KotlinCrypto/core#usage
 [url-hash]: https://github.com/KotlinCrypto/hash
-[url-encoding]: https://github.com/05nelsonm/encoding
+[url-pub-xof]: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf
 [url-version-catalog]: https://github.com/KotlinCrypto/version-catalog
-[url-secure-random]: https://github.com/KotlinCrypto/secure-random
