@@ -17,7 +17,6 @@
 
 package org.kotlincrypto.macs
 
-import org.kotlincrypto.core.Algorithm
 import org.kotlincrypto.core.Digest
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.Mac
@@ -43,7 +42,7 @@ public abstract class Hmac: Mac {
         key: ByteArray,
         algorithm: String,
         digest: Digest,
-    ): super(algorithm, Hmac.Engine(key, algorithm, digest))
+    ): this(Hmac.Engine(key, algorithm, digest))
 
     /**
      * Secondary constructor for implementing [copy].
@@ -55,11 +54,11 @@ public abstract class Hmac: Mac {
      * */
     @InternalKotlinCryptoApi
     @Throws(ClassCastException::class)
-    protected constructor(engine: Mac.Engine): super((engine as Hmac.Engine).algorithm(), engine)
+    protected constructor(engine: Mac.Engine): super((engine as Hmac.Engine).algorithm, engine)
 
-    private class Engine: Mac.Engine, Algorithm {
+    private class Engine: Mac.Engine {
 
-        private val algorithm: String
+        val algorithm: String
         private val iKey: ByteArray
         private val oKey: ByteArray
         private val digest: Digest
@@ -67,7 +66,6 @@ public abstract class Hmac: Mac {
         @OptIn(InternalKotlinCryptoApi::class)
         constructor(key: ByteArray, algorithm: String, digest: Digest): super(key) {
             this.algorithm = algorithm
-            digest.reset()
 
             val preparedKey = if (key.size > digest.blockSize()) {
                 digest.digest(key).copyOf(digest.blockSize())
@@ -107,7 +105,6 @@ public abstract class Hmac: Mac {
             digest.update(iKey)
         }
 
-        override fun algorithm(): String = algorithm
         override fun macLength(): Int = digest.digestLength()
 
         override fun copy(): Engine = Engine(object : State() {}, this)
