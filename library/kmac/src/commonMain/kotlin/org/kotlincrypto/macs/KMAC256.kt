@@ -26,17 +26,23 @@ import kotlin.jvm.JvmStatic
 public class KMAC256: Kmac {
 
     /**
-     * Primary constructor for creating a new [KMAC256] [Mac] instance
-     * with a fixed output [macLength].
+     * Creates a new [KMAC256] [Mac] instance with a fixed output [macLength].
+     *
+     * @throws [IllegalArgumentException] if [key] is empty.
+     * */
+    @Throws(IllegalArgumentException::class)
+    public constructor(key: ByteArray): this(key, null)
+
+    /**
+     * Creates a new [KMAC256] [Mac] instance with a fixed output [macLength].
      *
      * @param [S] A user selected customization bit string to define a variant
      *   of the function. When no customization is desired, [S] is set to an
      *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
-    @JvmOverloads
     @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray, S: ByteArray? = null): super(key, S, BIT_STRENGTH_256)
+    public constructor(key: ByteArray, S: ByteArray?): super(key, S, BIT_STRENGTH_256)
 
     private constructor(engine: Mac.Engine): super(engine)
 
