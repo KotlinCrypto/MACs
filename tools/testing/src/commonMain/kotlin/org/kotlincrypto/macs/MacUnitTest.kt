@@ -18,6 +18,7 @@ package org.kotlincrypto.macs
 import io.matthewnelson.encoding.core.Decoder.Companion.decodeToByteArray
 import io.matthewnelson.encoding.core.Encoder.Companion.encodeToString
 import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.Updatable
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals
 
@@ -34,7 +35,7 @@ abstract class MacUnitTest {
     open fun givenMac_whenResetSmallKey_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_SMALL)
         val empty = mac.doFinal().encodeToString(TestData.base16)
-        mac.update(TestData.BYTES_SMALL)
+        updateSmall(mac)
         mac.reset()
         val actual = mac.doFinal().encodeToString(TestData.base16)
         assertEquals(empty, actual)
@@ -44,7 +45,7 @@ abstract class MacUnitTest {
     open fun givenMac_whenResetMediumKey_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_MEDIUM)
         val empty = mac.doFinal().encodeToString(TestData.base16)
-        mac.update(TestData.BYTES_SMALL)
+        updateSmall(mac)
         mac.reset()
         val actual = mac.doFinal().encodeToString(TestData.base16)
         assertEquals(empty, actual)
@@ -53,7 +54,7 @@ abstract class MacUnitTest {
     open fun givenMac_whenResetLargeKey_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_LARGE)
         val empty = mac.doFinal().encodeToString(TestData.base16)
-        mac.update(TestData.BYTES_SMALL)
+        updateSmall(mac)
         mac.reset()
         val actual = mac.doFinal().encodeToString(TestData.base16)
         assertEquals(empty, actual)
@@ -63,16 +64,15 @@ abstract class MacUnitTest {
     open fun givenMac_whenUpdatedSmall_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_SMALL)
         mac.doFinal()
-        val actual = mac.doFinal(TestData.BYTES_SMALL).encodeToString(TestData.base16)
+        updateSmall(mac)
+        val actual = mac.doFinal().encodeToString(TestData.base16)
         assertEquals(expectedUpdateSmallHash, actual)
     }
 
     open fun givenMac_whenUpdatedMedium_thenDoFinalReturnsExpected() {
         val mac = mac(KEY_MEDIUM)
         mac.doFinal()
-        mac.update(TestData.BYTES_MEDIUM[3])
-        mac.update(TestData.BYTES_MEDIUM)
-        mac.update(TestData.BYTES_MEDIUM, 5, 500)
+        updateMedium(mac)
 
         val actual = mac.doFinal().encodeToString(TestData.base16)
         assertEquals(expectedUpdateMediumHash, actual)
@@ -80,33 +80,45 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenCopied_thenIsDifferentInstance() {
         val mac = mac(KEY_SMALL)
+        updateSmall(mac)
         val copy = mac.copy()
+        copy.reset()
 
         assertNotEquals(copy, mac)
         assertEquals(expectedResetSmallHash, copy.doFinal().encodeToString(TestData.base16))
-        assertEquals(expectedUpdateSmallHash, mac.doFinal(TestData.BYTES_SMALL).encodeToString(TestData.base16))
-        assertEquals(expectedUpdateSmallHash, copy.doFinal(TestData.BYTES_SMALL).encodeToString(TestData.base16))
+        assertEquals(expectedUpdateSmallHash, mac.doFinal().encodeToString(TestData.base16))
     }
 
     open fun givenMac_whenDoFinal_thenLengthMatchesOutput() {
         assertEquals(mac(KEY_SMALL).doFinal().encodeToString(TestData.base16).length, expectedResetSmallHash.length)
     }
 
-    private companion object {
+    protected companion object {
+
+        fun updateSmall(mac: Updatable) {
+            mac.update(TestData.BYTES_SMALL)
+        }
+
+        fun updateMedium(mac: Updatable) {
+            mac.update(TestData.BYTES_MEDIUM[3])
+            mac.update(TestData.BYTES_MEDIUM)
+            mac.update(TestData.BYTES_MEDIUM, 5, 500)
+        }
+
         // 20 bytes
-        private val KEY_SMALL = """
+        val KEY_SMALL = """
             1SURpmufJX7RlEnk9zoLo2UwLt8=
         """.trimIndent().decodeToByteArray(TestData.base64)
 
         // 100 bytes
-        private val KEY_MEDIUM = """
+        val KEY_MEDIUM = """
             HQEhPY467gYDjwh/Vvsq9+XwS2xDf7Jr05L0qiPk5CkDh/h3PCgyjkTo65a+h+wY
             BKaVXSlb2VQRD3Z2LCBCSgcKBd5GID8+U/xDHNFqXUowUWofEkagZYlf16uqkOPr
             CfBVTg==
         """.trimIndent().decodeToByteArray(TestData.base64)
 
         // 500 bytes
-        private val KEY_LARGE = """
+        val KEY_LARGE = """
             abW+KOSnDA3hq1goP/g46Ku3saALq693FpkTv1CxJWCbAoJMGd/oO9woi8VLNsB/
             YtfjrVgk0iT+mCxecG953pr9evhCWq9MuXtogQl3PA5KD5XfHK5ly+LIHg7rhu7l
             /Kq2y9lODRY/OmSXLg/AvU5XDaFDgz4LoJLlW240tC/NGvzp4ZsRYFwLI9gitXRs
