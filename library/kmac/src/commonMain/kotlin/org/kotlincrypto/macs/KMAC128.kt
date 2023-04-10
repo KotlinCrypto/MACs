@@ -22,6 +22,8 @@ import kotlin.jvm.JvmStatic
 
 /**
  * KMAC128 implementation
+ *
+ * @see [xOf]
  * */
 public class KMAC128: Kmac {
 

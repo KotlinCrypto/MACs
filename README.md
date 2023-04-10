@@ -30,12 +30,11 @@ Message Authentication Code algorithms for Kotlin Multiplatform
 See [HERE][url-core-usage] for basic usage example for `Mac`.
 
 ```kotlin
+// Using SecureRandom from the secure-random repo as an example
 import org.kotlincrypto.SecureRandom
+// ...
 
 fun main() {
-    // NOTE: SecureRandom is not included as a dependency in
-    //       MACs. It is only being used here as an example
-    //       because one should never derive a key using Random.
     val key = SecureRandom().nextBytesOf(100)
     
     // Hmacs that may be needed for backward compatibility but
@@ -82,7 +81,7 @@ fun main() {
 <!-- TODO: Uncomment
 `SHA3 KMAC & XOFs` (i.e. [Extendable-Output Functions][url-pub-xof])
 
-See [HERE][url-core-usage] for details on what XOFs are, and a basic usage example for Xof.
+See [HERE][url-core-usage] for details on what `XOFs` are, and a basic usage example for `Xof`.
 
 ```kotlin
 fun main() {
