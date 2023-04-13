@@ -1,7 +1,9 @@
 public final class org/kotlincrypto/macs/KMAC128 : org/kotlincrypto/macs/Kmac {
 	public static final field Companion Lorg/kotlincrypto/macs/KMAC128$Companion;
+	public static final field MAC_LENGTH I
 	public fun <init> ([B)V
 	public fun <init> ([B[B)V
+	public fun <init> ([B[BI)V
 	public static final fun xOf ([B)Lorg/kotlincrypto/core/Xof;
 	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/Xof;
 }
@@ -14,8 +16,10 @@ public final class org/kotlincrypto/macs/KMAC128$Companion : org/kotlincrypto/ma
 
 public final class org/kotlincrypto/macs/KMAC256 : org/kotlincrypto/macs/Kmac {
 	public static final field Companion Lorg/kotlincrypto/macs/KMAC256$Companion;
+	public static final field MAC_LENGTH I
 	public fun <init> ([B)V
 	public fun <init> ([B[B)V
+	public fun <init> ([B[BI)V
 	public static final fun xOf ([B)Lorg/kotlincrypto/core/Xof;
 	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/Xof;
 }
@@ -29,7 +33,7 @@ public final class org/kotlincrypto/macs/KMAC256$Companion : org/kotlincrypto/ma
 public abstract class org/kotlincrypto/macs/Kmac : org/kotlincrypto/core/Mac, org/kotlincrypto/core/XofAlgorithm {
 	protected static final field Companion Lorg/kotlincrypto/macs/Kmac$Companion;
 	public synthetic fun <init> (Lorg/kotlincrypto/core/Mac$Engine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> ([B[BILkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> ([B[BIILkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
 protected final class org/kotlincrypto/macs/Kmac$Companion {
