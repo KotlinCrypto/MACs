@@ -91,7 +91,6 @@ public abstract class Hmac: Mac {
         }
 
         override fun update(input: Byte) { digest.update(input) }
-        override fun update(input: ByteArray) { digest.update(input) }
         override fun update(input: ByteArray, offset: Int, len: Int) { digest.update(input, offset, len) }
 
         override fun doFinal(): ByteArray {

@@ -121,7 +121,6 @@ public sealed class Kmac: Mac, XofAlgorithm {
         }
 
         override fun update(input: Byte) { xof.update(input) }
-        override fun update(input: ByteArray) { xof.update(input) }
         override fun update(input: ByteArray, offset: Int, len: Int) { xof.update(input, offset, len) }
 
         override fun doFinal(): ByteArray {
@@ -153,7 +152,7 @@ public sealed class Kmac: Mac, XofAlgorithm {
         }
 
         private fun ByteArray.bytepad() {
-            update(this)
+            xof.update(this)
 
             val remainder = size % blockSize
 
@@ -161,7 +160,7 @@ public sealed class Kmac: Mac, XofAlgorithm {
             if (remainder == 0) return
 
             repeat(blockSize - remainder) {
-                update(0)
+                xof.update(0)
             }
         }
 
