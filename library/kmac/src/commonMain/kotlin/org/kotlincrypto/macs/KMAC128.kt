@@ -17,6 +17,7 @@ package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.Mac
 import org.kotlincrypto.core.Xof
+import org.kotlincrypto.hash.sha3.CSHAKE128
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
 
@@ -28,15 +29,19 @@ import kotlin.jvm.JvmStatic
 public class KMAC128: Kmac {
 
     /**
-     * Creates a new [KMAC128] [Mac] instance with a fixed output [macLength].
+     * Creates a new [KMAC128] [Mac] instance with a default output length
+     * of 32 bytes.
      *
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
     @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray): this(key, null)
+    public constructor(
+        key: ByteArray,
+    ): this(key, null)
 
     /**
-     * Creates a new [KMAC128] [Mac] instance with a fixed output [macLength].
+     * Creates a new [KMAC128] [Mac] instance with a default output length
+     * of 32 bytes.
      *
      * @param [S] A user selected customization bit string to define a variant
      *   of the function. When no customization is desired, [S] is set to an
@@ -44,13 +49,38 @@ public class KMAC128: Kmac {
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
     @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray, S: ByteArray?): super(key, S, BIT_STRENGTH_128)
+    public constructor(
+        key: ByteArray,
+        S: ByteArray?,
+    ): this(key, S, MAC_LENGTH)
+
+    /**
+     * Creates a new [KMAC128] [Mac] instance with a non-default output length.
+     *
+     * @param [S] A user selected customization bit string to define a variant
+     *   of the function. When no customization is desired, [S] is set to an
+     *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
+     * @param [outputLength] The number of bytes returned when [doFinal] is invoked
+     * @throws [IllegalArgumentException] if [key] is empty, or [outputLength]
+     *   is negative.
+     * */
+    @Throws(IllegalArgumentException::class)
+    public constructor(
+        key: ByteArray,
+        S: ByteArray?,
+        outputLength: Int,
+    ): super(key, S, BIT_STRENGTH_128, outputLength)
 
     private constructor(engine: Mac.Engine): super(engine)
 
     protected override fun copy(engineCopy: Mac.Engine): Mac = KMAC128(engineCopy)
 
     public companion object: KMACXofFactory<KMAC128>() {
+
+        /**
+         * The default number of bytes output when [doFinal] is invoked (32)
+         * */
+        public const val MAC_LENGTH: Int = CSHAKE128.DIGEST_LENGTH
 
         /**
          * Produces a new [Xof] (Extendable-Output Function) for [KMAC128]
@@ -62,6 +92,6 @@ public class KMAC128: Kmac {
          * */
         @JvmStatic
         @JvmOverloads
-        public fun xOf(key: ByteArray, S: ByteArray? = null): Xof<KMAC128> = KMACXof(KMAC128(key, S))
+        public fun xOf(key: ByteArray, S: ByteArray? = null): Xof<KMAC128> = KMACXof(KMAC128(key, S, 0))
     }
 }

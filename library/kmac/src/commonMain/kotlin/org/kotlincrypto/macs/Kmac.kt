@@ -38,7 +38,8 @@ public sealed class Kmac: Mac, XofAlgorithm {
         key: ByteArray,
         S: ByteArray?,
         bitStrength: Int,
-    ): this(Kmac.Engine(key, S, bitStrength))
+        outputLength: Int,
+    ): this(Kmac.Engine(key, S, bitStrength, outputLength))
 
     @OptIn(InternalKotlinCryptoApi::class)
     protected constructor(engine: Mac.Engine): super((engine as Kmac.Engine).algorithm(), engine) {
@@ -48,8 +49,16 @@ public sealed class Kmac: Mac, XofAlgorithm {
     @OptIn(InternalKotlinCryptoApi::class)
     public sealed class KMACXofFactory<A: Kmac>: XofFactory<A>() {
         protected inner class KMACXof(delegate: A): XofDelegate(delegate) {
+
+            init {
+                // While in XOF mode, the arbitrary output length, L, is
+                // represented as 0.
+                require(delegate.macLength() == 0) { "macLength must be 0" }
+            }
+
             override fun newReader(delegateCopy: A): Reader {
-                val reader = delegateCopy.engine.padAndProvideReader(isXofMode = true)
+                // Want to reset the copy Xof here before it gets black holed
+                val reader = delegateCopy.engine.padAndProvideReader(resetXof = true)
 
                 return object : Xof<A>.Reader() {
                     override fun readProtected(out: ByteArray, offset: Int, len: Int, bytesRead: Long) {
@@ -76,20 +85,22 @@ public sealed class Kmac: Mac, XofAlgorithm {
         private val outputLength: Int
 
         @OptIn(InternalKotlinCryptoApi::class)
-        constructor(key: ByteArray, S: ByteArray?, bitStrength: Int): super(key) {
+        constructor(key: ByteArray, S: ByteArray?, bitStrength: Int, outputLength: Int): super(key) {
+            require(outputLength >= 0) { "outputLength cannot be negative" }
+
             this.bitStrength = bitStrength
+            this.outputLength = outputLength
+
             val N = KMAC.encodeToByteArray()
 
             when (bitStrength) {
                 BIT_STRENGTH_128 -> {
                     this.xof = CSHAKE128.xOf(N, S)
                     this.blockSize = CSHAKE128.BLOCK_SIZE
-                    this.outputLength = CSHAKE128.DIGEST_LENGTH
                 }
                 BIT_STRENGTH_256 -> {
                     this.xof = CSHAKE256.xOf(N, S)
                     this.blockSize = CSHAKE256.BLOCK_SIZE
-                    this.outputLength = CSHAKE256.DIGEST_LENGTH
                 }
                 else -> throw IllegalArgumentException("bitStrength must be $BIT_STRENGTH_128 or $BIT_STRENGTH_256")
             }
@@ -121,39 +132,23 @@ public sealed class Kmac: Mac, XofAlgorithm {
         }
 
         override fun update(input: Byte) { xof.update(input) }
-        override fun update(input: ByteArray) { xof.update(input) }
         override fun update(input: ByteArray, offset: Int, len: Int) { xof.update(input, offset, len) }
 
         override fun doFinal(): ByteArray {
             val out = ByteArray(macLength())
-            padAndProvideReader(isXofMode = false).use { read(out) }
+            padAndProvideReader(resetXof = false).use { read(out) }
             return out
         }
 
-        fun padAndProvideReader(isXofMode: Boolean): Xof<*>.Reader {
-            // Depending on if KMAC is being utilized as a Xof or as a Mac,
-            // the output byte length will either be the 0 or macLength(),
-            // respectively.
-            //
-            // https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf#4.3.1%20KMAC%20with%20Arbitrary-Length%20Output
-            val outputByteLength = if (isXofMode) 0 else macLength()
-
+        fun padAndProvideReader(resetXof: Boolean): Xof<*>.Reader {
             @OptIn(InternalKotlinCryptoApi::class)
-            val encL = Xof.Utils.rightEncode(outputByteLength * 8L)
+            val encL = Xof.Utils.rightEncode(macLength() * 8L)
             xof.update(encL)
-
-            // If this is being used as a Mac, doFinal was called so no
-            // need to reset unnecessarily here as Mac.doFinal will call
-            // engine.reset() right after output is returned.
-            //
-            // If this is being used as a Xof, padAndProvideReader is
-            // called from a copy and will be single use for that Reader,
-            // so resetting it is needed before it gets black holed.
-            return xof.reader(resetXof = isXofMode)
+            return xof.reader(resetXof = resetXof)
         }
 
         private fun ByteArray.bytepad() {
-            update(this)
+            xof.update(this)
 
             val remainder = size % blockSize
 
@@ -161,7 +156,7 @@ public sealed class Kmac: Mac, XofAlgorithm {
             if (remainder == 0) return
 
             repeat(blockSize - remainder) {
-                update(0)
+                xof.update(0)
             }
         }
 

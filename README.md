@@ -41,6 +41,8 @@ fun main() {
     // should no longer be utilized because they have been broken.
     HmacMD5(key)
     HmacSHA1(key)
+    
+    key.fill(0)
 }
 ```
 
@@ -58,6 +60,8 @@ fun main() {
     HmacSHA512_224(key)
     HmacSHA512_256(key)
     HmacSHA512t(key, 504)
+    
+    key.fill(0)
 }
 ```
 
@@ -75,6 +79,8 @@ fun main() {
     HmacSHA3_256(key)
     HmacSHA3_384(key)
     HmacSHA3_512(key)
+    
+    key.fill(0)
 }
 ```
 
@@ -90,8 +96,11 @@ fun main() {
     KMAC128(key)     // as a Mac
     KMAC128.xOf(key) // as a Xof (Extendable-Output Function)
 
-    KMAC256(key)
+    val S = "My Customization".encodeToByteArray()
+    KMAC256(key, S, outputLength = 123)
     KMAC256.xOf(key)
+
+    key.fill(0)
 }
 ```
 -->
