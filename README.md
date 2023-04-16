@@ -84,7 +84,6 @@ fun main() {
 }
 ```
 
-<!-- TODO: Uncomment
 `SHA3 KMAC & XOFs` (i.e. [Extendable-Output Functions][url-pub-xof])
 
 See [HERE][url-core-usage] for details on what `XOFs` are, and a basic usage example for `Xof`.
@@ -92,18 +91,20 @@ See [HERE][url-core-usage] for details on what `XOFs` are, and a basic usage exa
 ```kotlin
 fun main() {
     val key = SecureRandom().nextBytesOf(100)
-    
-    KMAC128(key)     // as a Mac
-    KMAC128.xOf(key) // as a Xof (Extendable-Output Function)
 
     val S = "My Customization".encodeToByteArray()
-    KMAC256(key, S, outputLength = 123)
+
+    // Macs
+    KMAC128(key)
+    KMAC256(key, S, outputLength = 123) // returns 123 bytes instead of the default when doFinal() is invoked
+    
+    // Xofs
+    KMAC128.xOf(key, S)
     KMAC256.xOf(key)
 
     key.fill(0)
 }
 ```
--->
 
 ### Get Started
 
@@ -113,16 +114,11 @@ shown below.
 
 <!-- TAG_VERSION -->
 
-<!-- TODO: Add to dependencies
-    // KMAC128, KMAC256
-    implementation("org.kotlincrypto.macs:kmac")
--->
-
 ```kotlin
 // build.gradle.kts
 dependencies {
     // define the BOM and its version
-    implementation(platform("org.kotlincrypto.macs:bom:0.2.3"))
+    implementation(platform("org.kotlincrypto.macs:bom:0.2.4"))
 
     // define artifacts without version
     
@@ -138,17 +134,20 @@ dependencies {
     // HmacKeccak224, HmacKeccak256, HmacKeccak384, HmacKeccak512
     // HmacSHA3-224, HmacSHA3-256, HmacSHA3-384, HmacSHA3-512
     implementation("org.kotlincrypto.macs:hmac-sha3")
+
+    // KMAC128, KMAC256
+    implementation("org.kotlincrypto.macs:kmac")
 }
 ```
 
 <!-- TAG_VERSION -->
-[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.3-blue.svg?style=flat
+[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.4-blue.svg?style=flat
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
 
 <!-- TAG_DEPENDENCIES -->
 [badge-kotlin]: https://img.shields.io/badge/kotlin-1.8.10-blue.svg?logo=kotlin
-[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.2.3-blue.svg
-[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.3-blue.svg
+[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.2.4-blue.svg
+[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.4-blue.svg
 
 <!-- TAG_PLATFORMS -->
 [badge-platform-android]: http://img.shields.io/badge/-android-6EDB8D.svg?style=flat
