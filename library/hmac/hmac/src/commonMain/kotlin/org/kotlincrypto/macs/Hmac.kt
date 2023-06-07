@@ -67,16 +67,23 @@ public abstract class Hmac: Mac {
         constructor(key: ByteArray, algorithm: String, digest: Digest): super(key) {
             this.algorithm = algorithm
 
-            val preparedKey = if (key.size > digest.blockSize()) {
-                digest.digest(key).copyOf(digest.blockSize())
-            } else if (key.size < digest.blockSize()) {
-                key.copyOf(digest.blockSize())
+            val sizedKey = if (key.size > digest.blockSize()) {
+                val keyHash = digest.digest(key)
+                keyHash.copyOf(digest.blockSize()).also { keyHash.fill(0) }
             } else {
-                key
+                // Even if provided key is the correct size, still
+                // create a copy so sizedKey can always be blanked
+                // after deriving iKey and oKey.
+                //
+                // If the provided key is undersized, it will be
+                // padded with 0's.
+                key.copyOf(digest.blockSize())
             }
 
-            this.iKey = ByteArray(digest.blockSize()) { i -> preparedKey[i] xor I_PAD }
-            this.oKey = ByteArray(digest.blockSize()) { i -> preparedKey[i] xor O_PAD }
+            this.iKey = ByteArray(digest.blockSize()) { i -> sizedKey[i] xor I_PAD }
+            this.oKey = ByteArray(digest.blockSize()) { i -> sizedKey[i] xor O_PAD }
+
+            sizedKey.fill(0)
 
             digest.update(iKey)
             this.digest = digest
