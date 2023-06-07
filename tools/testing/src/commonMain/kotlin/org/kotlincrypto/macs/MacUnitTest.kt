@@ -15,6 +15,7 @@
  **/
 package org.kotlincrypto.macs
 
+import io.matthewnelson.encoding.base64.Base64
 import io.matthewnelson.encoding.core.Decoder.Companion.decodeToByteArray
 import io.matthewnelson.encoding.core.Encoder.Companion.encodeToString
 import org.kotlincrypto.core.Mac
@@ -108,14 +109,14 @@ abstract class MacUnitTest {
         // 20 bytes
         val KEY_SMALL = """
             1SURpmufJX7RlEnk9zoLo2UwLt8=
-        """.trimIndent().decodeToByteArray(TestData.base64)
+        """.trimIndent().decodeToByteArray(Base64.Default)
 
         // 100 bytes
         val KEY_MEDIUM = """
             HQEhPY467gYDjwh/Vvsq9+XwS2xDf7Jr05L0qiPk5CkDh/h3PCgyjkTo65a+h+wY
             BKaVXSlb2VQRD3Z2LCBCSgcKBd5GID8+U/xDHNFqXUowUWofEkagZYlf16uqkOPr
             CfBVTg==
-        """.trimIndent().decodeToByteArray(TestData.base64)
+        """.trimIndent().decodeToByteArray(Base64.Default)
 
         // 500 bytes
         val KEY_LARGE = """
@@ -130,6 +131,6 @@ abstract class MacUnitTest {
             BPsqM2QBrN60VdzTg4yLk7GmmGhc6B0NjH+PUP/pD4TVgxzI0Um29DcMZiwOibHr
             JR46yA5FQxsXpj0qHGRXe1mnP0+cKNW6Rc8AJcxZO/PDIPfu2BN1GUjQrhiSCM0j
             Dt/UlpETCDNLlp4aCq8wyQa5CIY=
-        """.trimIndent().decodeToByteArray(TestData.base64)
+        """.trimIndent().decodeToByteArray(Base64.Default)
     }
 }
