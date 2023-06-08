@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.2.6 (2023-06-08)
+ - Updates `kotlincrypto.core` to `0.2.6` [[#33]][33]
+     - Fix for Android API 21-23 requiring a `Provider` for `javax.crypto.Mac`
+       in order to set `spiImpl` [[core #44]][core-44]
+ - Updates `kotlincrypto.hash` to `0.2.6`
+
 ## Version 0.2.5 (2023-06-07)
  - Updates `kotlincrypto.core` to `0.2.5` [[#31]][31]
      - Fix for Android API 23 and below not accepting `null` for `Mac.init` key
@@ -51,8 +57,10 @@
  - Initial Release
 
 [core-38]: https://github.com/KotlinCrypto/core/pull/38
+[core-44]: https://github.com/KotlinCrypto/core/pull/44
 [21]: https://github.com/KotlinCrypto/MACs/pull/21
 [23]: https://github.com/KotlinCrypto/MACs/pull/23
 [26]: https://github.com/KotlinCrypto/MACs/pull/26
 [31]: https://github.com/KotlinCrypto/MACs/pull/31
 [32]: https://github.com/KotlinCrypto/MACs/pull/32
+[33]: https://github.com/KotlinCrypto/MACs/pull/33
