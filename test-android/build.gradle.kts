@@ -33,7 +33,7 @@ kmpConfiguration {
                 compileSdk = 33
 
                 defaultConfig {
-                    minSdk = 17
+                    minSdk = 14
 
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
