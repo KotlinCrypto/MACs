@@ -1,5 +1,11 @@
 # CHANGELOG
 
+## Version 0.2.7 (2023-06-09)
+ - Updates `kotlincrypto.core` to `0.2.7` [[#36]][36]
+     - Fix for Android API 23 and below where `javax.crypto.Mac.doFinal` does
+       not call `javax.crypto.MacSpi.engineReset` [[#core 46]][core-46]
+ - Updates `kotlincrypto.hash` to `0.2.7` [[#36]][36]
+
 ## Version 0.2.6 (2023-06-08)
  - Updates `kotlincrypto.core` to `0.2.6` [[#33]][33]
      - Fix for Android API 21-23 requiring a `Provider` for `javax.crypto.Mac`
@@ -58,9 +64,11 @@
 
 [core-38]: https://github.com/KotlinCrypto/core/pull/38
 [core-44]: https://github.com/KotlinCrypto/core/pull/44
+[core-46]: https://github.com/KotlinCrypto/core/pull/46
 [21]: https://github.com/KotlinCrypto/MACs/pull/21
 [23]: https://github.com/KotlinCrypto/MACs/pull/23
 [26]: https://github.com/KotlinCrypto/MACs/pull/26
 [31]: https://github.com/KotlinCrypto/MACs/pull/31
 [32]: https://github.com/KotlinCrypto/MACs/pull/32
 [33]: https://github.com/KotlinCrypto/MACs/pull/33
+[36]: https://github.com/KotlinCrypto/MACs/pull/36
