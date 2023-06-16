@@ -69,7 +69,14 @@ public class KMAC128: Kmac {
         key: ByteArray,
         S: ByteArray?,
         outputLength: Int,
-    ): super(key, S, BIT_STRENGTH_128, outputLength)
+    ): this(key, S, outputLength, xofMode = false)
+
+    private constructor(
+        key: ByteArray,
+        S: ByteArray?,
+        outputLength: Int,
+        xofMode: Boolean,
+    ): super(key, S, BIT_STRENGTH_128, outputLength, xofMode)
 
     private constructor(engine: Mac.Engine): super(engine)
 
@@ -92,6 +99,9 @@ public class KMAC128: Kmac {
          * */
         @JvmStatic
         @JvmOverloads
-        public fun xOf(key: ByteArray, S: ByteArray? = null): Xof<KMAC128> = KMACXof(KMAC128(key, S, 0))
+        public fun xOf(
+            key: ByteArray,
+            S: ByteArray? = null,
+        ): Xof<KMAC128> = KMACXof(KMAC128(key, S, 0, xofMode = true))
     }
 }

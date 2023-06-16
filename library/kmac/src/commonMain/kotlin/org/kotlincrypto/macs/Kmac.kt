@@ -20,6 +20,7 @@ package org.kotlincrypto.macs
 import org.kotlincrypto.core.*
 import org.kotlincrypto.hash.sha3.CSHAKE128
 import org.kotlincrypto.hash.sha3.CSHAKE256
+import kotlin.jvm.JvmField
 
 /**
  * Core abstraction for Keccak-based Message Authentication
@@ -39,7 +40,12 @@ public sealed class Kmac: Mac, XofAlgorithm {
         S: ByteArray?,
         bitStrength: Int,
         outputLength: Int,
-    ): this(Kmac.Engine(key, S, bitStrength, outputLength))
+        xofMode: Boolean,
+    ): this(if (xofMode) {
+        XofEngine(key, S, bitStrength)
+    } else {
+        DigestEngine(key, S, bitStrength, outputLength)
+    })
 
     @OptIn(InternalKotlinCryptoApi::class)
     protected constructor(engine: Mac.Engine): super((engine as Kmac.Engine).algorithm(), engine) {
@@ -51,14 +57,11 @@ public sealed class Kmac: Mac, XofAlgorithm {
         protected inner class KMACXof(delegate: A): XofDelegate(delegate) {
 
             init {
-                // While in XOF mode, the arbitrary output length, L, is
-                // represented as 0.
-                require(delegate.macLength() == 0) { "macLength must be 0" }
+                require(delegate.engine is XofEngine) { "delegate must use XofEngine" }
             }
 
             override fun newReader(delegateCopy: A): Reader {
-                // Want to reset the copy Xof here before it gets black holed
-                val reader = delegateCopy.engine.padAndProvideReader(resetXof = true)
+                val reader = (delegateCopy.engine as XofEngine).reader()
 
                 return object : Xof<A>.Reader() {
                     override fun readProtected(out: ByteArray, offset: Int, len: Int, bytesRead: Long) {
@@ -76,32 +79,93 @@ public sealed class Kmac: Mac, XofAlgorithm {
         }
     }
 
-    private class Engine: Mac.Engine, Algorithm {
+    private class DigestEngine: Engine {
 
-        private val xof: Xof<*>
+        protected override val source: Digest
+
+        constructor(
+            key: ByteArray,
+            S: ByteArray?,
+            bitStrength: Int,
+            outputLength: Int,
+        ): super(key, bitStrength, outputLength) {
+            val N = KMAC.encodeToByteArray()
+
+            this.source = if (bitStrength == BIT_STRENGTH_128) {
+                CSHAKE128(N, S, outputLength)
+            } else {
+                CSHAKE256(N, S, outputLength)
+            }
+
+            bytepad()
+        }
+
+        private constructor(state: State, engine: DigestEngine): super(state, engine) {
+            this.source = engine.source.copy()
+        }
+
+        override fun copy(): Mac.Engine = DigestEngine(object : State() {}, this)
+
+        override fun doFinal(): ByteArray {
+            padFinal()
+            return source.digest()
+        }
+    }
+
+    private class XofEngine: Engine {
+
+        protected override val source: Xof<*>
+
+        constructor(
+            key: ByteArray,
+            S: ByteArray?,
+            bitStrength: Int,
+        ): super(key, bitStrength, outputLength = 0) {
+            val N = KMAC.encodeToByteArray()
+
+            this.source = if (bitStrength == BIT_STRENGTH_128) {
+                CSHAKE128.xOf(N, S)
+            } else {
+                CSHAKE256.xOf(N, S)
+            }
+
+            bytepad()
+        }
+
+        private constructor(state: State, engine: XofEngine): super(state, engine) {
+            this.source = engine.source.copy()
+        }
+
+        override fun copy(): Mac.Engine = XofEngine(object: State() {}, this)
+
+        // Only ever called from a copy of the XofEngine. Calling source.reader
+        // will also create a copy of the underlying CSHAKE XOF, so we want to reset
+        // the underlying copy before it is black holed.
+        fun reader(): Xof<*>.Reader {
+            padFinal()
+            return source.reader(resetXof = true)
+        }
+
+        // Never called
+        override fun doFinal(): ByteArray = ByteArray(0)
+    }
+
+    private sealed class Engine: Mac.Engine, Algorithm {
+
+        protected abstract val source: Updatable
         private val bitStrength: Int
         private val blockSize: Int
         private val initBlock: ByteArray
         private val outputLength: Int
 
         @OptIn(InternalKotlinCryptoApi::class)
-        constructor(key: ByteArray, S: ByteArray?, bitStrength: Int, outputLength: Int): super(key) {
-            require(outputLength >= 0) { "outputLength cannot be negative" }
-
+        constructor(key: ByteArray, bitStrength: Int, outputLength: Int): super(key) {
             this.bitStrength = bitStrength
             this.outputLength = outputLength
 
-            val N = KMAC.encodeToByteArray()
-
-            when (bitStrength) {
-                BIT_STRENGTH_128 -> {
-                    this.xof = CSHAKE128.xOf(N, S)
-                    this.blockSize = CSHAKE128.BLOCK_SIZE
-                }
-                BIT_STRENGTH_256 -> {
-                    this.xof = CSHAKE256.xOf(N, S)
-                    this.blockSize = CSHAKE256.BLOCK_SIZE
-                }
+            this.blockSize = when (bitStrength) {
+                BIT_STRENGTH_128 -> CSHAKE128.BLOCK_SIZE
+                BIT_STRENGTH_256 -> CSHAKE256.BLOCK_SIZE
                 else -> throw IllegalArgumentException("bitStrength must be $BIT_STRENGTH_128 or $BIT_STRENGTH_256")
             }
 
@@ -119,59 +183,44 @@ public sealed class Kmac: Mac, XofAlgorithm {
             key.copyInto(b, encW.size + encKS.size)
 
             this.initBlock = b
-            this.initBlock.bytepad()
         }
 
         @OptIn(InternalKotlinCryptoApi::class)
-        private constructor(state: State, engine: Engine): super(state) {
-            this.xof = engine.xof.copy()
+        constructor(state: State, engine: Engine): super(state) {
             this.bitStrength = engine.bitStrength
             this.blockSize = engine.blockSize
             this.outputLength = engine.outputLength
             this.initBlock = engine.initBlock
         }
 
-        override fun update(input: Byte) { xof.update(input) }
-        override fun update(input: ByteArray, offset: Int, len: Int) { xof.update(input, offset, len) }
+        protected fun bytepad() {
+            source.update(initBlock)
 
-        override fun doFinal(): ByteArray {
-            val out = ByteArray(macLength())
-            padAndProvideReader(resetXof = false).use { read(out) }
-            return out
-        }
-
-        fun padAndProvideReader(resetXof: Boolean): Xof<*>.Reader {
-            @OptIn(InternalKotlinCryptoApi::class)
-            val encL = Xof.Utils.rightEncode(macLength() * 8L)
-            xof.update(encL)
-            return xof.reader(resetXof = resetXof)
-        }
-
-        private fun ByteArray.bytepad() {
-            xof.update(this)
-
-            val remainder = size % blockSize
+            val remainder = initBlock.size % blockSize
 
             // No padding is needed
             if (remainder == 0) return
 
             repeat(blockSize - remainder) {
-                xof.update(0)
+                source.update(0)
             }
         }
 
-        override fun reset() {
-            xof.reset()
-            initBlock.bytepad()
+        protected fun padFinal() {
+            @OptIn(InternalKotlinCryptoApi::class)
+            val encL = Xof.Utils.rightEncode(outputLength * 8L)
+            source.update(encL)
         }
 
-        override fun algorithm(): String = KMAC + bitStrength
-        override fun macLength(): Int = outputLength
+        final override fun update(input: Byte) { source.update(input) }
+        final override fun update(input: ByteArray, offset: Int, len: Int) { source.update(input, offset, len) }
+        final override fun reset() { (source as Resettable).reset(); bytepad() }
 
-        override fun copy(): Engine = Engine(object : State() {}, this)
+        final override fun algorithm(): String = KMAC + bitStrength
+        final override fun macLength(): Int = outputLength
 
-        private companion object {
-            private const val KMAC = "KMAC"
+        protected companion object {
+            internal const val KMAC = "KMAC"
         }
     }
 
