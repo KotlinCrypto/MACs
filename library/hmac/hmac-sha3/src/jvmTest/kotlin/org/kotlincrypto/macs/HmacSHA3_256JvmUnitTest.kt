@@ -16,7 +16,7 @@
 package org.kotlincrypto.macs
 
 import org.junit.Test
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 
 @Suppress("ClassName")
 class HmacSHA3_256JvmUnitTest: HmacSHA3_256UnitTest() {

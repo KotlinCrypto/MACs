@@ -15,7 +15,7 @@
  **/
 package org.kotlincrypto.macs
 
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 
 class HmacSHA224JvmUnitTest: HmacSHA224UnitTest() {
     override fun mac(key: ByteArray): Mac = TestJvmMac(super.mac(key).algorithm(), key)

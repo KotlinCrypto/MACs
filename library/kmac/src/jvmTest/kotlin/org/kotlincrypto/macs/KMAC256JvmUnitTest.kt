@@ -16,7 +16,7 @@
 package org.kotlincrypto.macs
 
 import org.junit.Test
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.core.Updatable
 
 class KMAC256JvmUnitTest: KMAC256UnitTest() {

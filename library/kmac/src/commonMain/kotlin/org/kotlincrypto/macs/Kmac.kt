@@ -18,9 +18,11 @@
 package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.*
+import org.kotlincrypto.core.digest.Digest
+import org.kotlincrypto.core.mac.Mac
+import org.kotlincrypto.core.xof.*
 import org.kotlincrypto.hash.sha3.CSHAKE128
 import org.kotlincrypto.hash.sha3.CSHAKE256
-import kotlin.jvm.JvmField
 
 /**
  * Core abstraction for Keccak-based Message Authentication

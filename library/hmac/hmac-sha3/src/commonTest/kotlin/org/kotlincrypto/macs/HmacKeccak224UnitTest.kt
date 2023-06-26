@@ -15,7 +15,7 @@
  **/
 package org.kotlincrypto.macs
 
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 import kotlin.test.Test
 
 open class HmacKeccak224UnitTest: MacUnitTest() {

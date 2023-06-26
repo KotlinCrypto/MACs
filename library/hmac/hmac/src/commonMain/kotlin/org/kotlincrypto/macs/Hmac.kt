@@ -17,9 +17,9 @@
 
 package org.kotlincrypto.macs
 
-import org.kotlincrypto.core.Digest
 import org.kotlincrypto.core.InternalKotlinCryptoApi
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.digest.Digest
+import org.kotlincrypto.core.mac.Mac
 import kotlin.experimental.xor
 
 /**

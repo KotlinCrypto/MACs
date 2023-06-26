@@ -18,7 +18,7 @@
 package org.kotlincrypto.macs
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.hash.sha3.SHA3_224
 
 /**

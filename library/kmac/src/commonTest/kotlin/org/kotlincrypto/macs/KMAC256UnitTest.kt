@@ -15,9 +15,9 @@
  **/
 package org.kotlincrypto.macs
 
-import org.kotlincrypto.core.Mac
 import org.kotlincrypto.core.Updatable
-import org.kotlincrypto.core.Xof
+import org.kotlincrypto.core.mac.Mac
+import org.kotlincrypto.core.xof.Xof
 import kotlin.test.Test
 
 open class KMAC256UnitTest: KmacUnitTest() {

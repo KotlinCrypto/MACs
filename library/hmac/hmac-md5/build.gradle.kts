@@ -23,7 +23,7 @@ kmpConfiguration {
         common {
             sourceSetMain {
                 dependencies {
-                    implementation(libs.kotlincrypto.hash.md5)
+                    implementation(libs.kotlincrypto.hash.md)
                     api(project(":library:hmac:hmac"))
                 }
             }

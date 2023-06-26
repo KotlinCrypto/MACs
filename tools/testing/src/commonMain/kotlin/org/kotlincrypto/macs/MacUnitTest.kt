@@ -18,7 +18,7 @@ package org.kotlincrypto.macs
 import io.matthewnelson.encoding.base64.Base64
 import io.matthewnelson.encoding.core.Decoder.Companion.decodeToByteArray
 import io.matthewnelson.encoding.core.Encoder.Companion.encodeToString
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.core.Updatable
 import kotlin.test.assertEquals
 import kotlin.test.assertNotEquals

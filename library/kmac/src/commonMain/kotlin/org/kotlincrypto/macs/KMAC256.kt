@@ -15,8 +15,8 @@
  **/
 package org.kotlincrypto.macs
 
-import org.kotlincrypto.core.Mac
-import org.kotlincrypto.core.Xof
+import org.kotlincrypto.core.mac.Mac
+import org.kotlincrypto.core.xof.Xof
 import org.kotlincrypto.hash.sha3.CSHAKE256
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic

@@ -19,14 +19,14 @@ package org.kotlincrypto.macs
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider
 import org.kotlincrypto.core.InternalKotlinCryptoApi
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 import java.security.NoSuchAlgorithmException
 import java.security.Security
 import javax.crypto.spec.SecretKeySpec
 
 /**
  * Simple test class that wraps a [javax.crypto.Mac]
- * with [org.kotlincrypto.core.Mac]
+ * with [org.kotlincrypto.core.mac.Mac]
  * */
 @OptIn(InternalKotlinCryptoApi::class)
 class TestJvmMac: Mac {

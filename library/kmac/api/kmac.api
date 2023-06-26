@@ -5,14 +5,14 @@ public final class org/kotlincrypto/macs/KMAC128 : org/kotlincrypto/macs/Kmac {
 	public fun <init> ([B[B)V
 	public fun <init> ([B[BI)V
 	public synthetic fun <init> ([B[BIZLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public static final fun xOf ([B)Lorg/kotlincrypto/core/Xof;
-	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/Xof;
+	public static final fun xOf ([B)Lorg/kotlincrypto/core/xof/Xof;
+	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/xof/Xof;
 }
 
 public final class org/kotlincrypto/macs/KMAC128$Companion : org/kotlincrypto/macs/Kmac$KMACXofFactory {
-	public final fun xOf ([B)Lorg/kotlincrypto/core/Xof;
-	public final fun xOf ([B[B)Lorg/kotlincrypto/core/Xof;
-	public static synthetic fun xOf$default (Lorg/kotlincrypto/macs/KMAC128$Companion;[B[BILjava/lang/Object;)Lorg/kotlincrypto/core/Xof;
+	public final fun xOf ([B)Lorg/kotlincrypto/core/xof/Xof;
+	public final fun xOf ([B[B)Lorg/kotlincrypto/core/xof/Xof;
+	public static synthetic fun xOf$default (Lorg/kotlincrypto/macs/KMAC128$Companion;[B[BILjava/lang/Object;)Lorg/kotlincrypto/core/xof/Xof;
 }
 
 public final class org/kotlincrypto/macs/KMAC256 : org/kotlincrypto/macs/Kmac {
@@ -22,32 +22,32 @@ public final class org/kotlincrypto/macs/KMAC256 : org/kotlincrypto/macs/Kmac {
 	public fun <init> ([B[B)V
 	public fun <init> ([B[BI)V
 	public synthetic fun <init> ([B[BIZLkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public static final fun xOf ([B)Lorg/kotlincrypto/core/Xof;
-	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/Xof;
+	public static final fun xOf ([B)Lorg/kotlincrypto/core/xof/Xof;
+	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/xof/Xof;
 }
 
 public final class org/kotlincrypto/macs/KMAC256$Companion : org/kotlincrypto/macs/Kmac$KMACXofFactory {
-	public final fun xOf ([B)Lorg/kotlincrypto/core/Xof;
-	public final fun xOf ([B[B)Lorg/kotlincrypto/core/Xof;
-	public static synthetic fun xOf$default (Lorg/kotlincrypto/macs/KMAC256$Companion;[B[BILjava/lang/Object;)Lorg/kotlincrypto/core/Xof;
+	public final fun xOf ([B)Lorg/kotlincrypto/core/xof/Xof;
+	public final fun xOf ([B[B)Lorg/kotlincrypto/core/xof/Xof;
+	public static synthetic fun xOf$default (Lorg/kotlincrypto/macs/KMAC256$Companion;[B[BILjava/lang/Object;)Lorg/kotlincrypto/core/xof/Xof;
 }
 
-public abstract class org/kotlincrypto/macs/Kmac : org/kotlincrypto/core/Mac, org/kotlincrypto/core/XofAlgorithm {
+public abstract class org/kotlincrypto/macs/Kmac : org/kotlincrypto/core/mac/Mac, org/kotlincrypto/core/xof/XofAlgorithm {
 	protected static final field Companion Lorg/kotlincrypto/macs/Kmac$Companion;
-	public synthetic fun <init> (Lorg/kotlincrypto/core/Mac$Engine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> (Lorg/kotlincrypto/core/mac/Mac$Engine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> ([B[BIIZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 
 protected final class org/kotlincrypto/macs/Kmac$Companion {
 }
 
-public abstract class org/kotlincrypto/macs/Kmac$KMACXofFactory : org/kotlincrypto/core/XofFactory {
+public abstract class org/kotlincrypto/macs/Kmac$KMACXofFactory : org/kotlincrypto/core/xof/XofFactory {
 }
 
-protected final class org/kotlincrypto/macs/Kmac$KMACXofFactory$KMACXof : org/kotlincrypto/core/XofFactory$XofDelegate {
+protected final class org/kotlincrypto/macs/Kmac$KMACXofFactory$KMACXof : org/kotlincrypto/core/xof/XofFactory$XofDelegate {
 	public fun <init> (Lorg/kotlincrypto/macs/Kmac$KMACXofFactory;Lorg/kotlincrypto/macs/Kmac;)V
 	public synthetic fun copy ()Ljava/lang/Object;
-	public fun copy ()Lorg/kotlincrypto/core/Xof;
-	public synthetic fun newReader (Lorg/kotlincrypto/core/XofAlgorithm;)Lorg/kotlincrypto/core/Xof$Reader;
+	public fun copy ()Lorg/kotlincrypto/core/xof/Xof;
+	public synthetic fun newReader (Lorg/kotlincrypto/core/xof/XofAlgorithm;)Lorg/kotlincrypto/core/xof/Xof$Reader;
 }
 

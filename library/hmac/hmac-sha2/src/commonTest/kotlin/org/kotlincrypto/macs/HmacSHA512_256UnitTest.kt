@@ -17,7 +17,7 @@
 
 package org.kotlincrypto.macs
 
-import org.kotlincrypto.core.Mac
+import org.kotlincrypto.core.mac.Mac
 import kotlin.test.Test
 
 open class HmacSHA512_256UnitTest: MacUnitTest() {
