@@ -1,4 +1,4 @@
-public final class org/kotlincrypto/macs/HmacSHA1 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha1/HmacSHA1 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
