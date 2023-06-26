@@ -18,6 +18,7 @@ if (CHECK_PUBLICATION != null) {
 } else {
     listOf(
         "hmac:hmac",
+        "hmac:hmac-md",
         "hmac:hmac-md5",
         "hmac:hmac-sha1",
         "hmac:hmac-sha2",
