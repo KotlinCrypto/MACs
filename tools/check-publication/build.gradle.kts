@@ -46,8 +46,6 @@ kmpConfiguration {
                     implementation("$group:hmac-md5")
                     implementation("$group:hmac-sha1")
                     implementation("$group:hmac-sha2")
-                    implementation("$group:hmac-sha2-256")
-                    implementation("$group:hmac-sha2-512")
                     implementation("$group:hmac-sha3")
 
                     implementation("$group:kmac")
