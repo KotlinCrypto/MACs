@@ -42,6 +42,7 @@ kmpConfiguration {
                     implementation("$group:hmac:$version")
 
                     implementation(platform("$group:bom:$version"))
+                    implementation("$group:hmac-md")
                     implementation("$group:hmac-md5")
                     implementation("$group:hmac-sha1")
                     implementation("$group:hmac-sha2")

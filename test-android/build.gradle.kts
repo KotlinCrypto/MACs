@@ -46,7 +46,7 @@ kmpConfiguration {
             }
 
             sourceSetTestInstrumented {
-                kotlin.srcDir("src/androidInstrumentedTest/hmac-md5")
+                kotlin.srcDir("src/androidInstrumentedTest/hmac-md")
                 kotlin.srcDir("src/androidInstrumentedTest/hmac-sha1")
                 kotlin.srcDir("src/androidInstrumentedTest/hmac-sha2")
                 kotlin.srcDir("src/androidInstrumentedTest/hmac-sha3")
@@ -57,7 +57,7 @@ kmpConfiguration {
                     implementation(libs.encoding.base16)
                     implementation(kotlin("test"))
 
-                    implementation(project(":library:hmac:hmac-md5"))
+                    implementation(project(":library:hmac:hmac-md"))
                     implementation(project(":library:hmac:hmac-sha1"))
                     implementation(project(":library:hmac:hmac-sha2"))
                     implementation(project(":library:hmac:hmac-sha3"))

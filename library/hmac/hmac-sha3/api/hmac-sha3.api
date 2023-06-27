@@ -1,32 +1,32 @@
-public final class org/kotlincrypto/macs/HmacKeccak224 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak224 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
-public final class org/kotlincrypto/macs/HmacKeccak256 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak256 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
-public final class org/kotlincrypto/macs/HmacKeccak384 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak384 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
-public final class org/kotlincrypto/macs/HmacKeccak512 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak512 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
-public final class org/kotlincrypto/macs/HmacSHA3_224 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_224 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
-public final class org/kotlincrypto/macs/HmacSHA3_256 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_256 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
-public final class org/kotlincrypto/macs/HmacSHA3_384 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_384 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 
-public final class org/kotlincrypto/macs/HmacSHA3_512 : org/kotlincrypto/macs/Hmac {
+public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_512 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
 }
 

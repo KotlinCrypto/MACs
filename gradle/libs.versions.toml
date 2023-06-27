@@ -3,10 +3,10 @@ android = "7.4.2"
 androidxTestRunner = "1.5.2"
 binaryCompat = "0.13.2"
 bouncyCastle = "1.73"
-configuration = "0.1.0"
-cryptoCore = "0.2.7"
-cryptoHash = "0.2.7"
-encoding = "1.2.2"
+configuration = "0.1.1"
+cryptoCore = "0.3.0-SNAPSHOT"
+cryptoHash = "0.3.0-SNAPSHOT"
+encoding = "2.0.0"
 gradleVersions = "0.46.0"
 kotlin = "1.8.21"
 publish = "0.25.2"
@@ -15,7 +15,7 @@ publish = "0.25.2"
 kotlincrypto-core-digest = { module = "org.kotlincrypto.core:digest", version.ref = "cryptoCore" }
 kotlincrypto-core-mac = { module = "org.kotlincrypto.core:mac", version.ref = "cryptoCore" }
 kotlincrypto-core-xof = { module = "org.kotlincrypto.core:xof", version.ref = "cryptoCore" }
-kotlincrypto-hash-md5 = { module = "org.kotlincrypto.hash:md5", version.ref = "cryptoHash" }
+kotlincrypto-hash-md = { module = "org.kotlincrypto.hash:md", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha1 = { module = "org.kotlincrypto.hash:sha1", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha2 = { module = "org.kotlincrypto.hash:sha2", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha3 = { module = "org.kotlincrypto.hash:sha3", version.ref = "cryptoHash" }
@@ -26,8 +26,8 @@ gradle-maven-publish = { module = "com.vanniktech:gradle-maven-publish-plugin", 
 # Tests
 androidx-test-runner = { module = "androidx.test:runner", version.ref = "androidxTestRunner" }
 bouncyCastle = { module = "org.bouncycastle:bcprov-ext-jdk15to18", version.ref = "bouncyCastle" }
-encoding-base16 = { module = "io.matthewnelson.kotlin-components:encoding-base16", version.ref = "encoding" }
-encoding-base64 = { module = "io.matthewnelson.kotlin-components:encoding-base64", version.ref = "encoding" }
+encoding-base16 = { module = "io.matthewnelson.encoding:base16", version.ref = "encoding" }
+encoding-base64 = { module = "io.matthewnelson.encoding:base64", version.ref = "encoding" }
 
 [plugins]
 android-library = { id = "com.android.library", version.ref = "android" }

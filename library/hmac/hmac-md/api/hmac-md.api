@@ -1,0 +1,4 @@
+public final class org/kotlincrypto/macs/hmac/md/HmacMD5 : org/kotlincrypto/macs/hmac/Hmac {
+	public fun <init> ([B)V
+}
+
