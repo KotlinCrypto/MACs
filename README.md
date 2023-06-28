@@ -118,17 +118,18 @@ shown below.
 // build.gradle.kts
 dependencies {
     // define the BOM and its version
-    implementation(platform("org.kotlincrypto.macs:bom:0.2.7"))
+    implementation(platform("org.kotlincrypto.macs:bom:0.3.0"))
 
     // define artifacts without version
     
     // HmacMD5
-    implementation("org.kotlincrypto.macs:hmac-md5")
+    implementation("org.kotlincrypto.macs:hmac-md")
     
     // HmacSHA1
     implementation("org.kotlincrypto.macs:hmac-sha1")
     
-    // HmacSHA224, HmacSHA256, HmacSHA384, HmacSHA512, HmacSHA512/224, HmacSHA512/256
+    // HmacSHA224, HmacSHA256, HmacSHA384, HmacSHA512
+    // HmacSHA512/t, HmacSHA512/224, HmacSHA512/256
     implementation("org.kotlincrypto.macs:hmac-sha2")
     
     // HmacKeccak224, HmacKeccak256, HmacKeccak384, HmacKeccak512
@@ -141,13 +142,13 @@ dependencies {
 ```
 
 <!-- TAG_VERSION -->
-[badge-latest-release]: https://img.shields.io/badge/latest--release-0.2.7-blue.svg?style=flat
+[badge-latest-release]: https://img.shields.io/badge/latest--release-0.3.0-blue.svg?style=flat
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
 
 <!-- TAG_DEPENDENCIES -->
 [badge-kotlin]: https://img.shields.io/badge/kotlin-1.8.21-blue.svg?logo=kotlin
-[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.2.7-blue.svg
-[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.2.7-blue.svg
+[badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.3.0-blue.svg
+[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.3.0-blue.svg
 
 <!-- TAG_PLATFORMS -->
 [badge-platform-android]: http://img.shields.io/badge/-android-6EDB8D.svg?style=flat

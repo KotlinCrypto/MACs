@@ -1,5 +1,26 @@
 # CHANGELOG
 
+## Version 0.3.0 (2023-06-28)
+ - Fixes JPMS split packages [[#40]][40]
+     - **API BREAKING CHANGES**
+     - Package names were changed for `hmac`, `hmac-md5`, `hmac-sha1`, `hmac-sha2`, `hmac-sha3`, 
+       and `kmac` modules
+     - Example:
+         - `org.kotlincrypto.macs.Hmac` was moved to `org.kotlincrypto.macs.hmac.Hmac`
+         - `org.kotlincrypto.macs.HmacSHA256` was moved to `org.kotlincrypto.macs.hmac.sha2.HmacSHA256`
+         - `org.kotlincrypto.macs.HmacSHA3_256` was moved to `org.kotlincrypto.macs.hmac.sha3.HmacSHA3_256`
+         - `org.kotlincrypto.macs.KMAC128` was moved to `org.kotlincrypto.macs.kmac.KMAC128`
+ - The MavenCentral dependency `org.kotlincrypto.macs:hmac-md5` is now deprecated,
+   in favor of `org.kotlincrypto.macs:hmac-md`
+     - `hmac-md5` dependency now simply provides the `hmac-md` dependency and
+       will continue to be published until the next major version release.
+ - The following MavenCentral dependencies (previously deprecated) have
+   been removed from publication [[#41]][41]
+     - `org.kotlincrypto.macs:hmac-sha2-256`
+     - `org.kotlincrypto.macs:hmac-sha2-512`
+ - `Kmac` performance improvements [[#38]][38]
+ - See the [ANNOUNCEMENT][discussion-3] for more information on `0.3.0` release
+
 ## Version 0.2.7 (2023-06-09)
  - Updates `kotlincrypto.core` to `0.2.7` [[#36]][36]
      - Fix for Android API 23 and below where `javax.crypto.Mac.doFinal` does
@@ -62,6 +83,7 @@
 ## Version 0.1.0 (2023-03-05)
  - Initial Release
 
+[discussion-3]: https://github.com/orgs/KotlinCrypto/discussions/3
 [core-38]: https://github.com/KotlinCrypto/core/pull/38
 [core-44]: https://github.com/KotlinCrypto/core/pull/44
 [core-46]: https://github.com/KotlinCrypto/core/pull/46
@@ -72,3 +94,6 @@
 [32]: https://github.com/KotlinCrypto/MACs/pull/32
 [33]: https://github.com/KotlinCrypto/MACs/pull/33
 [36]: https://github.com/KotlinCrypto/MACs/pull/36
+[38]: https://github.com/KotlinCrypto/MACs/pull/38
+[40]: https://github.com/KotlinCrypto/MACs/pull/40
+[41]: https://github.com/KotlinCrypto/MACs/pull/41
