@@ -15,13 +15,15 @@
 ![badge-platform-ios]
 ![badge-platform-tvos]
 ![badge-platform-watchos]
-![badge-platform-wasm]
 ![badge-platform-windows]
 ![badge-support-android-native]
 ![badge-support-apple-silicon]
 ![badge-support-js-ir]
 ![badge-support-linux-arm]
-![badge-support-linux-mips]
+
+<!--
+![badge-platform-wasm]
+-->
 
 Message Authentication Code algorithms for Kotlin Multiplatform
 
