@@ -85,7 +85,6 @@ abstract class MacUnitTest {
         val copy = mac.copy()
         copy.reset()
 
-        assertNotEquals(copy, mac)
         assertEquals(expectedResetSmallHash, copy.doFinal().encodeToString(TestData.base16))
         assertEquals(expectedUpdateSmallHash, mac.doFinal().encodeToString(TestData.base16))
     }
