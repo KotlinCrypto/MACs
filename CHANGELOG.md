@@ -1,5 +1,18 @@
 # CHANGELOG
 
+## Version 0.4.0 (2023-11-30)
+- Updates `kotlincrypto.core` to `0.4.0` [[#42]][42]
+- Updates `kotlincrypto.hash` to `0.4.0` [[#42]][42]
+- Updates `kotlin` to `1.9.21` [[#42]][42]
+- Drops support for the following deprecated targets:
+    - `iosArm32`
+    - `watchosX86`
+    - `linuxArm32Hfp`
+    - `linuxMips32`
+    - `linuxMipsel32`
+    - `mingwX86`
+    - `wasm32`
+
 ## Version 0.3.0 (2023-06-28)
  - Fixes JPMS split packages [[#40]][40]
      - **API BREAKING CHANGES**
@@ -97,3 +110,4 @@
 [38]: https://github.com/KotlinCrypto/MACs/pull/38
 [40]: https://github.com/KotlinCrypto/MACs/pull/40
 [41]: https://github.com/KotlinCrypto/MACs/pull/41
+[42]: https://github.com/KotlinCrypto/MACs/pull/42
