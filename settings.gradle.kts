@@ -25,11 +25,13 @@ if (CHECK_PUBLICATION != null) {
         "hmac:hmac-sha3",
 
         "kmac",
+
+        "siphash",
     ).forEach { name ->
         include(":library:$name")
     }
 
     include(":bom")
     include(":tools:testing")
-    include(":test-android")
+//    include(":test-android")
 }

@@ -108,6 +108,28 @@ fun main() {
 }
 ```
 
+
+`SipHash & HalfSipHash`
+
+SipHash can be used to ...
+
+```kotlin
+fun main() {
+
+    val S = "My Customization".encodeToByteArray()
+
+    // SipHash requires 16 bytes key
+    val key = SecureRandom().nextBytesOf(16)
+    SipHash(key)
+
+    // HalfSipHash requires 8 bytes key
+    val key = SecureRandom().nextBytesOf(8)
+    SipHash(key)
+    
+    key.fill(0)
+}
+```
+
 ### Get Started
 
 The best way to keep `KotlinCrypto` dependencies up to date is by using the 
@@ -140,6 +162,9 @@ dependencies {
 
     // KMAC128, KMAC256
     implementation("org.kotlincrypto.macs:kmac")
+    
+    // SipHash, HalfSipHash
+    implementation("org.kotlincrypto.macs:siphash")
 }
 ```
 

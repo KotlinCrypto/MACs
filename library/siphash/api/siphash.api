@@ -1,0 +1,4 @@
+public final class org/kotlincrypto/macs/siphash/SipHash : org/kotlincrypto/core/mac/Mac {
+	public fun <init> ([B)V
+}
+
