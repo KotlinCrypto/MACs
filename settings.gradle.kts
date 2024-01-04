@@ -33,5 +33,5 @@ if (CHECK_PUBLICATION != null) {
 
     include(":bom")
     include(":tools:testing")
-//    include(":test-android")
+    include(":test-android")
 }

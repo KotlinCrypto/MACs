@@ -75,18 +75,18 @@ public class SipHash : Mac {
         }
 
         override fun update(input: Byte) {
-            inputs += input
+            this.inputs += input
         }
 
         override fun update(input: ByteArray, offset: Int, len: Int) {
-            inputs = inputs.take(offset).toByteArray() + input + inputs.drop(len).toByteArray()
+            this.inputs = inputs.take(offset).toByteArray() + input + inputs.drop(len).toByteArray()
         }
 
         override fun doFinal(): ByteArray = state.doFinal(inputs)
 
         override fun reset() {
-            inputs = byteArrayOf()
-            state.reset()
+            this.inputs = byteArrayOf()
+            this.state.reset()
         }
 
         override fun macLength(): Int = state.length()
@@ -202,9 +202,7 @@ public class SipHash : Mac {
         override fun length(): Int = 8
     }
 
-    internal class SipHashState internal constructor(
-        key: SipKey
-    ) : State {
+    internal class SipHashState internal constructor(key: SipKey) : State {
         private val k0: Long = key.left()
         private val k1: Long = key.right()
 
@@ -344,17 +342,16 @@ public class SipHash : Mac {
         override fun length(): Int = 16
     }
 
-    internal class SipKey(
-        private val bytes: ByteArray,
-    ) {
+    internal class SipKey(private val bytes: ByteArray) {
+
         init {
             require(bytes.size == 8 || bytes.size == 16) { "HalfSipHash key must be 8 bytes\nSipHash key must be 16 bytes" }
         }
 
-        public fun left(): Long = bytes.convertToLong(0)
-        public fun leftInt(): Int = bytes.convertToInt(0)
-        public fun right(): Long = bytes.convertToLong(8)
-        public fun rightInt(): Int = bytes.convertToInt(4)
+        fun left(): Long = bytes.convertToLong(0)
+        fun leftInt(): Int = bytes.convertToInt(0)
+        fun right(): Long = bytes.convertToLong(8)
+        fun rightInt(): Int = bytes.convertToInt(4)
     }
 }
 
