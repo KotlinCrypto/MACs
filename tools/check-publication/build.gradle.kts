@@ -49,6 +49,8 @@ kmpConfiguration {
                     implementation("$group:hmac-sha3")
 
                     implementation("$group:kmac")
+
+                    implementation("$group:siphash")
                 }
             }
         }

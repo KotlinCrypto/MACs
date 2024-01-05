@@ -109,9 +109,19 @@ fun main() {
 ```
 
 
-`SipHash & HalfSipHash`
+`SipHash`
+Created by Jean-Philippe Aumasson and Daniel J. Bernstein in 2012
 
-SipHash can be used to ...
+- Simpler and faster on short messages than previous cryptographic algorithms, such as MACs based on universal hashing.
+- Competitive in performance with insecure non-cryptographic algorithms, such as fhhash.
+- Cryptographically secure, with no sign of weakness despite multiple cryptanalysis projects by leading cryptographers.
+- Battle-tested, with successful integration in OSs (Linux kernel, OpenBSD, FreeBSD, FreeRTOS), languages (Perl, Python, Ruby, etc.), libraries (OpenSSL libcrypto, Sodium, etc.) and applications (Wireguard, Redis, etc.).
+- As a secure pseudorandom function (a.k.a. keyed hash function), SipHash can also be used as a secure message authentication code (MAC). But SipHash is not a hash in the sense of general-purpose key-less hash function such as BLAKE3 or SHA-3. SipHash should therefore always be used with a secret key in order to be secure.
+
+`HalfSipHash`
+
+Works with 32-bit words instead of 64-bit, takes a 64-bit key, and returns 32-bit tags. 
+Current implementation has 2 compression rounds, 4 finalization rounds, and returns a 32-bit tag.
 
 ```kotlin
 fun main() {
@@ -119,14 +129,12 @@ fun main() {
     val S = "My Customization".encodeToByteArray()
 
     // SipHash requires 16 bytes key
-    val key = SecureRandom().nextBytesOf(16)
-    SipHash(key)
+    val siphash = SipHash(key = ByteArray(16)).doFinal(S)
+    assertEquals("4ee724a78dab27a0", siphash.toHexString(), "")
 
     // HalfSipHash requires 8 bytes key
-    val key = SecureRandom().nextBytesOf(8)
-    SipHash(key)
-    
-    key.fill(0)
+    val halfSiphash = SipHash(key = ByteArray(8)).doFinal(S)
+    assertEquals("caac77f9", halfSiphash.toHexString(), "")
 }
 ```
 

@@ -42,7 +42,7 @@ class SipHashUnitTest {
     fun givenInvalidKey_thenErrorIsThrown() {
         try {
             SipHash(ByteArray(2))
-            fail("Should throw error")
+            fail("Should throw error because Key should be 8 or 16")
         } catch (invalidKey: IllegalArgumentException) {
             assertTrue(true, "Should have thrown")
         }
@@ -92,9 +92,22 @@ class SipHashUnitTest {
         assertEquals("a9a8fbd7", mac.doFinal().toHexString())
     }
 
+    @Test
+    fun test_README_sample_is_working() {
+        val S = "My Customization".encodeToByteArray()
+
+        // SipHash requires 16 bytes key
+        val siphash = SipHash(key = ByteArray(16)).doFinal(S)
+        assertEquals("4ee724a78dab27a0", siphash.toHexString(), "")
+
+        // HalfSipHash requires 8 bytes key
+        val halfSiphash = SipHash(key = ByteArray(8)).doFinal(S)
+        assertEquals("caac77f9", halfSiphash.toHexString(), "")
+    }
 
     private val siphashKey = ByteArray(16) { it.toByte() }
 
+    // FROM: https://github.com/veorq/SipHash/blob/master/vectors.h
     private val expectedHashes = listOf(
         ubyteArrayOf(0x31U, 0x0eU, 0x0eU, 0xddU, 0x47U, 0xdbU, 0x6fU, 0x72U),
         ubyteArrayOf(0xfdU, 0x67U, 0xdcU, 0x93U, 0xc5U, 0x39U, 0xf8U, 0x74U),
@@ -164,6 +177,7 @@ class SipHashUnitTest {
 
     private val halfSiphashKey = ByteArray(8) { it.toByte() }
 
+    // FROM: https://github.com/veorq/SipHash/blob/master/vectors.h
     private val expectedHalfHashes = listOf(
         ubyteArrayOf(0xa9U, 0x35U, 0x9fU, 0x5bU),
         ubyteArrayOf(0x27U, 0x47U, 0x5aU, 0xb8U),

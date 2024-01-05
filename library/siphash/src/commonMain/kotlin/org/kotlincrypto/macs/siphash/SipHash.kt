@@ -21,10 +21,12 @@ import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.mac.Mac
 
 /**
- * Core abstraction for SipHash-based Message Authentication
+ * SipHash-based Message Authentication
+ * Created by Jean-Philippe Aumasson and Daniel J. Bernstein in 2012
+ *
  * Code implementations:
- *  - SipHash
- *  - HalfSipHash
+ *  - SipHash, when key is 16 bytes
+ *  - HalfSipHash, when key is 8 bytes
  *
  * @see [Mac]
  * */
@@ -44,9 +46,11 @@ public class SipHash : Mac {
     @Throws(IllegalArgumentException::class)
     private constructor(engine: Mac.Engine) : super(
         when (engine.macLength()) {
-            16 -> "SIPHASH"
-            8 -> "HALF-SIPHASH"
-            else -> throw IllegalArgumentException("Key is 16 byte for SipHash or 8 for HalfSipHash")
+            SIPHASH_KEY_SIZE -> "SIPHASH"
+            HALF_SIPHASH_KEY_SIZE -> "HALF-SIPHASH"
+            else -> {
+                throw IllegalArgumentException(ERROR_MESSAGE)
+            }
         }, engine
     )
 
@@ -61,9 +65,9 @@ public class SipHash : Mac {
         @OptIn(InternalKotlinCryptoApi::class)
         constructor(key: ByteArray) : super(key) {
             this.state = when (key.size) {
-                16 -> SipHash.SipHashState(SipKey(key))
-                8 -> SipHash.HalfSipHashState(SipKey(key))
-                else -> throw IllegalArgumentException("Key is 16 byte for SipHash or 8 for HalfSipHash")
+                SIPHASH_KEY_SIZE -> SipHash.SipHashState(SipKey(key))
+                HALF_SIPHASH_KEY_SIZE -> SipHash.HalfSipHashState(SipKey(key))
+                else -> throw IllegalArgumentException(ERROR_MESSAGE)
             }
             this.inputs = byteArrayOf()
         }
@@ -345,13 +349,19 @@ public class SipHash : Mac {
     internal class SipKey(private val bytes: ByteArray) {
 
         init {
-            require(bytes.size == 8 || bytes.size == 16) { "HalfSipHash key must be 8 bytes\nSipHash key must be 16 bytes" }
+            require(bytes.size == HALF_SIPHASH_KEY_SIZE || bytes.size == SIPHASH_KEY_SIZE) { ERROR_MESSAGE }
         }
 
         fun left(): Long = bytes.convertToLong(0)
         fun leftInt(): Int = bytes.convertToInt(0)
         fun right(): Long = bytes.convertToLong(8)
         fun rightInt(): Int = bytes.convertToInt(4)
+    }
+
+    private companion object {
+        const val SIPHASH_KEY_SIZE = 16
+        const val HALF_SIPHASH_KEY_SIZE = 8
+        const val ERROR_MESSAGE = "Key should be 16 bytes for SipHash or 8 bytes for HalfSipHash"
     }
 }
 
