@@ -13,8 +13,6 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("UnnecessaryOptInAnnotation", "RemoveRedundantQualifierName")
-
 package org.kotlincrypto.macs.siphash
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
@@ -34,6 +32,7 @@ public class SipHash : Mac {
 
     /**
      * Primary constructor for creating a new [SipHash] instance
+     * @param [key] secret key
      *
      * @throws [IllegalArgumentException] if [key] is not 16 or 8 bytes.
      * */
@@ -44,7 +43,7 @@ public class SipHash : Mac {
 
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
-    private constructor(engine: Mac.Engine) : super(
+    private constructor(engine: Engine) : super(
         when (engine.macLength()) {
             SIPHASH_KEY_SIZE -> "SIPHASH"
             HALF_SIPHASH_KEY_SIZE -> "HALF-SIPHASH"
@@ -56,7 +55,7 @@ public class SipHash : Mac {
 
     protected override fun copy(engineCopy: Engine): Mac = SipHash(engineCopy)
 
-    private class SipHashEngine : Mac.Engine {
+    private class SipHashEngine : Engine {
 
         val state: SipHash.State
         var inputs: ByteArray
@@ -65,8 +64,8 @@ public class SipHash : Mac {
         @OptIn(InternalKotlinCryptoApi::class)
         constructor(key: ByteArray) : super(key) {
             this.state = when (key.size) {
-                SIPHASH_KEY_SIZE -> SipHash.SipHashState(SipKey(key))
-                HALF_SIPHASH_KEY_SIZE -> SipHash.HalfSipHashState(SipKey(key))
+                SIPHASH_KEY_SIZE -> SipHashState(SipKey(key))
+                HALF_SIPHASH_KEY_SIZE -> HalfSipHashState(SipKey(key))
                 else -> throw IllegalArgumentException(ERROR_MESSAGE)
             }
             this.inputs = byteArrayOf()
