@@ -359,9 +359,9 @@ public class SipHash : Mac {
     }
 
     private companion object {
-        const val SIPHASH_KEY_SIZE = 16
-        const val HALF_SIPHASH_KEY_SIZE = 8
-        const val ERROR_MESSAGE = "Key should be 16 bytes for SipHash or 8 bytes for HalfSipHash"
+        private const val SIPHASH_KEY_SIZE = 16
+        private const val HALF_SIPHASH_KEY_SIZE = 8
+        private const val ERROR_MESSAGE = "Key should be 16 bytes for SipHash or 8 bytes for HalfSipHash"
     }
 }
 
