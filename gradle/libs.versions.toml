@@ -5,6 +5,7 @@ binaryCompat = "0.13.2"
 bouncyCastle = "1.73"
 configuration = "0.1.5"
 cryptoCore = "0.4.0"
+cryptoEndians = "0.2.0"
 cryptoHash = "0.4.0"
 encoding = "2.1.0"
 gradleVersions = "0.50.0"
@@ -15,6 +16,7 @@ publish = "0.25.3"
 kotlincrypto-core-digest = { module = "org.kotlincrypto.core:digest", version.ref = "cryptoCore" }
 kotlincrypto-core-mac = { module = "org.kotlincrypto.core:mac", version.ref = "cryptoCore" }
 kotlincrypto-core-xof = { module = "org.kotlincrypto.core:xof", version.ref = "cryptoCore" }
+kotlincrypto-endians = { module = "org.kotlincrypto.endians:endians", version.ref = "cryptoEndians" }
 kotlincrypto-hash-md = { module = "org.kotlincrypto.hash:md", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha1 = { module = "org.kotlincrypto.hash:sha1", version.ref = "cryptoHash" }
 kotlincrypto-hash-sha2 = { module = "org.kotlincrypto.hash:sha2", version.ref = "cryptoHash" }

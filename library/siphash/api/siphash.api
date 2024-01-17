@@ -1,4 +1,13 @@
-public final class org/kotlincrypto/macs/siphash/SipHash : org/kotlincrypto/core/mac/Mac {
+public final class org/kotlincrypto/macs/siphash/HALFSIPHASH32 : org/kotlincrypto/macs/siphash/SipHash {
 	public fun <init> ([B)V
+}
+
+public final class org/kotlincrypto/macs/siphash/SIPHASH64 : org/kotlincrypto/macs/siphash/SipHash {
+	public fun <init> ([B)V
+}
+
+public abstract class org/kotlincrypto/macs/siphash/SipHash : org/kotlincrypto/core/mac/Mac {
+	public synthetic fun <init> (Lorg/kotlincrypto/core/mac/Mac$Engine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> ([BLkotlin/jvm/internal/DefaultConstructorMarker;)V
 }
 

@@ -15,239 +15,94 @@
  **/
 package org.kotlincrypto.macs.siphash
 
+import org.kotlincrypto.core.Algorithm
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.mac.Mac
+import org.kotlincrypto.endians.LittleEndian
+import org.kotlincrypto.endians.LittleEndian.Companion.toLittleEndian
+import kotlin.jvm.JvmInline
 
 /**
- * SipHash-based Message Authentication
- * Created by Jean-Philippe Aumasson and Daniel J. Bernstein in 2012
- *
+ * Core abstraction for Siphash
  * Code implementations:
- *  - SipHash, when key is 16 bytes
- *  - HalfSipHash, when key is 8 bytes
+ *  - SIPHASH64
+ *  - HALFSIPHASH32
  *
  * @see [Mac]
  * */
-public class SipHash : Mac {
+public sealed class SipHash : Mac {
 
-    /**
-     * Primary constructor for creating a new [SipHash] instance
-     * @param [key] secret key
-     *
-     * @throws [IllegalArgumentException] if [key] is not 16 or 8 bytes.
-     * */
+    private val engine: Mac.Engine
+
     @Throws(IllegalArgumentException::class)
-    public constructor(
-        key: ByteArray,
-    ) : this(SipHashEngine(key))
+    protected constructor(
+        secretKey: ByteArray,
+    ) : this(
+        when (secretKey.size) {
+            SIPHASH_KEY_SIZE -> SiphashEngine(secretKey)
+            HALF_SIPHASH_KEY_SIZE -> HalfSipHashEngine(secretKey)
+            else -> throw IllegalArgumentException(ERROR_MESSAGE)
+        }
+    )
 
     @OptIn(InternalKotlinCryptoApi::class)
     @Throws(IllegalArgumentException::class)
-    private constructor(engine: Engine) : super(
-        when (engine.macLength()) {
-            SIPHASH_KEY_SIZE -> "SIPHASH"
-            HALF_SIPHASH_KEY_SIZE -> "HALF-SIPHASH"
-            else -> {
-                throw IllegalArgumentException(ERROR_MESSAGE)
-            }
-        }, engine
-    )
-
-    protected override fun copy(engineCopy: Engine): Mac = SipHash(engineCopy)
-
-    private class SipHashEngine : Engine {
-
-        val state: SipHash.State
-        var inputs: ByteArray
-
-
-        @OptIn(InternalKotlinCryptoApi::class)
-        constructor(key: ByteArray) : super(key) {
-            this.state = when (key.size) {
-                SIPHASH_KEY_SIZE -> SipHashState(SipKey(key))
-                HALF_SIPHASH_KEY_SIZE -> HalfSipHashState(SipKey(key))
-                else -> throw IllegalArgumentException(ERROR_MESSAGE)
-            }
-            this.inputs = byteArrayOf()
-        }
-
-        @OptIn(InternalKotlinCryptoApi::class)
-        private constructor(state: State, engine: SipHashEngine) : super(state) {
-            this.state = engine.state
-            this.inputs = engine.inputs
-        }
-
-        override fun update(input: Byte) {
-            this.inputs += input
-        }
-
-        override fun update(input: ByteArray, offset: Int, len: Int) {
-            this.inputs = inputs.take(offset).toByteArray() + input + inputs.drop(len).toByteArray()
-        }
-
-        override fun doFinal(): ByteArray = state.doFinal(inputs)
-
-        override fun reset() {
-            this.inputs = byteArrayOf()
-            this.state.reset()
-        }
-
-        override fun macLength(): Int = state.length()
-
-        override fun copy(): SipHashEngine = SipHashEngine(object : State() {}, this)
+    protected constructor(engine: Mac.Engine) : super((engine as Engine).algorithm(), engine) {
+        this.engine = engine
     }
 
-    internal interface State {
-        fun length(): Int
-        fun doFinal(inputs: ByteArray): ByteArray
-        fun reset()
-    }
+    private class SiphashEngine(
+        private val key: ByteArray
+    ) : Engine(key) {
 
-    internal class HalfSipHashState internal constructor(key: SipKey) : State {
-
-        private val k0: Int = key.leftInt()
-        private val k1: Int = key.rightInt()
-
-        private var v0: Int = 0 xor k0
-        private var v1: Int = 0 xor k1
-        private var v2: Int = 0x6c796765 xor k0
-        private var v3: Int = 0x74656462 xor k1
-
-        override fun reset() {
-            v0 = 0 xor k0
-            v1 = 0 xor k1
-            v2 = 0x6c796765 xor k0
-            v3 = 0x74656462 xor k1
-        }
-
-        override fun doFinal(inputs: ByteArray): ByteArray {
-            var m: Int
-            val iter = inputs.size / 4
-
-            for (i in 0 until iter) {
-                m = inputs.convertToInt(i * 4)
-                processBlock(m)
-            }
-
-            m = lastBlock(inputs, iter)
-            processBlock(m)
-            finish()
-            val digest = digest()
-
-            return byteArrayOf(
-                (digest shr 0).toByte(),
-                (digest shr 8).toByte(),
-                (digest shr 16).toByte(),
-                (digest shr 24).toByte(),
-            )
-        }
-
-        private fun compress() {
-            v0 += v1
-            v1 = rotateLeft(v1, 5)
-            v1 = v1 xor v0
-            v0 = rotateLeft(v0, 16)
-            v2 += v3
-            v3 = rotateLeft(v3, 8)
-            v3 = v3 xor v2
-            v0 += v3
-            v3 = rotateLeft(v3, 7)
-            v3 = v3 xor v0
-            v2 += v1
-            v1 = rotateLeft(v1, 13)
-            v1 = v1 xor v2
-            v2 = rotateLeft(v2, 16)
-        }
-
-        private fun rotateLeft(value: Int, shift: Int): Int = value shl shift or (value ushr 32 - shift)
-
-        private fun lastBlock(data: ByteArray, iter: Int): Int {
-            var last: Int = data.size shl 24
-            val off = iter * 4
-
-            when (data.size % 4) {
-                3 -> {
-                    last = last or (data[off + 2].toUByte().toInt() shl 16)
-                    last = last or (data[off + 1].toUByte().toInt() shl 8)
-                    last = last or data[off].toUByte().toInt()
-                }
-
-                2 -> {
-                    last = last or (data[off + 1].toUByte().toInt() shl 8)
-                    last = last or data[off].toUByte().toInt()
-                }
-
-                1 -> last = last or data[off].toUByte().toInt()
-                0 -> {}
-            }
-            return last
-        }
-
-        private fun compressTimes(times: Int) {
-            for (i in 0 until times) {
-                compress()
-            }
-        }
-
-        private fun processBlock(m: Int) {
-            v3 = v3 xor m
-            compressTimes(2)
-            v0 = v0 xor m
-        }
-
-        private fun finish() {
-            v2 = v2 xor 0xff
-            compressTimes(4)
-        }
-
-        private fun digest(): Int = v1 xor v3
-
-        override fun length(): Int = 8
-    }
-
-    internal class SipHashState internal constructor(key: SipKey) : State {
-        private val k0: Long = key.left()
-        private val k1: Long = key.right()
+        private val k0: Long = sipKey.left()
+        private val k1: Long = sipKey.right()
 
         private var v0: Long = 0x736f6d6570736575L xor k0
         private var v1: Long = 0x646f72616e646f6dL xor k1
         private var v2: Long = 0x6c7967656e657261L xor k0
         private var v3: Long = 0x7465646279746573L xor k1
 
+        override fun algorithm(): String = "SipHash"
+
+        override fun copy(): Mac.Engine = SiphashEngine(key)
+
         override fun reset() {
-            v0 = 0x736f6d6570736575L xor k0
-            v1 = 0x646f72616e646f6dL xor k1
-            v2 = 0x6c7967656e657261L xor k0
-            v3 = 0x7465646279746573L xor k1
+            super.reset()
+            this.v0 = 0x736f6d6570736575L xor k0
+            this.v1 = 0x646f72616e646f6dL xor k1
+            this.v2 = 0x6c7967656e657261L xor k0
+            this.v3 = 0x7465646279746573L xor k1
         }
 
-        override fun doFinal(inputs: ByteArray): ByteArray {
+        override fun doFinal(): ByteArray {
             var m: Long
+            val inputs = final()
             val iter = inputs.size / 8
 
             for (i in 0 until iter) {
-                m = inputs.convertToLong(i * 8)
+                m = LittleEndian(
+                    inputs[0 + i * 8],
+                    inputs[1 + i * 8],
+                    inputs[2 + i * 8],
+                    inputs[3 + i * 8],
+                    inputs[4 + i * 8],
+                    inputs[5 + i * 8],
+                    inputs[6 + i * 8],
+                    inputs[7 + i * 8]
+                ).toLong()
                 processBlock(m)
             }
 
             m = lastBlock(inputs, iter)
             processBlock(m)
             finish()
-            val digest = digest()
-
-            return byteArrayOf(
-                (digest shr 0).toByte(),
-                (digest shr 8).toByte(),
-                (digest shr 16).toByte(),
-                (digest shr 24).toByte(),
-                (digest shr 32).toByte(),
-                (digest shr 40).toByte(),
-                (digest shr 48).toByte(),
-                (digest shr 56).toByte(),
-            )
+            return digest().toLittleEndian().toByteArray()
         }
 
-        private fun compress() {
+        override fun macLength(): Int = SIPHASH_KEY_SIZE
+
+        override fun compress() {
             v0 += v1
             v1 = rotateLeft(v1, 13)
             v1 = v1 xor v0
@@ -323,11 +178,6 @@ public class SipHash : Mac {
             return last
         }
 
-        private fun compressTimes(times: Int) {
-            for (i in 0 until times) {
-                compress()
-            }
-        }
 
         private fun processBlock(m: Long) {
             v3 = v3 xor m
@@ -341,41 +191,156 @@ public class SipHash : Mac {
         }
 
         private fun digest(): Long = v0 xor v1 xor v2 xor v3
-
-        override fun length(): Int = 16
     }
 
-    internal class SipKey(private val bytes: ByteArray) {
+    private class HalfSipHashEngine(
+        private val key: ByteArray
+    ) : Engine(key) {
+
+        private val k0: Int = sipKey.leftInt()
+        private val k1: Int = sipKey.rightInt()
+
+        private var v0: Int = 0 xor k0
+        private var v1: Int = 0 xor k1
+        private var v2: Int = 0x6c796765 xor k0
+        private var v3: Int = 0x74656462 xor k1
+
+
+        override fun algorithm(): String = "Half-SipHash"
+
+        override fun copy(): Mac.Engine = HalfSipHashEngine(key)
+
+        override fun reset() {
+            super.reset()
+            this.v0 = 0 xor k0
+            this.v1 = 0 xor k1
+            this.v2 = 0x6c796765 xor k0
+            this.v3 = 0x74656462 xor k1
+        }
+
+        override fun doFinal(): ByteArray {
+            var m: Int
+            val inputs = final()
+            val iter = inputs.size / 4
+
+            for (i in 0 until iter) {
+                m = LittleEndian(inputs[0 + i * 4], inputs[1 + i * 4], inputs[2 + i * 4], inputs[3 + i * 4]).toInt()
+                processBlock(m)
+            }
+
+            m = lastBlock(inputs, iter)
+            processBlock(m)
+            finish()
+            return digest().toLittleEndian().toByteArray()
+        }
+
+        override fun macLength(): Int = HALF_SIPHASH_KEY_SIZE
+
+        override fun compress() {
+            v0 += v1
+            v1 = rotateLeft(v1, 5)
+            v1 = v1 xor v0
+            v0 = rotateLeft(v0, 16)
+            v2 += v3
+            v3 = rotateLeft(v3, 8)
+            v3 = v3 xor v2
+            v0 += v3
+            v3 = rotateLeft(v3, 7)
+            v3 = v3 xor v0
+            v2 += v1
+            v1 = rotateLeft(v1, 13)
+            v1 = v1 xor v2
+            v2 = rotateLeft(v2, 16)
+        }
+
+        private fun rotateLeft(value: Int, shift: Int): Int = value shl shift or (value ushr 32 - shift)
+
+        private fun lastBlock(data: ByteArray, iter: Int): Int {
+            var last: Int = data.size shl 24
+            val off = iter * 4
+
+            when (data.size % 4) {
+                3 -> {
+                    last = last or (data[off + 2].toUByte().toInt() shl 16)
+                    last = last or (data[off + 1].toUByte().toInt() shl 8)
+                    last = last or data[off].toUByte().toInt()
+                }
+
+                2 -> {
+                    last = last or (data[off + 1].toUByte().toInt() shl 8)
+                    last = last or data[off].toUByte().toInt()
+                }
+
+                1 -> last = last or data[off].toUByte().toInt()
+                0 -> {}
+            }
+            return last
+        }
+
+        private fun processBlock(m: Int) {
+            v3 = v3 xor m
+            compressTimes(2)
+            v0 = v0 xor m
+        }
+
+        private fun finish() {
+            v2 = v2 xor 0xff
+            compressTimes(4)
+        }
+
+        private fun digest(): Int = v1 xor v3
+    }
+
+    @OptIn(InternalKotlinCryptoApi::class)
+    private sealed class Engine(key: ByteArray) : Mac.Engine(key), Algorithm {
+
+        protected val sipKey: SipKey = SipKey(key)
+        private var inputs: MutableList<Byte> = mutableListOf()
+
+        override fun reset() {
+            inputs.clear()
+        }
+
+        override fun update(input: Byte) {
+            inputs.add(input)
+        }
+
+        override fun update(input: ByteArray, offset: Int, len: Int) {
+            if (offset < 0 || len < 0 || offset > input.size - len) throw IllegalArgumentException("Bad arguments")
+            inputs.addAll(offset, input.take(len))
+        }
+
+        protected fun final(): ByteArray = inputs.toByteArray().copyOf()
+
+        abstract fun compress()
+
+        protected fun compressTimes(times: Int) {
+            for (i in 0 until times) {
+                compress()
+            }
+        }
+    }
+
+    @JvmInline
+    private value class SipKey(private val bytes: ByteArray) {
 
         init {
             require(bytes.size == HALF_SIPHASH_KEY_SIZE || bytes.size == SIPHASH_KEY_SIZE) { ERROR_MESSAGE }
         }
 
-        fun left(): Long = bytes.convertToLong(0)
-        fun leftInt(): Int = bytes.convertToInt(0)
-        fun right(): Long = bytes.convertToLong(8)
-        fun rightInt(): Int = bytes.convertToInt(4)
+        fun left(): Long =
+            LittleEndian(bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7]).toLong()
+
+        fun right(): Long =
+            LittleEndian(bytes[8], bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15]).toLong()
+
+        fun leftInt(): Int = LittleEndian(bytes[0], bytes[1], bytes[2], bytes[3]).toInt()
+        fun rightInt(): Int = LittleEndian(bytes[4], bytes[5], bytes[6], bytes[7]).toInt()
     }
 
     private companion object {
         private const val SIPHASH_KEY_SIZE = 16
         private const val HALF_SIPHASH_KEY_SIZE = 8
-        private const val ERROR_MESSAGE = "Key should be 16 bytes for SipHash or 8 bytes for HalfSipHash"
+        private const val ERROR_MESSAGE = "SecretKey should be 16 bytes for SIPHASH64 or 8 bytes for HALFSIPHASH32"
     }
-}
-
-internal fun ByteArray.convertToLong(offset: Int): Long {
-    var m: Long = 0
-    for (i in 0..<8) {
-        m = m or (get(i + offset).toLong() and 0xffL shl 8 * i)
-    }
-    return m
-}
-
-internal fun ByteArray.convertToInt(offset: Int): Int {
-    var m: Int = 0
-    for (i in 0..<4) {
-        m = m or (get(i + offset).toInt() and 0xff shl 8 * i)
-    }
-    return m
 }

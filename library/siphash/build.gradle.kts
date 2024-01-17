@@ -23,7 +23,7 @@ kmpConfiguration {
         common {
             sourceSetMain {
                 dependencies {
-                    implementation(libs.kotlincrypto.core.digest)
+                    implementation(libs.kotlincrypto.endians)
                     api(libs.kotlincrypto.core.mac)
                 }
             }
