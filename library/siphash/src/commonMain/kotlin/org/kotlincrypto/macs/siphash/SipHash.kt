@@ -55,8 +55,8 @@ public sealed class SipHash : Mac {
         private val key: ByteArray
     ) : Engine(key) {
 
-        private val k0: Long = sipKey.left()
-        private val k1: Long = sipKey.right()
+        private val k0: Long = secretKey.left()
+        private val k1: Long = secretKey.right()
 
         private var v0: Long = 0x736f6d6570736575L xor k0
         private var v1: Long = 0x646f72616e646f6dL xor k1
@@ -77,10 +77,10 @@ public sealed class SipHash : Mac {
 
         override fun doFinal(): ByteArray {
             var m: Long
-            val inputs = final()
-            val iter = inputs.size / 8
+            val inputs = bytes()
+            val iterations = inputs.size / 8
 
-            for (i in 0 until iter) {
+            for (i in 0 until iterations) {
                 m = LittleEndian(
                     inputs[0 + i * 8],
                     inputs[1 + i * 8],
@@ -94,7 +94,7 @@ public sealed class SipHash : Mac {
                 processBlock(m)
             }
 
-            m = lastBlock(inputs, iter)
+            m = lastBlock(inputs, iterations)
             processBlock(m)
             finish()
             return digest().toLittleEndian().toByteArray()
@@ -121,9 +121,9 @@ public sealed class SipHash : Mac {
 
         private fun rotateLeft(value: Long, shift: Int): Long = value shl shift or (value ushr 64 - shift)
 
-        private fun lastBlock(data: ByteArray, iter: Int): Long {
+        private fun lastBlock(data: ByteArray, iterations: Int): Long {
             var last = data.size.toLong() shl 56
-            val off = iter * 8
+            val off = iterations * 8
 
             when (data.size % 8) {
                 7 -> {
@@ -197,8 +197,8 @@ public sealed class SipHash : Mac {
         private val key: ByteArray
     ) : Engine(key) {
 
-        private val k0: Int = sipKey.leftInt()
-        private val k1: Int = sipKey.rightInt()
+        private val k0: Int = secretKey.leftInt()
+        private val k1: Int = secretKey.rightInt()
 
         private var v0: Int = 0 xor k0
         private var v1: Int = 0 xor k1
@@ -220,7 +220,7 @@ public sealed class SipHash : Mac {
 
         override fun doFinal(): ByteArray {
             var m: Int
-            val inputs = final()
+            val inputs = bytes()
             val iter = inputs.size / 4
 
             for (i in 0 until iter) {
@@ -294,8 +294,10 @@ public sealed class SipHash : Mac {
     @OptIn(InternalKotlinCryptoApi::class)
     private sealed class Engine(key: ByteArray) : Mac.Engine(key), Algorithm {
 
-        protected val sipKey: SipKey = SipKey(key)
-        private var inputs: MutableList<Byte> = mutableListOf()
+        abstract fun compress()
+
+        protected val secretKey: SecretSipHashKey = SecretSipHashKey(key)
+        private val inputs: MutableList<Byte> = mutableListOf()
 
         override fun reset() {
             inputs.clear()
@@ -310,9 +312,7 @@ public sealed class SipHash : Mac {
             inputs.addAll(offset, input.take(len))
         }
 
-        protected fun final(): ByteArray = inputs.toByteArray().copyOf()
-
-        abstract fun compress()
+        protected fun bytes(): ByteArray = inputs.toByteArray().copyOf()
 
         protected fun compressTimes(times: Int) {
             for (i in 0 until times) {
@@ -322,18 +322,14 @@ public sealed class SipHash : Mac {
     }
 
     @JvmInline
-    private value class SipKey(private val bytes: ByteArray) {
+    private value class SecretSipHashKey(private val bytes: ByteArray) {
 
         init {
             require(bytes.size == HALF_SIPHASH_KEY_SIZE || bytes.size == SIPHASH_KEY_SIZE) { ERROR_MESSAGE }
         }
 
-        fun left(): Long =
-            LittleEndian(bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7]).toLong()
-
-        fun right(): Long =
-            LittleEndian(bytes[8], bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15]).toLong()
-
+        fun left(): Long = LittleEndian(bytes[0], bytes[1], bytes[2], bytes[3], bytes[4], bytes[5], bytes[6], bytes[7]).toLong()
+        fun right(): Long = LittleEndian(bytes[8], bytes[9], bytes[10], bytes[11], bytes[12], bytes[13], bytes[14], bytes[15]).toLong()
         fun leftInt(): Int = LittleEndian(bytes[0], bytes[1], bytes[2], bytes[3]).toInt()
         fun rightInt(): Int = LittleEndian(bytes[4], bytes[5], bytes[6], bytes[7]).toInt()
     }
