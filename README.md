@@ -108,6 +108,26 @@ fun main() {
 }
 ```
 
+
+`SipHash`
+
+See [HERE][url-pub-siphash] for details on the Algorithm and 
+
+```kotlin
+fun main() {
+
+    val S = "My Customization".encodeToByteArray()
+
+    // SipHash requires 16 bytes key
+    val siphash = SIPHASH64(secretKey = ByteArray(16)).doFinal(S)
+    assertEquals("4ee724a78dab27a0", siphash.toHexString(), "")
+
+    // HalfSipHash requires 8 bytes key
+    val halfSiphash = SIPHASH32(secretKey = ByteArray(8)).doFinal(S)
+    assertEquals("caac77f9", halfSiphash.toHexString(), "")
+}
+```
+
 ### Get Started
 
 The best way to keep `KotlinCrypto` dependencies up to date is by using the 
@@ -140,6 +160,9 @@ dependencies {
 
     // KMAC128, KMAC256
     implementation("org.kotlincrypto.macs:kmac")
+    
+    // SIPHASH64, HALFSIPHASH32
+    implementation("org.kotlincrypto.macs:siphash")
 }
 ```
 
@@ -177,4 +200,5 @@ dependencies {
 [url-core-usage]: https://github.com/KotlinCrypto/core#usage
 [url-hash]: https://github.com/KotlinCrypto/hash
 [url-pub-xof]: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf
+[url-pub-siphash]: https://www.rfc-editor.org/rfc/rfc9231.pdf
 [url-version-catalog]: https://github.com/KotlinCrypto/version-catalog

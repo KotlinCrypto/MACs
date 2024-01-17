@@ -25,6 +25,8 @@ if (CHECK_PUBLICATION != null) {
         "hmac:hmac-sha3",
 
         "kmac",
+
+        "siphash",
     ).forEach { name ->
         include(":library:$name")
     }
