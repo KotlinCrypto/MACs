@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.5.1 (2024-03-18)
+ - Updates `kotlincrypto.core` to `0.5.1` [[#46]][46]
+ - Updates `kotlincrypto.endians` to `0.3.0` [[#46]][46]
+ - Updates `kotlincrypto.sponges` to `0.3.0` [[#46]][46]
+ - Updates `kotlin` to `1.9.23` [[#46]][46]
+ - Add experimental support for `wasmJs` & `wasmWasi` [[#46]][46]
+ - Add support for Java9 `JPMS` via Multi-Release jar [[#47]][47]
+
 ## Version 0.4.0 (2023-11-30)
 - Updates `kotlincrypto.core` to `0.4.0` [[#42]][42]
 - Updates `kotlincrypto.hash` to `0.4.0` [[#42]][42]
@@ -111,3 +119,5 @@
 [40]: https://github.com/KotlinCrypto/MACs/pull/40
 [41]: https://github.com/KotlinCrypto/MACs/pull/41
 [42]: https://github.com/KotlinCrypto/MACs/pull/42
+[46]: https://github.com/KotlinCrypto/MACs/pull/46
+[47]: https://github.com/KotlinCrypto/MACs/pull/47
