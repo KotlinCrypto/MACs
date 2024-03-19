@@ -1,9 +1,8 @@
 # CHANGELOG
 
-## Version 0.5.1 (2024-03-18)
+## Version 0.5.1 (2024-03-19)
  - Updates `kotlincrypto.core` to `0.5.1` [[#46]][46]
- - Updates `kotlincrypto.endians` to `0.3.0` [[#46]][46]
- - Updates `kotlincrypto.sponges` to `0.3.0` [[#46]][46]
+ - Updates `kotlincrypto.hash` to `0.5.1` [[#46]][46]
  - Updates `kotlin` to `1.9.23` [[#46]][46]
  - Add experimental support for `wasmJs` & `wasmWasi` [[#46]][46]
  - Add support for Java9 `JPMS` via Multi-Release jar [[#47]][47]
