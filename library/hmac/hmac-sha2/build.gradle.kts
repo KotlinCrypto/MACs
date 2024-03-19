@@ -19,7 +19,7 @@ plugins {
 }
 
 kmpConfiguration {
-    configureShared(publish = true) {
+    configureShared(java9ModuleName = "org.kotlincrypto.macs.hmac.sha2", publish = true) {
         common {
             sourceSetMain {
                 dependencies {
