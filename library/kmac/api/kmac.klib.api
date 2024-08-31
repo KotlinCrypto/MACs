@@ -1,0 +1,50 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <org.kotlincrypto.macs:kmac>
+final class org.kotlincrypto.macs.kmac/KMAC128 : org.kotlincrypto.macs.kmac/Kmac { // org.kotlincrypto.macs.kmac/KMAC128|null[0]
+    constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.kmac/KMAC128.<init>|<init>(kotlin.ByteArray){}[0]
+    constructor <init>(kotlin/ByteArray, kotlin/ByteArray?) // org.kotlincrypto.macs.kmac/KMAC128.<init>|<init>(kotlin.ByteArray;kotlin.ByteArray?){}[0]
+    constructor <init>(kotlin/ByteArray, kotlin/ByteArray?, kotlin/Int) // org.kotlincrypto.macs.kmac/KMAC128.<init>|<init>(kotlin.ByteArray;kotlin.ByteArray?;kotlin.Int){}[0]
+
+    final object Companion : org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory<org.kotlincrypto.macs.kmac/KMAC128> { // org.kotlincrypto.macs.kmac/KMAC128.Companion|null[0]
+        final const val MAC_LENGTH // org.kotlincrypto.macs.kmac/KMAC128.Companion.MAC_LENGTH|<get-MAC_LENGTH>(){}[0]
+            final fun <get-MAC_LENGTH>(): kotlin/Int // org.kotlincrypto.macs.kmac/KMAC128.Companion.MAC_LENGTH.<get-MAC_LENGTH>|<get-MAC_LENGTH>(){}[0]
+
+        final fun xOf(kotlin/ByteArray, kotlin/ByteArray? =...): org.kotlincrypto.core.xof/Xof<org.kotlincrypto.macs.kmac/KMAC128> // org.kotlincrypto.macs.kmac/KMAC128.Companion.xOf|xOf(kotlin.ByteArray;kotlin.ByteArray?){}[0]
+    }
+}
+
+final class org.kotlincrypto.macs.kmac/KMAC256 : org.kotlincrypto.macs.kmac/Kmac { // org.kotlincrypto.macs.kmac/KMAC256|null[0]
+    constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.kmac/KMAC256.<init>|<init>(kotlin.ByteArray){}[0]
+    constructor <init>(kotlin/ByteArray, kotlin/ByteArray?) // org.kotlincrypto.macs.kmac/KMAC256.<init>|<init>(kotlin.ByteArray;kotlin.ByteArray?){}[0]
+    constructor <init>(kotlin/ByteArray, kotlin/ByteArray?, kotlin/Int) // org.kotlincrypto.macs.kmac/KMAC256.<init>|<init>(kotlin.ByteArray;kotlin.ByteArray?;kotlin.Int){}[0]
+
+    final object Companion : org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory<org.kotlincrypto.macs.kmac/KMAC256> { // org.kotlincrypto.macs.kmac/KMAC256.Companion|null[0]
+        final const val MAC_LENGTH // org.kotlincrypto.macs.kmac/KMAC256.Companion.MAC_LENGTH|<get-MAC_LENGTH>(){}[0]
+            final fun <get-MAC_LENGTH>(): kotlin/Int // org.kotlincrypto.macs.kmac/KMAC256.Companion.MAC_LENGTH.<get-MAC_LENGTH>|<get-MAC_LENGTH>(){}[0]
+
+        final fun xOf(kotlin/ByteArray, kotlin/ByteArray? =...): org.kotlincrypto.core.xof/Xof<org.kotlincrypto.macs.kmac/KMAC256> // org.kotlincrypto.macs.kmac/KMAC256.Companion.xOf|xOf(kotlin.ByteArray;kotlin.ByteArray?){}[0]
+    }
+}
+
+sealed class org.kotlincrypto.macs.kmac/Kmac : org.kotlincrypto.core.mac/Mac, org.kotlincrypto.core.xof/XofAlgorithm { // org.kotlincrypto.macs.kmac/Kmac|null[0]
+    constructor <init>(kotlin/ByteArray, kotlin/ByteArray?, kotlin/Int, kotlin/Int, kotlin/Boolean) // org.kotlincrypto.macs.kmac/Kmac.<init>|<init>(kotlin.ByteArray;kotlin.ByteArray?;kotlin.Int;kotlin.Int;kotlin.Boolean){}[0]
+    constructor <init>(org.kotlincrypto.core.mac/Mac.Engine) // org.kotlincrypto.macs.kmac/Kmac.<init>|<init>(org.kotlincrypto.core.mac.Mac.Engine){}[0]
+
+    sealed class <#A1: org.kotlincrypto.macs.kmac/Kmac> KMACXofFactory : org.kotlincrypto.core.xof/XofFactory<#A1> { // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory|null[0]
+        constructor <init>() // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory.<init>|<init>(){}[0]
+
+        final inner class KMACXof : org.kotlincrypto.core.xof/XofFactory.XofDelegate<#A1> { // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory.KMACXof|null[0]
+            constructor <init>(#A1) // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory.KMACXof.<init>|<init>(2:0){}[0]
+
+            final fun copy(): org.kotlincrypto.core.xof/Xof<#A1> // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory.KMACXof.copy|copy(){}[0]
+        }
+    }
+
+    final object Companion // org.kotlincrypto.macs.kmac/Kmac.Companion|null[0]
+}

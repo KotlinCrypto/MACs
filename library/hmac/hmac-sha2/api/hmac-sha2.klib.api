@@ -1,0 +1,30 @@
+// Klib ABI Dump
+// Targets: [androidNativeArm32, androidNativeArm64, androidNativeX64, androidNativeX86, iosArm64, iosSimulatorArm64, iosX64, js, linuxArm64, linuxX64, macosArm64, macosX64, mingwX64, tvosArm64, tvosSimulatorArm64, tvosX64, wasmJs, wasmWasi, watchosArm32, watchosArm64, watchosDeviceArm64, watchosSimulatorArm64, watchosX64]
+// Rendering settings:
+// - Signature version: 2
+// - Show manifest properties: true
+// - Show declarations: true
+
+// Library unique name: <org.kotlincrypto.macs:hmac-sha2>
+final class org.kotlincrypto.macs.hmac.sha2/HmacSHA224 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA224|null[0]
+    constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA224.<init>|<init>(kotlin.ByteArray){}[0]
+}
+
+final class org.kotlincrypto.macs.hmac.sha2/HmacSHA256 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA256|null[0]
+    constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA256.<init>|<init>(kotlin.ByteArray){}[0]
+}
+
+final class org.kotlincrypto.macs.hmac.sha2/HmacSHA384 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA384|null[0]
+    constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA384.<init>|<init>(kotlin.ByteArray){}[0]
+}
+
+final class org.kotlincrypto.macs.hmac.sha2/HmacSHA512 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA512|null[0]
+    constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA512.<init>|<init>(kotlin.ByteArray){}[0]
+}
+
+final class org.kotlincrypto.macs.hmac.sha2/HmacSHA512t : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA512t|null[0]
+    constructor <init>(kotlin/ByteArray, kotlin/Int) // org.kotlincrypto.macs.hmac.sha2/HmacSHA512t.<init>|<init>(kotlin.ByteArray;kotlin.Int){}[0]
+}
+
+final fun org.kotlincrypto.macs.hmac.sha2/HmacSHA512_224(kotlin/ByteArray): org.kotlincrypto.macs.hmac.sha2/HmacSHA512t // org.kotlincrypto.macs.hmac.sha2/HmacSHA512_224|HmacSHA512_224(kotlin.ByteArray){}[0]
+final fun org.kotlincrypto.macs.hmac.sha2/HmacSHA512_256(kotlin/ByteArray): org.kotlincrypto.macs.hmac.sha2/HmacSHA512t // org.kotlincrypto.macs.hmac.sha2/HmacSHA512_256|HmacSHA512_256(kotlin.ByteArray){}[0]
