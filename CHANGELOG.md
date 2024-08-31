@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.5.3 (2024-08-31)
+ - Updates `kotlincrypto.core` to `0.5.3`
+ - Updates `kotlincrypto.hash` to `0.5.3`
+ - Updates `kotlin` to `1.9.24` [[#50]][50]
+ - Fixes multiplatform metadata manifest `unique_name` parameter for
+   all source sets to be truly unique. [[#50]][50]
+ - Updates jvm `.kotlin_module` with truly unique file name. [[#50]][50]
+
 ## Version 0.5.1 (2024-03-19)
  - Updates `kotlincrypto.core` to `0.5.1` [[#46]][46]
  - Updates `kotlincrypto.hash` to `0.5.1` [[#46]][46]
@@ -120,3 +128,4 @@
 [42]: https://github.com/KotlinCrypto/MACs/pull/42
 [46]: https://github.com/KotlinCrypto/MACs/pull/46
 [47]: https://github.com/KotlinCrypto/MACs/pull/47
+[50]: https://github.com/KotlinCrypto/MACs/pull/50
