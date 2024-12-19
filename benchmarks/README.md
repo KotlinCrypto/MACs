@@ -1,6 +1,6 @@
 # benchmarks
 
-Benchmarks for tracking performance of `hash` implementations.
+Benchmarks for tracking performance of `MACs` implementations.
 
 **NOTE:** Benchmarking is run on every Pull Request. Results can be viewed for each
 workflow run on the [GitHub Actions][url-actions] tab of the repository.
