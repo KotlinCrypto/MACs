@@ -1,5 +1,13 @@
 # CHANGELOG
 
+## Version 0.5.4 (2024-12-19)
+ - Updates `kotlincrypto.core` to `0.5.4`
+ - Updates `kotlincrypto.hash` to `0.5.4`
+ - Adds benchmarking to repository [[#53]][53]
+     - Benchmark comparisons using `core` and `sponges` performance
+       improvements can be viewed in [PR #54][54-comment]
+     - TL;DR huge gains for `hmac-sha3` & `kmac`
+
 ## Version 0.5.3 (2024-08-31)
  - Updates `kotlincrypto.core` to `0.5.3`
  - Updates `kotlincrypto.hash` to `0.5.3`
@@ -129,3 +137,5 @@
 [46]: https://github.com/KotlinCrypto/MACs/pull/46
 [47]: https://github.com/KotlinCrypto/MACs/pull/47
 [50]: https://github.com/KotlinCrypto/MACs/pull/50
+[53]: https://github.com/KotlinCrypto/MACs/pull/53
+[54-comment]: https://github.com/KotlinCrypto/MACs/pull/54#issuecomment-2554991551
