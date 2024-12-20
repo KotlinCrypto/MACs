@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 0.5.5 (2024-12-20)
+ - Updates `kotlincrypto.core` to `0.5.5`
+ - Updates `kotlincrypto.hash` to `0.5.5`
+ - Fixes `hmac-sha3` and `kmac` performance issues for Jvm [[#55]][55]
+
 ## Version 0.5.4 (2024-12-19)
  - Updates `kotlincrypto.core` to `0.5.4`
  - Updates `kotlincrypto.hash` to `0.5.4`
@@ -139,3 +144,4 @@
 [50]: https://github.com/KotlinCrypto/MACs/pull/50
 [53]: https://github.com/KotlinCrypto/MACs/pull/53
 [54-comment]: https://github.com/KotlinCrypto/MACs/pull/54#issuecomment-2554991551
+[55]: https://github.com/KotlinCrypto/MACs/pull/55
