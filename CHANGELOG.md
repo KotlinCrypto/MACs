@@ -1,7 +1,7 @@
 # CHANGELOG
 
 ## Version 0.5.6 (2024-12-28)
- - Updates `kotlincrypto.hash` to `0.5.5` [[#56]][56]
+ - Updates `kotlincrypto.hash` to `0.5.6` [[#56]][56]
 
 ## Version 0.5.5 (2024-12-20)
  - Updates `kotlincrypto.core` to `0.5.5`
