@@ -1,5 +1,8 @@
 # CHANGELOG
 
+## Version 0.5.6 (2024-12-28)
+ - Updates `kotlincrypto.hash` to `0.5.5` [[#56]][56]
+
 ## Version 0.5.5 (2024-12-20)
  - Updates `kotlincrypto.core` to `0.5.5`
  - Updates `kotlincrypto.hash` to `0.5.5`
@@ -145,3 +148,4 @@
 [53]: https://github.com/KotlinCrypto/MACs/pull/53
 [54-comment]: https://github.com/KotlinCrypto/MACs/pull/54#issuecomment-2554991551
 [55]: https://github.com/KotlinCrypto/MACs/pull/55
+[56]: https://github.com/KotlinCrypto/MACs/pull/56
