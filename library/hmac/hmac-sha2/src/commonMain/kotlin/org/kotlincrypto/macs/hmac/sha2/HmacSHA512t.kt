@@ -21,22 +21,6 @@ import org.kotlincrypto.hash.sha2.SHA512t
 import org.kotlincrypto.macs.hmac.Hmac
 
 /**
- * HmacSHA512/224
- *
- * @throws [IllegalArgumentException] if [key] is empty
- * */
-@Throws(IllegalArgumentException::class)
-public fun HmacSHA512_224(key: ByteArray): HmacSHA512t = HmacSHA512t(key, 224)
-
-/**
- * HmacSHA512/256
- *
- * @throws [IllegalArgumentException] if [key] is empty
- * */
-@Throws(IllegalArgumentException::class)
-public fun HmacSHA512_256(key: ByteArray): HmacSHA512t = HmacSHA512t(key, 256)
-
-/**
  * HmacSHA512/t implementation
  * */
 public class HmacSHA512t: Hmac {

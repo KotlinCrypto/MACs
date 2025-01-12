@@ -22,7 +22,7 @@ import org.kotlincrypto.macs.MacUnitTest
 import kotlin.test.Test
 
 open class HmacSHA512_256UnitTest: MacUnitTest() {
-    override fun mac(key: ByteArray): Mac = HmacSHA512_256(key)
+    override fun mac(key: ByteArray): Mac = HmacSHA512t(key, 256)
 
     final override val expectedResetSmallHash: String = "5a9c3f3b04f27901c6f61b4f6e2c594c2e92bc782143d073791994b563b4480e"
     final override val expectedResetMediumHash: String = "447f9db5826247b823f272922f4eaf6f2651c0a30afacfd294d94d3239d2e4ed"
