@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+@file:Suppress("SpellCheckingInspection", "LocalVariableName")
+
 package org.kotlincrypto.macs.kmac
 
 import org.kotlincrypto.core.mac.Mac
@@ -34,7 +36,6 @@ public class KMAC128: Kmac {
      *
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
-    @Throws(IllegalArgumentException::class)
     public constructor(
         key: ByteArray,
     ): this(key, null)
@@ -48,7 +49,6 @@ public class KMAC128: Kmac {
      *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
-    @Throws(IllegalArgumentException::class)
     public constructor(
         key: ByteArray,
         S: ByteArray?,
@@ -64,7 +64,6 @@ public class KMAC128: Kmac {
      * @throws [IllegalArgumentException] if [key] is empty, or [outputLength]
      *   is negative.
      * */
-    @Throws(IllegalArgumentException::class)
     public constructor(
         key: ByteArray,
         S: ByteArray?,
@@ -76,11 +75,17 @@ public class KMAC128: Kmac {
         S: ByteArray?,
         outputLength: Int,
         xofMode: Boolean,
-    ): super(key, S, BIT_STRENGTH_128, outputLength, xofMode)
+    ): super(
+        key = key,
+        S = S,
+        bitStrength = BIT_STRENGTH_128,
+        outputLength = outputLength,
+        xofMode = xofMode,
+    )
 
-    private constructor(engine: Mac.Engine): super(engine)
+    private constructor(other: KMAC128): super(other)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = KMAC128(engineCopy)
+    public override fun copy(): KMAC128 = KMAC128(this)
 
     public companion object: KMACXofFactory<KMAC128>() {
 
@@ -92,6 +97,7 @@ public class KMAC128: Kmac {
         /**
          * Produces a new [Xof] (Extendable-Output Function) for [KMAC128]
          *
+         * @see [Kmac.KMACXofFactory.reset]
          * @param [S] A user selected customization bit string to define a variant
          *   of the function. When no customization is desired, [S] is set to an
          *   empty or null value. (e.g. "My Customization".encodeToByteArray()).

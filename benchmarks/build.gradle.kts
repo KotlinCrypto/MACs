@@ -54,11 +54,12 @@ kmpConfiguration {
             sourceSetMain {
                 dependencies {
                     implementation(libs.benchmark.runtime)
+                    implementation(libs.kotlincrypto.bitops.bits)
+                    implementation(libs.kotlincrypto.bitops.endian)
                     implementation(libs.kotlincrypto.hash.md)
                     implementation(libs.kotlincrypto.hash.sha1)
                     implementation(libs.kotlincrypto.hash.sha2)
                     implementation(libs.kotlincrypto.hash.sha3)
-                    implementation(libs.kotlincrypto.endians.endians)
                     implementation(libs.kotlincrypto.sponges.keccak)
                     implementation(project(":library:hmac:hmac-md"))
                     implementation(project(":library:hmac:hmac-sha1"))

@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+@file:Suppress("SpellCheckingInspection", "LocalVariableName")
+
 package org.kotlincrypto.macs.kmac
 
 import org.kotlincrypto.core.mac.Mac
@@ -76,11 +78,17 @@ public class KMAC256: Kmac {
         S: ByteArray?,
         outputLength: Int,
         xofMode: Boolean,
-    ): super(key, S, BIT_STRENGTH_256, outputLength, xofMode)
+    ): super(
+        key = key,
+        S = S,
+        bitStrength = BIT_STRENGTH_256,
+        outputLength = outputLength,
+        xofMode = xofMode,
+    )
 
-    private constructor(engine: Mac.Engine): super(engine)
+    private constructor(other: KMAC256): super(other)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = KMAC256(engineCopy)
+    public override fun copy(): KMAC256 = KMAC256(this)
 
     public companion object: KMACXofFactory<KMAC256>() {
 
@@ -92,6 +100,7 @@ public class KMAC256: Kmac {
         /**
          * Produces a new [Xof] (Extendable-Output Function) for [KMAC256]
          *
+         * @see [Kmac.KMACXofFactory.reset]
          * @param [S] A user selected customization bit string to define a variant
          *   of the function. When no customization is desired, [S] is set to an
          *   empty or null value. (e.g. "My Customization".encodeToByteArray()).

@@ -8,22 +8,32 @@
 // Library unique name: <org.kotlincrypto.macs:hmac-sha2>
 final class org.kotlincrypto.macs.hmac.sha2/HmacSHA224 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA224|null[0]
     constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA224.<init>|<init>(kotlin.ByteArray){}[0]
+
+    final fun copy(): org.kotlincrypto.macs.hmac.sha2/HmacSHA224 // org.kotlincrypto.macs.hmac.sha2/HmacSHA224.copy|copy(){}[0]
 }
 
 final class org.kotlincrypto.macs.hmac.sha2/HmacSHA256 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA256|null[0]
     constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA256.<init>|<init>(kotlin.ByteArray){}[0]
+
+    final fun copy(): org.kotlincrypto.macs.hmac.sha2/HmacSHA256 // org.kotlincrypto.macs.hmac.sha2/HmacSHA256.copy|copy(){}[0]
 }
 
 final class org.kotlincrypto.macs.hmac.sha2/HmacSHA384 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA384|null[0]
     constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA384.<init>|<init>(kotlin.ByteArray){}[0]
+
+    final fun copy(): org.kotlincrypto.macs.hmac.sha2/HmacSHA384 // org.kotlincrypto.macs.hmac.sha2/HmacSHA384.copy|copy(){}[0]
 }
 
 final class org.kotlincrypto.macs.hmac.sha2/HmacSHA512 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA512|null[0]
     constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha2/HmacSHA512.<init>|<init>(kotlin.ByteArray){}[0]
+
+    final fun copy(): org.kotlincrypto.macs.hmac.sha2/HmacSHA512 // org.kotlincrypto.macs.hmac.sha2/HmacSHA512.copy|copy(){}[0]
 }
 
 final class org.kotlincrypto.macs.hmac.sha2/HmacSHA512t : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha2/HmacSHA512t|null[0]
     constructor <init>(kotlin/ByteArray, kotlin/Int) // org.kotlincrypto.macs.hmac.sha2/HmacSHA512t.<init>|<init>(kotlin.ByteArray;kotlin.Int){}[0]
+
+    final fun copy(): org.kotlincrypto.macs.hmac.sha2/HmacSHA512t // org.kotlincrypto.macs.hmac.sha2/HmacSHA512t.copy|copy(){}[0]
 }
 
 final fun org.kotlincrypto.macs.hmac.sha2/HmacSHA512_224(kotlin/ByteArray): org.kotlincrypto.macs.hmac.sha2/HmacSHA512t // org.kotlincrypto.macs.hmac.sha2/HmacSHA512_224|HmacSHA512_224(kotlin.ByteArray){}[0]

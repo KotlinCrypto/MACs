@@ -12,9 +12,9 @@ gradle-kmp-configuration = "0.3.2"
 gradle-kotlin = "1.9.24"
 gradle-publish-maven = "0.29.0"
 
-kotlincrypto-core = "0.5.5"
-kotlincrypto-hash = "0.5.6"
-kotlincrypto-endians = "0.3.1"
+kotlincrypto-bitops = "0.1.0-SNAPSHOT"
+kotlincrypto-core = "0.6.0-SNAPSHOT"
+kotlincrypto-hash = "0.6.0-SNAPSHOT"
 kotlincrypto-sponges = "0.3.4"
 
 [libraries]
@@ -36,7 +36,8 @@ benchmark-runtime = { module = "org.jetbrains.kotlinx:kotlinx-benchmark-runtime"
 bouncy-castle = { module = "org.bouncycastle:bcprov-ext-jdk15to18", version.ref = "bouncy-castle" }
 encoding-base16 = { module = "io.matthewnelson.encoding:base16", version.ref = "encoding" }
 encoding-base64 = { module = "io.matthewnelson.encoding:base64", version.ref = "encoding" }
-kotlincrypto-endians-endians = { module = "org.kotlincrypto.endians:endians", version.ref = "kotlincrypto-endians"}
+kotlincrypto-bitops-bits = { module = "org.kotlincrypto.bitops:bits", version.ref = "kotlincrypto-bitops" }
+kotlincrypto-bitops-endian = { module = "org.kotlincrypto.bitops:endian", version.ref = "kotlincrypto-bitops" }
 kotlincrypto-sponges-keccak = { module = "org.kotlincrypto.sponges:keccak", version.ref = "kotlincrypto-sponges" }
 
 [plugins]

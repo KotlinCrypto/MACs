@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("ClassName", "UnnecessaryOptInAnnotation")
+@file:Suppress("ClassName", "SpellCheckingInspection")
 
 package org.kotlincrypto.macs.hmac.sha3
 
-import org.kotlincrypto.core.InternalKotlinCryptoApi
-import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.hash.sha3.SHA3_224
 import org.kotlincrypto.macs.hmac.Hmac
 
@@ -28,16 +26,17 @@ import org.kotlincrypto.macs.hmac.Hmac
 public class HmacSHA3_224: Hmac {
 
     /**
-     * Instantiates a new instance of [HmacSHA3_224].
+     * Creates a new instance of [HmacSHA3_224].
      *
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
-    @OptIn(InternalKotlinCryptoApi::class)
-    @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray): super(key, "HmacSHA3-224", SHA3_224())
+    public constructor(key: ByteArray): super(
+        key = key,
+        algorithm = "HmacSHA3-224",
+        digest = SHA3_224(),
+    )
 
-    @OptIn(InternalKotlinCryptoApi::class)
-    private constructor(engine: Mac.Engine): super(engine)
+    private constructor(other: HmacSHA3_224): super(other)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA3_224(engineCopy)
+    public override fun copy(): HmacSHA3_224 = HmacSHA3_224(this)
 }
