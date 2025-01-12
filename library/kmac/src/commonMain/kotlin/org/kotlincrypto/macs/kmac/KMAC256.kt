@@ -100,7 +100,7 @@ public class KMAC256: Kmac {
         /**
          * Produces a new [Xof] (Extendable-Output Function) for [KMAC256]
          *
-         * @see [Kmac.KMACXofFactory.reset]
+         * @see [Xof.Companion.reset]
          * @param [S] A user selected customization bit string to define a variant
          *   of the function. When no customization is desired, [S] is set to an
          *   empty or null value. (e.g. "My Customization".encodeToByteArray()).

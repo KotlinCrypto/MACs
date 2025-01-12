@@ -23,8 +23,6 @@ import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.core.xof.*
 import org.kotlincrypto.hash.sha3.CSHAKE128
 import org.kotlincrypto.hash.sha3.CSHAKE256
-import kotlin.jvm.JvmField
-import kotlin.jvm.JvmStatic
 
 /**
  * Core abstraction for Keccak-based Message Authentication
@@ -32,51 +30,7 @@ import kotlin.jvm.JvmStatic
  *  - [KMAC128]
  *  - [KMAC256]
  * */
-public sealed class Kmac: Mac, XofAlgorithm {
-
-    public sealed class KMACXofFactory<A: Kmac>: XofFactory<A>() {
-
-        public companion object {
-
-            /**
-             * Supplements [Mac.reset] functionality for [Xof] to enable re-initializing
-             * of backing [Kmac] instance with provided [newKey].
-             *
-             * @throws [IllegalArgumentException] if [newKey] is empty.
-             * */
-            @JvmStatic
-            public fun <A: Kmac> Xof<A>.reset(newKey: ByteArray) {
-                (this as KMACXof).kmac.reset(newKey)
-            }
-        }
-
-        protected inner class KMACXof(
-            @JvmField
-            public val kmac: A,
-        ) : XofDelegate(kmac) {
-
-            init {
-                require(kmac.engine is XofEngine) { "delegate must use XofEngine" }
-            }
-
-            override fun newReader(delegateCopy: A): Reader {
-                val reader = (delegateCopy.engine as XofEngine).reader()
-
-                return object : Xof<A>.Reader() {
-                    override fun readProtected(out: ByteArray, offset: Int, len: Int): Int {
-                        return reader.read(out, offset, len)
-                    }
-
-                    override fun closeProtected() {
-                        reader.close()
-                    }
-                }
-            }
-
-            @Suppress("UNCHECKED_CAST")
-            override fun copy(): Xof<A> = KMACXof(delegate.copy() as A)
-        }
-    }
+public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
 
     private val engine: Engine
 
@@ -96,6 +50,41 @@ public sealed class Kmac: Mac, XofAlgorithm {
 
     private constructor(engine: Kmac.Engine): super(engine.algorithm(), engine) {
         this.engine = engine
+    }
+
+    public abstract override fun copy(): Kmac
+
+    /**
+     * Provides [Xof] functionality for [KMAC128] & [KMAC256]
+     *
+     * @see [KMAC128.Companion]
+     * @see [KMAC256.Companion]
+     * */
+    public sealed class KMACXofFactory<A: Kmac>: XofFactory<A>() {
+
+        protected inner class KMACXof(delegate: A): XofDelegate(delegate) {
+
+            init {
+                require(delegate.engine is XofEngine) { "delegate must use XofEngine" }
+            }
+
+            override fun newReader(delegateCopy: A): Reader {
+                val reader = (delegateCopy.engine as XofEngine).reader()
+
+                return object : Xof<A>.Reader() {
+                    override fun readProtected(out: ByteArray, offset: Int, len: Int): Int {
+                        return reader.read(out, offset, len)
+                    }
+
+                    override fun closeProtected() {
+                        reader.close()
+                    }
+                }
+            }
+
+            @Suppress("UNCHECKED_CAST")
+            override fun copy(): Xof<A> = KMACXof(delegate.copy() as A)
+        }
     }
 
     private class DigestEngine: Engine {

@@ -7,6 +7,7 @@ public final class org/kotlincrypto/macs/kmac/KMAC128 : org/kotlincrypto/macs/km
 	public synthetic fun <init> ([B[BIZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun copy ()Ljava/lang/Object;
 	public fun copy ()Lorg/kotlincrypto/macs/kmac/KMAC128;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/kmac/Kmac;
 	public static final fun xOf ([B)Lorg/kotlincrypto/core/xof/Xof;
 	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/xof/Xof;
 }
@@ -26,6 +27,7 @@ public final class org/kotlincrypto/macs/kmac/KMAC256 : org/kotlincrypto/macs/km
 	public synthetic fun <init> ([B[BIZLkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun copy ()Ljava/lang/Object;
 	public fun copy ()Lorg/kotlincrypto/macs/kmac/KMAC256;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/kmac/Kmac;
 	public static final fun xOf ([B)Lorg/kotlincrypto/core/xof/Xof;
 	public static final fun xOf ([B[B)Lorg/kotlincrypto/core/xof/Xof;
 }
@@ -36,27 +38,21 @@ public final class org/kotlincrypto/macs/kmac/KMAC256$Companion : org/kotlincryp
 	public static synthetic fun xOf$default (Lorg/kotlincrypto/macs/kmac/KMAC256$Companion;[B[BILjava/lang/Object;)Lorg/kotlincrypto/core/xof/Xof;
 }
 
-public abstract class org/kotlincrypto/macs/kmac/Kmac : org/kotlincrypto/core/mac/Mac, org/kotlincrypto/core/xof/XofAlgorithm {
+public abstract class org/kotlincrypto/macs/kmac/Kmac : org/kotlincrypto/core/mac/Mac, org/kotlincrypto/core/xof/ReKeyableXofAlgorithm {
 	protected static final field Companion Lorg/kotlincrypto/macs/kmac/Kmac$Companion;
 	public synthetic fun <init> (Lorg/kotlincrypto/macs/kmac/Kmac$Engine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lorg/kotlincrypto/macs/kmac/Kmac;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> ([B[BIIZLkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public abstract fun copy ()Lorg/kotlincrypto/macs/kmac/Kmac;
 }
 
 protected final class org/kotlincrypto/macs/kmac/Kmac$Companion {
 }
 
 public abstract class org/kotlincrypto/macs/kmac/Kmac$KMACXofFactory : org/kotlincrypto/core/xof/XofFactory {
-	public static final field Companion Lorg/kotlincrypto/macs/kmac/Kmac$KMACXofFactory$Companion;
-	public static final fun reset (Lorg/kotlincrypto/core/xof/Xof;[B)V
-}
-
-public final class org/kotlincrypto/macs/kmac/Kmac$KMACXofFactory$Companion {
-	public final fun reset (Lorg/kotlincrypto/core/xof/Xof;[B)V
 }
 
 protected final class org/kotlincrypto/macs/kmac/Kmac$KMACXofFactory$KMACXof : org/kotlincrypto/core/xof/XofFactory$XofDelegate {
-	public final field kmac Lorg/kotlincrypto/macs/kmac/Kmac;
 	public fun <init> (Lorg/kotlincrypto/macs/kmac/Kmac$KMACXofFactory;Lorg/kotlincrypto/macs/kmac/Kmac;)V
 	public synthetic fun copy ()Ljava/lang/Object;
 	public fun copy ()Lorg/kotlincrypto/core/xof/Xof;
