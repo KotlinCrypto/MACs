@@ -1,3 +1,6 @@
 public abstract class org/kotlincrypto/macs/hmac/Hmac : org/kotlincrypto/core/mac/Mac {
+	protected fun <init> (Lorg/kotlincrypto/macs/hmac/Hmac;)V
+	protected fun <init> ([BLjava/lang/String;Lorg/kotlincrypto/core/digest/Digest;)V
+	public abstract fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
 }
 

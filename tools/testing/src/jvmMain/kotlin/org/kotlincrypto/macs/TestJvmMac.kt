@@ -13,12 +13,9 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("UnnecessaryOptInAnnotation")
-
 package org.kotlincrypto.macs
 
 import org.bouncycastle.jce.provider.BouncyCastleProvider
-import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.mac.Mac
 import java.security.NoSuchAlgorithmException
 import java.security.Security
@@ -28,13 +25,12 @@ import javax.crypto.spec.SecretKeySpec
  * Simple test class that wraps a [javax.crypto.Mac]
  * with [org.kotlincrypto.core.mac.Mac]
  * */
-@OptIn(InternalKotlinCryptoApi::class)
 class TestJvmMac: Mac {
 
     constructor(algorithm: String, key: ByteArray): super(algorithm, Engine(algorithm, key))
 
-    private constructor(algorithm: String, engine: Engine): super(algorithm, engine)
-    override fun copy(engineCopy: Mac.Engine): Mac = TestJvmMac(algorithm, engineCopy as Engine)
+    private constructor(other: TestJvmMac): super(other)
+    override fun copy(): TestJvmMac = TestJvmMac(this)
 
     private class Engine: Mac.Engine {
 
@@ -46,11 +42,11 @@ class TestJvmMac: Mac {
             }
         }
 
-        private constructor(state: State, engine: Engine): super(state) {
-            delegate = engine.delegate.clone() as javax.crypto.Mac
+        private constructor(other: Engine): super(other) {
+            delegate = other.delegate.clone() as javax.crypto.Mac
         }
 
-        override fun copy(): Mac.Engine = Engine(object : State() {}, this)
+        override fun copy(): Engine = Engine(this)
 
         override fun macLength(): Int = delegate.macLength
 
@@ -61,6 +57,7 @@ class TestJvmMac: Mac {
         override fun doFinal(): ByteArray = delegate.doFinal()
 
         override fun reset() { delegate.reset() }
+        override fun reset(newKey: ByteArray) { delegate.init(SecretKeySpec(newKey, delegate.algorithm)) }
     }
 
     private companion object {

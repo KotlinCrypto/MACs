@@ -13,6 +13,8 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+@file:Suppress("FunctionName")
+
 package org.kotlincrypto.macs
 
 import io.matthewnelson.encoding.base64.Base64
@@ -21,7 +23,25 @@ import io.matthewnelson.encoding.core.Encoder.Companion.encodeToString
 import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.core.Updatable
 import kotlin.test.assertEquals
+import kotlin.test.assertNotEquals
 
+/**
+ * Test abstraction to verify that the Mac implementation is in proper working order.
+ * All input utilized is deterministic in order to ensure expected hash values never
+ * change.
+ *
+ * Expected hash values are obtained by an already working implementation of the
+ * algorithm under test (e.g. Bouncy Castle provider). Those values must then match
+ * when the KotlinCrypto implementation is put under test.
+ *
+ * To implement this abstraction for a new algorithm:
+ *
+ * See [org.kotlincrypto.macs.hmac.md.HmacMD5UnitTest] located in `commonTest`. Note that
+ * the test class is `open`. This allows it to be inherited from in the `jvmTest` source
+ * set, for example the [org.kotlincrypto.macs.hmac.md.HmacMD5JvmUnitTest] test. This
+ * ensures that both implementations run under the same test parameters output the same
+ * values.
+ * */
 abstract class MacUnitTest {
 
     abstract fun mac(key: ByteArray): Mac
@@ -32,7 +52,18 @@ abstract class MacUnitTest {
     abstract val expectedUpdateSmallHash: String
     abstract val expectedUpdateMediumHash: String
 
+    private val assertExpectedHashes by lazy {
+        setOf(
+            expectedResetSmallHash,
+            expectedResetMediumHash,
+            expectedResetLargeHash,
+            expectedUpdateSmallHash,
+            expectedUpdateMediumHash,
+        ).let { assertEquals(5, it.size, "Expected hash values must all be different") }
+    }
+
     open fun givenMac_whenResetSmallKey_thenDoFinalReturnsExpected() {
+        assertExpectedHashes
         val mac = mac(KEY_SMALL)
         val empty = mac.doFinal().encodeToString(TestData.base16)
         updateSmall(mac)
@@ -43,6 +74,7 @@ abstract class MacUnitTest {
     }
 
     open fun givenMac_whenResetMediumKey_thenDoFinalReturnsExpected() {
+        assertExpectedHashes
         val mac = mac(KEY_MEDIUM)
         val empty = mac.doFinal().encodeToString(TestData.base16)
         updateSmall(mac)
@@ -51,7 +83,9 @@ abstract class MacUnitTest {
         assertEquals(empty, actual)
         assertEquals(expectedResetMediumHash, actual)
     }
+
     open fun givenMac_whenResetLargeKey_thenDoFinalReturnsExpected() {
+        assertExpectedHashes
         val mac = mac(KEY_LARGE)
         val empty = mac.doFinal().encodeToString(TestData.base16)
         updateSmall(mac)
@@ -62,6 +96,7 @@ abstract class MacUnitTest {
     }
 
     open fun givenMac_whenUpdatedSmall_thenDoFinalReturnsExpected() {
+        assertExpectedHashes
         val mac = mac(KEY_SMALL)
         mac.doFinal()
         updateSmall(mac)
@@ -70,6 +105,7 @@ abstract class MacUnitTest {
     }
 
     open fun givenMac_whenUpdatedMedium_thenDoFinalReturnsExpected() {
+        assertExpectedHashes
         val mac = mac(KEY_MEDIUM)
         mac.doFinal()
         updateMedium(mac)
@@ -79,17 +115,36 @@ abstract class MacUnitTest {
     }
 
     open fun givenMac_whenCopied_thenIsDifferentInstance() {
+        assertExpectedHashes
         val mac = mac(KEY_SMALL)
         updateSmall(mac)
-        val copy = mac.copy()
-        copy.reset()
 
+        val copy = mac.copy()
+        assertNotEquals(copy, mac)
+        assertEquals(expectedUpdateSmallHash, copy.doFinal().encodeToString(TestData.base16))
         assertEquals(expectedResetSmallHash, copy.doFinal().encodeToString(TestData.base16))
+
+        updateSmall(copy)
+        assertEquals(expectedUpdateSmallHash, copy.doFinal().encodeToString(TestData.base16))
         assertEquals(expectedUpdateSmallHash, mac.doFinal().encodeToString(TestData.base16))
     }
 
     open fun givenMac_whenDoFinal_thenLengthMatchesOutput() {
+        assertExpectedHashes
         assertEquals(mac(KEY_SMALL).doFinal().encodeToString(TestData.base16).length, expectedResetSmallHash.length)
+    }
+
+    open fun givenMac_whenInstanceResetWithNewKey_thenDoFinalReturnsExpected() {
+        assertExpectedHashes
+        val mac = mac(KEY_SMALL)
+        updateSmall(mac)
+        assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedUpdateSmallHash)
+        assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedResetSmallHash)
+
+        mac.reset(KEY_MEDIUM)
+        updateMedium(mac)
+        assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedUpdateMediumHash)
+        assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedResetMediumHash)
     }
 
     protected companion object {

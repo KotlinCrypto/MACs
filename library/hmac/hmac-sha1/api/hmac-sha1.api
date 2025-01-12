@@ -1,4 +1,7 @@
 public final class org/kotlincrypto/macs/hmac/sha1/HmacSHA1 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha1/HmacSHA1;
 }
 

@@ -56,9 +56,8 @@ fun main() {
     HmacSha384(key)
     HmacSHA512(key)
 
-    HmacSHA512_224(key)
-    HmacSHA512_256(key)
-    HmacSHA512t(key, 504)
+    HmacSHA512t(key, 224) // HmacSHA512/224
+    HmacSHA512t(key, 256) // HmacSHA512/256
     
     key.fill(0)
 }

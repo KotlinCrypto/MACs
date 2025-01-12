@@ -6,4 +6,9 @@
 // - Show declarations: true
 
 // Library unique name: <org.kotlincrypto.macs:hmac>
-abstract class org.kotlincrypto.macs.hmac/Hmac : org.kotlincrypto.core.mac/Mac // org.kotlincrypto.macs.hmac/Hmac|null[0]
+abstract class org.kotlincrypto.macs.hmac/Hmac : org.kotlincrypto.core.mac/Mac { // org.kotlincrypto.macs.hmac/Hmac|null[0]
+    constructor <init>(kotlin/ByteArray, kotlin/String, org.kotlincrypto.core.digest/Digest) // org.kotlincrypto.macs.hmac/Hmac.<init>|<init>(kotlin.ByteArray;kotlin.String;org.kotlincrypto.core.digest.Digest){}[0]
+    constructor <init>(org.kotlincrypto.macs.hmac/Hmac) // org.kotlincrypto.macs.hmac/Hmac.<init>|<init>(org.kotlincrypto.macs.hmac.Hmac){}[0]
+
+    abstract fun copy(): org.kotlincrypto.macs.hmac/Hmac // org.kotlincrypto.macs.hmac/Hmac.copy|copy(){}[0]
+}

@@ -13,30 +13,12 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("UnnecessaryOptInAnnotation", "FunctionName")
+@file:Suppress("SpellCheckingInspection")
 
 package org.kotlincrypto.macs.hmac.sha2
 
-import org.kotlincrypto.core.InternalKotlinCryptoApi
-import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.hash.sha2.SHA512t
 import org.kotlincrypto.macs.hmac.Hmac
-
-/**
- * HmacSHA512/224
- *
- * @throws [IllegalArgumentException] if [key] is empty
- * */
-@Throws(IllegalArgumentException::class)
-public fun HmacSHA512_224(key: ByteArray): HmacSHA512t = HmacSHA512t(key, 224)
-
-/**
- * HmacSHA512/256
- *
- * @throws [IllegalArgumentException] if [key] is empty
- * */
-@Throws(IllegalArgumentException::class)
-public fun HmacSHA512_256(key: ByteArray): HmacSHA512t = HmacSHA512t(key, 256)
 
 /**
  * HmacSHA512/t implementation
@@ -44,10 +26,8 @@ public fun HmacSHA512_256(key: ByteArray): HmacSHA512t = HmacSHA512t(key, 256)
 public class HmacSHA512t: Hmac {
 
     /**
-     * Instantiates a new instance of [HmacSHA512t].
+     * Creates a new instance of [HmacSHA512t].
      *
-     * @see [HmacSHA512_224]
-     * @see [HmacSHA512_256]
      * @throws [IllegalArgumentException] when:
      *  - [key] is empty
      *  - [t] is less than 8
@@ -55,12 +35,13 @@ public class HmacSHA512t: Hmac {
      *  - [t] is not a factor of 8
      *  - [t] is 384
      * */
-    @OptIn(InternalKotlinCryptoApi::class)
-    @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray, t: Int): super(key, "HmacSHA512/$t", SHA512t(t))
+    public constructor(key: ByteArray, t: Int): super(
+        key = key,
+        algorithm = "HmacSHA512/$t",
+        digest = SHA512t(t),
+    )
 
-    @OptIn(InternalKotlinCryptoApi::class)
-    private constructor(engine: Mac.Engine): super(engine)
+    private constructor(other: HmacSHA512t): super(other)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA512t(engineCopy)
+    public override fun copy(): HmacSHA512t = HmacSHA512t(this)
 }

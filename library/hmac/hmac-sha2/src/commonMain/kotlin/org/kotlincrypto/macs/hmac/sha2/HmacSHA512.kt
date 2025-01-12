@@ -13,12 +13,10 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("UnnecessaryOptInAnnotation")
+@file:Suppress("SpellCheckingInspection")
 
 package org.kotlincrypto.macs.hmac.sha2
 
-import org.kotlincrypto.core.InternalKotlinCryptoApi
-import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.hash.sha2.SHA512
 import org.kotlincrypto.macs.hmac.Hmac
 
@@ -28,16 +26,17 @@ import org.kotlincrypto.macs.hmac.Hmac
 public class HmacSHA512: Hmac {
 
     /**
-     * Instantiates a new instance of [HmacSHA512].
+     * Creates a new instance of [HmacSHA512].
      *
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
-    @OptIn(InternalKotlinCryptoApi::class)
-    @Throws(IllegalArgumentException::class)
-    public constructor(key: ByteArray): super(key, "HmacSHA512", SHA512())
+    public constructor(key: ByteArray): super(
+        key = key,
+        algorithm = "HmacSHA512",
+        digest = SHA512(),
+    )
 
-    @OptIn(InternalKotlinCryptoApi::class)
-    private constructor(engine: Mac.Engine): super(engine)
+    private constructor(other: HmacSHA512): super(other)
 
-    protected override fun copy(engineCopy: Mac.Engine): Mac = HmacSHA512(engineCopy)
+    public override fun copy(): HmacSHA512 = HmacSHA512(this)
 }

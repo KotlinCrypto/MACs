@@ -8,4 +8,6 @@
 // Library unique name: <org.kotlincrypto.macs:hmac-sha1>
 final class org.kotlincrypto.macs.hmac.sha1/HmacSHA1 : org.kotlincrypto.macs.hmac/Hmac { // org.kotlincrypto.macs.hmac.sha1/HmacSHA1|null[0]
     constructor <init>(kotlin/ByteArray) // org.kotlincrypto.macs.hmac.sha1/HmacSHA1.<init>|<init>(kotlin.ByteArray){}[0]
+
+    final fun copy(): org.kotlincrypto.macs.hmac.sha1/HmacSHA1 // org.kotlincrypto.macs.hmac.sha1/HmacSHA1.copy|copy(){}[0]
 }

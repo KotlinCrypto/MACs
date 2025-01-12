@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("ClassName", "SpellCheckingInspection")
+@file:Suppress("ClassName", "SpellCheckingInspection", "unused")
 
 package org.kotlincrypto.macs.benchmarks
 

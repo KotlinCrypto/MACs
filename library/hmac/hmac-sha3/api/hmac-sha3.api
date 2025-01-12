@@ -1,32 +1,56 @@
 public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak224 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacKeccak224;
 }
 
 public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak256 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacKeccak256;
 }
 
 public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak384 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacKeccak384;
 }
 
 public final class org/kotlincrypto/macs/hmac/sha3/HmacKeccak512 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacKeccak512;
 }
 
 public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_224 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacSHA3_224;
 }
 
 public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_256 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacSHA3_256;
 }
 
 public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_384 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacSHA3_384;
 }
 
 public final class org/kotlincrypto/macs/hmac/sha3/HmacSHA3_512 : org/kotlincrypto/macs/hmac/Hmac {
 	public fun <init> ([B)V
+	public synthetic fun copy ()Ljava/lang/Object;
+	public synthetic fun copy ()Lorg/kotlincrypto/macs/hmac/Hmac;
+	public fun copy ()Lorg/kotlincrypto/macs/hmac/sha3/HmacSHA3_512;
 }
 
