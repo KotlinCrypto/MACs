@@ -64,4 +64,9 @@ open class HmacSHA512_256UnitTest: MacUnitTest() {
     final override fun givenMac_whenDoFinal_thenLengthMatchesOutput() {
         super.givenMac_whenDoFinal_thenLengthMatchesOutput()
     }
+
+    @Test
+    final override fun givenMac_whenInstanceResetWithNewKey_thenDoFinalReturnsExpected() {
+        super.givenMac_whenInstanceResetWithNewKey_thenDoFinalReturnsExpected()
+    }
 }
