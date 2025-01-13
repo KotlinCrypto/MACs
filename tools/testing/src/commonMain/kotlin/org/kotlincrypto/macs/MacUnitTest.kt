@@ -46,6 +46,13 @@ abstract class MacUnitTest {
 
     abstract fun mac(key: ByteArray): Mac
 
+    private fun ByteArray.toMaxKeyLen(): ByteArray {
+        val max = maxKeyLength ?: return this
+        if (this.size < max) return this
+        return copyOf(max)
+    }
+
+    open val maxKeyLength: Int? = null
     abstract val expectedResetSmallHash: String
     abstract val expectedResetMediumHash: String
     abstract val expectedResetLargeHash: String
@@ -64,7 +71,7 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenResetSmallKey_thenDoFinalReturnsExpected() {
         assertExpectedHashes
-        val mac = mac(KEY_SMALL)
+        val mac = mac(KEY_SMALL.toMaxKeyLen())
         val empty = mac.doFinal().encodeToString(TestData.base16)
         updateSmall(mac)
         mac.reset()
@@ -75,7 +82,7 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenResetMediumKey_thenDoFinalReturnsExpected() {
         assertExpectedHashes
-        val mac = mac(KEY_MEDIUM)
+        val mac = mac(KEY_MEDIUM.toMaxKeyLen())
         val empty = mac.doFinal().encodeToString(TestData.base16)
         updateSmall(mac)
         mac.reset()
@@ -86,7 +93,7 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenResetLargeKey_thenDoFinalReturnsExpected() {
         assertExpectedHashes
-        val mac = mac(KEY_LARGE)
+        val mac = mac(KEY_LARGE.toMaxKeyLen())
         val empty = mac.doFinal().encodeToString(TestData.base16)
         updateSmall(mac)
         mac.reset()
@@ -97,7 +104,7 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenUpdatedSmall_thenDoFinalReturnsExpected() {
         assertExpectedHashes
-        val mac = mac(KEY_SMALL)
+        val mac = mac(KEY_SMALL.toMaxKeyLen())
         mac.doFinal()
         updateSmall(mac)
         val actual = mac.doFinal().encodeToString(TestData.base16)
@@ -106,7 +113,7 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenUpdatedMedium_thenDoFinalReturnsExpected() {
         assertExpectedHashes
-        val mac = mac(KEY_MEDIUM)
+        val mac = mac(KEY_MEDIUM.toMaxKeyLen())
         mac.doFinal()
         updateMedium(mac)
 
@@ -116,7 +123,7 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenCopied_thenIsDifferentInstance() {
         assertExpectedHashes
-        val mac = mac(KEY_SMALL)
+        val mac = mac(KEY_SMALL.toMaxKeyLen())
         updateSmall(mac)
 
         val copy = mac.copy()
@@ -131,17 +138,17 @@ abstract class MacUnitTest {
 
     open fun givenMac_whenDoFinal_thenLengthMatchesOutput() {
         assertExpectedHashes
-        assertEquals(mac(KEY_SMALL).doFinal().encodeToString(TestData.base16).length, expectedResetSmallHash.length)
+        assertEquals(mac(KEY_SMALL.toMaxKeyLen()).doFinal().encodeToString(TestData.base16).length, expectedResetSmallHash.length)
     }
 
     open fun givenMac_whenInstanceResetWithNewKey_thenDoFinalReturnsExpected() {
         assertExpectedHashes
-        val mac = mac(KEY_SMALL)
+        val mac = mac(KEY_SMALL.toMaxKeyLen())
         updateSmall(mac)
         assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedUpdateSmallHash)
         assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedResetSmallHash)
 
-        mac.reset(KEY_MEDIUM)
+        mac.reset(KEY_MEDIUM.toMaxKeyLen())
         updateMedium(mac)
         assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedUpdateMediumHash)
         assertEquals(mac.doFinal().encodeToString(TestData.base16), expectedResetMediumHash)

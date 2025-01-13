@@ -26,9 +26,9 @@ const val ITERATIONS = 5
 const val TIME_WARMUP = 2
 const val TIME_MEASURE = 4
 
-abstract class MacBenchmarkBase {
+abstract class MacBenchmarkBase(keyLength: Int = 50) {
 
-    protected val key = Random.Default.nextBytes(50)
+    protected val key = Random.Default.nextBytes(keyLength)
 
     protected abstract val m: Mac
     private val bytes by lazy { Random.Default.nextBytes((m.macLength() * 2) + 10) }

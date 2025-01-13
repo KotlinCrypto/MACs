@@ -17,6 +17,7 @@ if (CHECK_PUBLICATION != null) {
     include(":tools:check-publication")
 } else {
     listOf(
+        "blake2",
         "hmac:hmac",
         "hmac:hmac-md",
         "hmac:hmac-sha1",
