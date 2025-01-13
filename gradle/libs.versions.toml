@@ -25,6 +25,7 @@ gradle-publish-maven = { module = "com.vanniktech:gradle-maven-publish-plugin", 
 kotlincrypto-core-digest = { module = "org.kotlincrypto.core:digest", version.ref = "kotlincrypto-core" }
 kotlincrypto-core-mac = { module = "org.kotlincrypto.core:mac", version.ref = "kotlincrypto-core" }
 kotlincrypto-core-xof = { module = "org.kotlincrypto.core:xof", version.ref = "kotlincrypto-core" }
+kotlincrypto-hash-blake2 = { module = "org.kotlincrypto.hash:blake2", version.ref = "kotlincrypto-hash" }
 kotlincrypto-hash-md = { module = "org.kotlincrypto.hash:md", version.ref = "kotlincrypto-hash" }
 kotlincrypto-hash-sha1 = { module = "org.kotlincrypto.hash:sha1", version.ref = "kotlincrypto-hash" }
 kotlincrypto-hash-sha2 = { module = "org.kotlincrypto.hash:sha2", version.ref = "kotlincrypto-hash" }

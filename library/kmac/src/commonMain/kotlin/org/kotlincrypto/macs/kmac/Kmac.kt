@@ -26,6 +26,7 @@ import org.kotlincrypto.hash.sha3.CSHAKE256
 
 /**
  * Core abstraction for Keccak-based Message Authentication
+ *
  * Code implementations:
  *  - [KMAC128]
  *  - [KMAC256]
