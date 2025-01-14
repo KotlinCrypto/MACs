@@ -16,7 +16,6 @@
 package org.kotlincrypto.macs.blake2
 
 import org.kotlincrypto.core.Algorithm
-import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.hash.blake2.BLAKE2Digest
 
@@ -34,22 +33,32 @@ public sealed class BLAKE2Mac: Mac {
         key: ByteArray,
         bitStrength: Int,
         personalization: ByteArray?,
-        factory: BLAKE2Digest.KeyedHashFactory<*>,
+        factory: DigestFactory,
     ): this(Engine(key, bitStrength, personalization, factory))
 
     protected constructor(other: BLAKE2Mac): super(other)
+
+    protected fun interface DigestFactory {
+
+        @Throws(IllegalArgumentException::class)
+        public fun newInstance(
+            bitStrength: Int,
+            keyLength: Int,
+            salt: ByteArray?,
+            personalization: ByteArray?,
+        ): BLAKE2Digest
+    }
 
     private constructor(engine: Engine): super(engine.algorithm(), engine)
 
     public abstract override fun copy(): BLAKE2Mac
 
-    @OptIn(InternalKotlinCryptoApi::class)
     private class Engine: Mac.Engine, Algorithm {
 
         private val bitStrength: Int
         private val keyBlock: ByteArray
         private val personalization: ByteArray?
-        private val factory: BLAKE2Digest.KeyedHashFactory<*>
+        private val factory: DigestFactory
         private var digest: BLAKE2Digest
 
         @Throws(IllegalArgumentException::class)
@@ -57,11 +66,11 @@ public sealed class BLAKE2Mac: Mac {
             key: ByteArray,
             bitStrength: Int,
             personalization: ByteArray?,
-            factory: BLAKE2Digest.KeyedHashFactory<*>,
+            factory: DigestFactory,
         ): super(key) {
             this.bitStrength = bitStrength
             this.personalization = personalization?.copyOf()
-            this.digest = factory.keyedHashInstance(
+            this.digest = factory.newInstance(
                 bitStrength = bitStrength,
                 keyLength = key.size,
                 salt = null,
@@ -95,7 +104,7 @@ public sealed class BLAKE2Mac: Mac {
 
         override fun reset(newKey: ByteArray) {
             val oldDigest = digest
-            this.digest = factory.keyedHashInstance(
+            this.digest = factory.newInstance(
                 bitStrength = bitStrength,
                 keyLength = newKey.size,
                 salt = null,

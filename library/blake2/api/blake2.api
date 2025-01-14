@@ -1,8 +1,12 @@
 public abstract class org/kotlincrypto/macs/blake2/BLAKE2Mac : org/kotlincrypto/core/mac/Mac {
 	public synthetic fun <init> (Lorg/kotlincrypto/macs/blake2/BLAKE2Mac$Engine;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public synthetic fun <init> (Lorg/kotlincrypto/macs/blake2/BLAKE2Mac;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
-	public synthetic fun <init> ([BI[BLorg/kotlincrypto/hash/blake2/BLAKE2Digest$KeyedHashFactory;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
+	public synthetic fun <init> ([BI[BLorg/kotlincrypto/macs/blake2/BLAKE2Mac$DigestFactory;Lkotlin/jvm/internal/DefaultConstructorMarker;)V
 	public abstract fun copy ()Lorg/kotlincrypto/macs/blake2/BLAKE2Mac;
+}
+
+protected abstract interface class org/kotlincrypto/macs/blake2/BLAKE2Mac$DigestFactory {
+	public abstract fun newInstance (II[B[B)Lorg/kotlincrypto/hash/blake2/BLAKE2Digest;
 }
 
 public final class org/kotlincrypto/macs/blake2/BLAKE2b : org/kotlincrypto/macs/blake2/BLAKE2Mac {
