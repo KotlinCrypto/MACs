@@ -15,6 +15,8 @@
  **/
 package org.kotlincrypto.macs.blake2
 
+import org.kotlincrypto.core.InternalKotlinCryptoApi
+
 /**
  * BLAKE2b Keyed Hashing implementation
  *
@@ -65,10 +67,26 @@ public class BLAKE2b: BLAKE2Mac {
         key = key,
         bitStrength = bitStrength,
         personalization = personalization,
-        factory = org.kotlincrypto.hash.blake2.BLAKE2b,
+        factory = Companion,
     )
 
     private constructor(other: BLAKE2b): super(other)
 
     public override fun copy(): BLAKE2b = BLAKE2b(this)
+
+    private companion object: DigestFactory {
+
+        @OptIn(InternalKotlinCryptoApi::class)
+        override fun newInstance(
+            bitStrength: Int,
+            keyLength: Int,
+            salt: ByteArray?,
+            personalization: ByteArray?,
+        ): org.kotlincrypto.hash.blake2.BLAKE2b = org.kotlincrypto.hash.blake2.BLAKE2b(
+            bitStrength = bitStrength,
+            keyLength = keyLength,
+            salt = salt,
+            personalization = personalization,
+        )
+    }
 }
