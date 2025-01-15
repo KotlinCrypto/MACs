@@ -1,5 +1,19 @@
 # CHANGELOG
 
+## Version 0.6.0 (2025-01-15)
+ - Adds `BLAKE2b` and `BLAKE2s` message authentication.
+ - Updates `KotlinCrypto.core` and `KotlinCrypto.hash` to `0.6.0`
+ - Updates all implementations to conform to `KotlinCrypto.core` `0.6.0` modifications 
+   to `Mac` and `Mac.Engine` internal API.
+ - All implementations now define a proper return type for `copy` (instead of `Mac`).
+ - All implementations can now be reinitialized with a new `key` via `Mac.reset(newKey)`
+ - Removes all `@Throws` annotations from constructors (it is documented).
+ - Finalizes `Hmac` API and removes `InternalKotlinCryptoApi` opt-in requirement from constructors.
+ - Deprecates `HmacSHA512_224` and `HmacSHA512_256` top-level functions.
+ - `Kmac` now implements `ReKeyableXofAlgorithm` so that the `Xof` can be reinitialized via `Xof.Companion.reset`.
+ - `Xof<Kmac>` instances now zero out the key block for the copy of the underlying `Mac.Engine` whenever 
+   a new `Xof.Reader` is created.
+
 ## Version 0.5.6 (2024-12-28)
  - Updates `kotlincrypto.hash` to `0.5.6` [[#56]][56]
 
