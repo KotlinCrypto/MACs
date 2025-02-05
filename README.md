@@ -108,10 +108,11 @@ fun main() {
 
 ```kotlin
 fun main() {
-    val key = SecureRandom().nextBytesOf(100)
+    val key64 = SecureRandom().nextBytesOf(64)
+    val key32 = SecureRandom().nextBytesOf(32)
 
-    BLAKE2b(key, 512)
-    BLAKE2s(key, 256)
+    BLAKE2b(key64, 512)
+    BLAKE2s(key32, 256)
 }
 ```
 
@@ -147,6 +148,9 @@ dependencies {
 
     // KMAC128, KMAC256
     implementation("org.kotlincrypto.macs:kmac")
+
+    // BLAKE2b, BLAKE2s
+    implementation("org.kotlincrypto.macs:blake2")
 }
 ```
 
