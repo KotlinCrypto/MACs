@@ -26,6 +26,8 @@ import kotlin.jvm.JvmStatic
 /**
  * KMAC128 implementation
  *
+ * https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf#4%20KMAC
+ *
  * @see [xOf]
  * */
 public class KMAC128: Kmac {

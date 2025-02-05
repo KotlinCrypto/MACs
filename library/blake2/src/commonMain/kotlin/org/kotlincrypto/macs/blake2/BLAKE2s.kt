@@ -21,6 +21,8 @@ import org.kotlincrypto.core.InternalKotlinCryptoApi
  * BLAKE2s Keyed Hashing implementation
  *
  * https://datatracker.ietf.org/doc/rfc7693/
+ *
+ * https://www.blake2.net/blake2.pdf
  * */
 public class BLAKE2s: BLAKE2Mac {
 

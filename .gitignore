@@ -4,3 +4,6 @@ build/
 .idea/
 local.properties
 .kotlin/
+
+gh-pages/*
+!gh-pages/publish.sh

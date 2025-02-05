@@ -26,6 +26,8 @@ import kotlin.jvm.JvmStatic
 /**
  * KMAC128 implementation
  *
+ * https://nvlpubs.nist.gov/nistpubs/SpecialPublications/NIST.SP.800-185.pdf#4%20KMAC
+ *
  * @see [xOf]
  * */
 public class KMAC256: Kmac {
@@ -36,7 +38,6 @@ public class KMAC256: Kmac {
      *
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
-    @Throws(IllegalArgumentException::class)
     public constructor(
         key: ByteArray,
     ): this(key, null)
@@ -50,7 +51,6 @@ public class KMAC256: Kmac {
      *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
      * @throws [IllegalArgumentException] if [key] is empty.
      * */
-    @Throws(IllegalArgumentException::class)
     public constructor(
         key: ByteArray,
         S: ByteArray?,
@@ -66,7 +66,6 @@ public class KMAC256: Kmac {
      * @throws [IllegalArgumentException] if [key] is empty, or [outputLength]
      *   is negative.
      * */
-    @Throws(IllegalArgumentException::class)
     public constructor(
         key: ByteArray,
         S: ByteArray?,

@@ -24,97 +24,19 @@
 
 Message Authentication Code algorithms for Kotlin Multiplatform
 
-### Usage
+### Modules
 
-See [HERE][url-core-usage] for basic usage example for `Mac`.
+ - [hmac](library/hmac/hmac/README.md)
+ - [hmac-md](library/hmac/hmac-md/README.md)
+ - [hmac-sha1](library/hmac/hmac-sha1/README.md)
+ - [hmac-sha2](library/hmac/hmac-sha2/README.md)
+ - [hmac-sha3](library/hmac/hmac-sha3/README.md)
+ - [blake2](library/blake2/README.md)
+ - [kmac](library/kmac/README.md)
 
-```kotlin
-// Using SecureRandom from the secure-random repo as an example
-import org.kotlincrypto.SecureRandom
-// ...
+### API Docs
 
-fun main() {
-    val key = SecureRandom().nextBytesOf(100)
-    
-    // Hmacs that may be needed for backward compatibility but
-    // should no longer be utilized because they have been broken.
-    HmacMD5(key)
-    HmacSHA1(key)
-    
-    key.fill(0)
-}
-```
-
-`SHA2 Hmac`
-
-```kotlin
-fun main() {
-    val key = SecureRandom().nextBytesOf(100)
-
-    HmacSHA224(key)
-    HmacSHA256(key)
-    HmacSha384(key)
-    HmacSHA512(key)
-
-    HmacSHA512t(key, 224) // HmacSHA512/224
-    HmacSHA512t(key, 256) // HmacSHA512/256
-    
-    key.fill(0)
-}
-```
-
-`SHA3 Hmac`
-
-```kotlin
- fun main() {
-    val key = SecureRandom().nextBytesOf(100)
-
-    HmacKeccak224(key)
-    HmacKeccak256(key)
-    HmacKeccak384(key)
-    HmacKeccak512(key)
-    HmacSHA3_224(key)
-    HmacSHA3_256(key)
-    HmacSHA3_384(key)
-    HmacSHA3_512(key)
-    
-    key.fill(0)
-}
-```
-
-`SHA3 KMAC & XOFs` (i.e. [Extendable-Output Functions][url-pub-xof])
-
-See [HERE][url-core-usage] for details on what `XOFs` are, and a basic usage example for `Xof`.
-
-```kotlin
-fun main() {
-    val key = SecureRandom().nextBytesOf(100)
-
-    val S = "My Customization".encodeToByteArray()
-
-    // Macs
-    KMAC128(key)
-    KMAC256(key, S, outputLength = 123) // returns 123 bytes instead of the default when doFinal() is invoked
-    
-    // Xofs
-    KMAC128.xOf(key, S)
-    KMAC256.xOf(key)
-
-    key.fill(0)
-}
-````
-
-`BLAKE2 Macs`
-
-```kotlin
-fun main() {
-    val key64 = SecureRandom().nextBytesOf(64)
-    val key32 = SecureRandom().nextBytesOf(32)
-
-    BLAKE2b(key64, 512)
-    BLAKE2s(key32, 256)
-}
-```
+ - [https://macs.kotlincrypto.org][url-docs]
 
 ### Get Started
 
@@ -185,7 +107,6 @@ dependencies {
 [url-license]: https://www.apache.org/licenses/LICENSE-2.0.txt
 [url-kotlin]: https://kotlinlang.org
 [url-core]: https://github.com/KotlinCrypto/core
-[url-core-usage]: https://github.com/KotlinCrypto/core#usage
 [url-hash]: https://github.com/KotlinCrypto/hash
-[url-pub-xof]: https://nvlpubs.nist.gov/nistpubs/FIPS/NIST.FIPS.202.pdf
 [url-version-catalog]: https://github.com/KotlinCrypto/version-catalog
+[url-docs]: https://macs.kotlincrypto.org

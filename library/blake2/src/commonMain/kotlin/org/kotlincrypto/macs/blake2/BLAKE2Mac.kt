@@ -20,9 +20,7 @@ import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.hash.blake2.BLAKE2Digest
 
 /**
- * Core abstraction for BLAKE2 Keyed Hashing in the form of Message Authentication
- *
- * Code implementations:
+ * Core abstraction for:
  *  - [BLAKE2b]
  *  - [BLAKE2s]
  * */
