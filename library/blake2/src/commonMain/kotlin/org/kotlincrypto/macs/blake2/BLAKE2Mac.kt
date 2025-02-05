@@ -67,7 +67,7 @@ public sealed class BLAKE2Mac: Mac {
             bitStrength: Int,
             personalization: ByteArray?,
             factory: DigestFactory,
-        ): super(key) {
+        ): super(key, resetOnDoFinal = false) {
             this.bitStrength = bitStrength
             this.personalization = personalization?.copyOf()
             this.digest = factory.newInstance(
@@ -103,6 +103,8 @@ public sealed class BLAKE2Mac: Mac {
 
         override fun doFinalInto(dest: ByteArray, destOffset: Int) {
             digest.digestInto(dest, destOffset)
+            // resetOnDoFinal = false
+            digest.update(keyBlock)
         }
 
         override fun reset() {

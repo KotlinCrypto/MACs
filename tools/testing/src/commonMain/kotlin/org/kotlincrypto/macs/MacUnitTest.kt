@@ -80,6 +80,7 @@ abstract class MacUnitTest {
         val actual = mac.doFinal().hex()
         assertEquals(empty, actual)
         assertEquals(expectedResetSmallHash, actual)
+        assertEquals(expectedResetSmallHash, mac.doFinal().hex())
 
         updateSmall(mac)
         mac.reset()
@@ -100,6 +101,7 @@ abstract class MacUnitTest {
         val actual = mac.doFinal().hex()
         assertEquals(empty, actual)
         assertEquals(expectedResetMediumHash, actual)
+        assertEquals(expectedResetMediumHash, mac.doFinal().hex())
 
         updateSmall(mac)
         mac.reset()
@@ -120,6 +122,7 @@ abstract class MacUnitTest {
         val actual = mac.doFinal().hex()
         assertEquals(empty, actual)
         assertEquals(expectedResetLargeHash, actual)
+        assertEquals(expectedResetLargeHash, mac.doFinal().hex())
 
         updateSmall(mac)
         mac.reset()
