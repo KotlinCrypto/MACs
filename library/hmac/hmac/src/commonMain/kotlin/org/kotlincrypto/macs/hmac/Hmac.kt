@@ -72,7 +72,7 @@ public abstract class Hmac: Mac {
         private val oKey: ByteArray
         private val digest: Digest
 
-        constructor(key: ByteArray, digest: Digest): super(key) {
+        constructor(key: ByteArray, digest: Digest): super(key, resetOnDoFinal = false) {
             this.digest = digest
             this.iKey = ByteArray(digest.blockSize())
             this.oKey = ByteArray(digest.blockSize())
@@ -101,6 +101,7 @@ public abstract class Hmac: Mac {
             digest.update(oKey)
             digest.update(inner)
             digest.digestInto(dest, destOffset)
+            digest.update(iKey)
         }
 
         override fun reset() {

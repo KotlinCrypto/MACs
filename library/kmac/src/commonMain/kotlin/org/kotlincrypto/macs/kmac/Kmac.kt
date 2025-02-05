@@ -124,7 +124,10 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
         override fun doFinalInto(dest: ByteArray, destOffset: Int) {
             padFinal()
             source.digestInto(dest, destOffset)
+            bytepad()
         }
+
+        override fun reset() { source.reset(); bytepad() }
     }
 
     private class XofEngine: Engine {
@@ -171,6 +174,8 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
         // Never called. outputLength is 0, so.
         override fun doFinal(): ByteArray = ZERO_BYTES
 
+        override fun reset() { source.reset(); bytepad() }
+
         private companion object { private val ZERO_BYTES = ByteArray(0) }
     }
 
@@ -183,7 +188,11 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
         private var initBlock: ByteArray
         private val outputLength: Int
 
-        constructor(key: ByteArray, bitStrength: Int, outputLength: Int): super(key) {
+        constructor(
+            key: ByteArray,
+            bitStrength: Int,
+            outputLength: Int,
+        ): super(key, resetOnDoFinal = false) {
             this.bitStrength = bitStrength
             this.outputLength = outputLength
 
@@ -227,7 +236,7 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
 
         final override fun update(input: Byte) { source.update(input) }
         final override fun update(input: ByteArray, offset: Int, len: Int) { source.update(input, offset, len) }
-        final override fun reset() { (source as Resettable).reset(); bytepad() }
+
         final override fun reset(newKey: ByteArray) {
             val oldInitBlock = this.initBlock
             initBlock = newInitBlock(newKey, blockSize)
