@@ -29,6 +29,8 @@ public abstract class Hmac: Mac {
     /**
      * Primary constructor for creating a new [Hmac] instance
      *
+     * **NOTE:** [digest] must be a newly created instance.
+     *
      * @throws [IllegalArgumentException] if [key] is empty or [algorithm] is blank.
      * */
     @Throws(IllegalArgumentException::class)
@@ -71,11 +73,10 @@ public abstract class Hmac: Mac {
         private val digest: Digest
 
         constructor(key: ByteArray, digest: Digest): super(key) {
-            // Do not know where Digest is coming from. Always create a new instance.
-            this.digest = digest.copy()
+            this.digest = digest
             this.iKey = ByteArray(digest.blockSize())
             this.oKey = ByteArray(digest.blockSize())
-            this.digest.resetAndInitialize(key = key, iKey = iKey, oKey = oKey)
+            this.digest.doInitialization(key = key, iKey = iKey, oKey = oKey, needsReset = false)
         }
 
         private constructor(other: Engine): super(other) {
@@ -101,15 +102,20 @@ public abstract class Hmac: Mac {
         }
 
         override fun reset(newKey: ByteArray) {
-            digest.resetAndInitialize(key = newKey, iKey = iKey, oKey = oKey)
+            digest.doInitialization(key = newKey, iKey = iKey, oKey = oKey, needsReset = true)
         }
 
         override fun macLength(): Int = digest.digestLength()
 
         @Suppress("NOTHING_TO_INLINE", "KotlinRedundantDiagnosticSuppress")
-        private inline fun Digest.resetAndInitialize(key: ByteArray, iKey: ByteArray, oKey: ByteArray) {
+        private inline fun Digest.doInitialization(
+            key: ByteArray,
+            iKey: ByteArray,
+            oKey: ByteArray,
+            needsReset: Boolean,
+        ) {
             val blockSize = blockSize()
-            reset()
+            if (needsReset) reset()
 
             val sizedKey = if (key.size > blockSize) {
                 val keyHash = digest(key)
