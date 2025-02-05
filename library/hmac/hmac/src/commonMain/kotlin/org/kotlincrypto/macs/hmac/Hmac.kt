@@ -91,9 +91,16 @@ public abstract class Hmac: Mac {
         override fun update(input: ByteArray, offset: Int, len: Int) { digest.update(input, offset, len) }
 
         override fun doFinal(): ByteArray {
-            val iFinal = digest.digest()
+            val final = ByteArray(digest.digestLength())
+            doFinalInto(final, 0)
+            return final
+        }
+
+        override fun doFinalInto(dest: ByteArray, destOffset: Int) {
+            val inner = digest.digest()
             digest.update(oKey)
-            return digest.digest(iFinal)
+            digest.update(inner)
+            digest.digestInto(dest, destOffset)
         }
 
         override fun reset() {

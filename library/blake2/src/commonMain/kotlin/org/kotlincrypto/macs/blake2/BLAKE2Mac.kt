@@ -95,7 +95,15 @@ public sealed class BLAKE2Mac: Mac {
 
         override fun update(input: ByteArray, offset: Int, len: Int) { digest.update(input, offset, len) }
 
-        override fun doFinal(): ByteArray = digest.digest()
+        override fun doFinal(): ByteArray {
+            val final = ByteArray(digest.digestLength())
+            doFinalInto(final, 0)
+            return final
+        }
+
+        override fun doFinalInto(dest: ByteArray, destOffset: Int) {
+            digest.digestInto(dest, destOffset)
+        }
 
         override fun reset() {
             digest.reset()
