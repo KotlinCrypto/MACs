@@ -116,8 +116,14 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
         override fun copy(): DigestEngine = DigestEngine(this)
 
         override fun doFinal(): ByteArray {
+            val final = ByteArray(source.digestLength())
+            doFinalInto(final, 0)
+            return final
+        }
+
+        override fun doFinalInto(dest: ByteArray, destOffset: Int) {
             padFinal()
-            return source.digest()
+            source.digestInto(dest, destOffset)
         }
     }
 
@@ -162,8 +168,10 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
             return source.reader(resetXof = true)
         }
 
-        // Never called
-        override fun doFinal(): ByteArray = error("Xof Mode")
+        // Never called. outputLength is 0, so.
+        override fun doFinal(): ByteArray = ZERO_BYTES
+
+        private companion object { private val ZERO_BYTES = ByteArray(0) }
     }
 
     @OptIn(InternalKotlinCryptoApi::class)

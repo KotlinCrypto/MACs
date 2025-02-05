@@ -55,6 +55,9 @@ class TestJvmMac: Mac {
         override fun update(input: ByteArray, offset: Int, len: Int) { delegate.update(input, offset, len) }
 
         override fun doFinal(): ByteArray = delegate.doFinal()
+        override fun doFinalInto(dest: ByteArray, destOffset: Int) {
+            delegate.doFinal(dest, destOffset)
+        }
 
         override fun reset() { delegate.reset() }
         override fun reset(newKey: ByteArray) { delegate.init(SecretKeySpec(newKey, delegate.algorithm)) }
