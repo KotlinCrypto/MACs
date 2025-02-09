@@ -41,7 +41,7 @@
 <a class="library-name--link" href="../../index.html">
                             MACs
                     </a>            </div>
-            <div class="library-version">0.6.1-SNAPSHOT
+            <div class="library-version">0.6.1
             </div>
         </div>
         <div class="filter-section" id="filter-section">
@@ -62,7 +62,7 @@
   <div class="breadcrumbs"></div>
   <div class="cover ">
     <h1 class="cover"><span><span>blake2</span></span></h1>
-    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:blake2:dokkaHtmlPartial/commonMain"><p class="paragraph"><code class="lang-kotlin">Mac</code> implementations for BLAKE2 Keyed Hashing</p><p class="paragraph">Implementations for:</p><ul><li><p class="paragraph">BLAKE2b</p></li><li><p class="paragraph">BLAKE2s</p></li></ul><p class="paragraph">See <a href="https://core.kotlincrypto.org/library/mac/index.html">HERE</a> for basic usage example of <code class="lang-kotlin">Mac</code>.</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">// Using SecureRandom from the secure-random repo as an example<br>import org.kotlincrypto.SecureRandom<br>// ...<br><br>fun main() {<br>    val key64 = SecureRandom().nextBytesOf(64)<br>    val key32 = SecureRandom().nextBytesOf(32)<br><br>    BLAKE2b(key64, 512)<br>    BLAKE2s(key32, 256)<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
+    <div class="platform-hinted UnderCoverText" data-platform-hinted="data-platform-hinted"><div class="content sourceset-dependent-content" data-active="" data-togglable=":library:blake2:dokkaHtmlPartial/commonMain"><p class="paragraph"><code class="lang-kotlin">Mac</code> implementations for BLAKE2 Keyed Hashing</p><p class="paragraph">Implementations for:</p><ul><li><p class="paragraph">BLAKE2b</p></li><li><p class="paragraph">BLAKE2s</p></li></ul><p class="paragraph">See <a href="https://core.kotlincrypto.org/library/mac/index.html">HERE</a> for basic usage example of <code class="lang-kotlin">Mac</code>.</p><div class="sample-container"><pre><code class="block lang-kotlin" theme="idea">// Using CryptoRand from KotlinCrypto/random repo as an example<br>import org.kotlincrypto.random.CryptoRand<br>// ...<br><br>fun main() {<br>    val key64 = CryptoRand.Default.nextBytes(ByteArray(64))<br>    val key32 = CryptoRand.Default.nextBytes(ByteArray(32))<br><br>    BLAKE2b(key64, 512)<br>    BLAKE2s(key32, 256)<br>}</code></pre><span class="top-right-position"><span class="copy-icon"></span><div class="copy-popup-wrapper popup-to-left"><span class="copy-popup-icon"></span><span>Content copied to clipboard</span></div></span></div></div></div>
   </div>
   <h2 class="">Packages</h2>
   <div class="table"><a data-name="-244649461%2FPackages%2F1711159315" anchor-label="org.kotlincrypto.macs.blake2" id="-244649461%2FPackages%2F1711159315" data-filterable-set=":library:blake2:dokkaHtmlPartial/commonMain"></a>
