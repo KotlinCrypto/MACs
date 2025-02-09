@@ -32,6 +32,9 @@ tasks.withType<DokkaTaskPartial>().configureEach {
             url = URI("https://core.kotlincrypto.org/").toURL()
         }
         externalDocumentationLink {
+            url = URI("https://error.kotlincrypto.org/").toURL()
+        }
+        externalDocumentationLink {
             url = URI("https://hash.kotlincrypto.org/").toURL()
         }
 

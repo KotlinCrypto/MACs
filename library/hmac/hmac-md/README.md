@@ -8,12 +8,12 @@ Implementations for:
 See [HERE][url-mac-usage] for basic usage example of `Mac`.
 
 ```kotlin
-// Using SecureRandom from the secure-random repo as an example
-import org.kotlincrypto.SecureRandom
+// Using CryptoRand from KotlinCrypto/random repo as an example
+import org.kotlincrypto.random.CryptoRand
 // ...
 
 fun main() {
-    val key = SecureRandom().nextBytesOf(100)
+    val key = CryptoRand.Default.nextBytes(ByteArray(100))
 
     HmacMD5(key)
 }

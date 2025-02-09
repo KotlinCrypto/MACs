@@ -9,13 +9,13 @@ Implementations for:
 See [HERE][url-mac-usage] for basic usage example of `Mac`.
 
 ```kotlin
-// Using SecureRandom from the secure-random repo as an example
-import org.kotlincrypto.SecureRandom
+// Using CryptoRand from KotlinCrypto/random repo as an example
+import org.kotlincrypto.random.CryptoRand
 // ...
 
 fun main() {
-    val key64 = SecureRandom().nextBytesOf(64)
-    val key32 = SecureRandom().nextBytesOf(32)
+    val key64 = CryptoRand.Default.nextBytes(ByteArray(64))
+    val key32 = CryptoRand.Default.nextBytes(ByteArray(32))
 
     BLAKE2b(key64, 512)
     BLAKE2s(key32, 256)

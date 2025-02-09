@@ -1,5 +1,14 @@
 # CHANGELOG
 
+## Version 0.6.1 (2025-02-09)
+ - Updates `kotlincrypto.core` to `0.6.1`
+ - Updates `kotlincrypto.hash` to `0.6.1`
+ - Implements new `Mac.Engine.doFinalInto` API for all implementations [[#71]][71]
+ - Fixes unnecessary calls to `Digest.copy` & `Digest.reset` when `Hmac.Engine` is instantiated [[#70]][70]
+ - Fixes double resets on `doFinal` of underlying `Digest` by setting `Mac.Engine.resetOnDoFinal` to 
+   `false` for all implementations [[#72]][72]
+ - Adds `dokka` documentation at `https://MACs.kotlincrypto.org` [[#73]][73]
+
 ## Version 0.6.0 (2025-01-15)
  - Adds `BLAKE2b` and `BLAKE2s` message authentication.
  - Updates `KotlinCrypto.core` and `KotlinCrypto.hash` to `0.6.0`
@@ -27,7 +36,7 @@
  - Updates `kotlincrypto.hash` to `0.5.4`
  - Adds benchmarking to repository [[#53]][53]
      - Benchmark comparisons using `core` and `sponges` performance
-       improvements can be viewed in [PR #54][54-comment]
+       improvements can be viewed in [comment PR #54][54-comment]
      - TL;DR huge gains for `hmac-sha3` & `kmac`
 
 ## Version 0.5.3 (2024-08-31)
@@ -77,24 +86,24 @@
      - `org.kotlincrypto.macs:hmac-sha2-256`
      - `org.kotlincrypto.macs:hmac-sha2-512`
  - `Kmac` performance improvements [[#38]][38]
- - See the [ANNOUNCEMENT][discussion-3] for more information on `0.3.0` release
+ - See the [ANNOUNCEMENT #3][3-discussion] for more information on `0.3.0` release
 
 ## Version 0.2.7 (2023-06-09)
  - Updates `kotlincrypto.core` to `0.2.7` [[#36]][36]
      - Fix for Android API 23 and below where `javax.crypto.Mac.doFinal` does
-       not call `javax.crypto.MacSpi.engineReset` [[#core 46]][core-46]
+       not call `javax.crypto.MacSpi.engineReset` [[core PR #46]][46-core]
  - Updates `kotlincrypto.hash` to `0.2.7` [[#36]][36]
 
 ## Version 0.2.6 (2023-06-08)
  - Updates `kotlincrypto.core` to `0.2.6` [[#33]][33]
      - Fix for Android API 21-23 requiring a `Provider` for `javax.crypto.Mac`
-       in order to set `spiImpl` [[core #44]][core-44]
+       in order to set `spiImpl` [[core PR #44]][44-core]
  - Updates `kotlincrypto.hash` to `0.2.6`
 
 ## Version 0.2.5 (2023-06-07)
  - Updates `kotlincrypto.core` to `0.2.5` [[#31]][31]
      - Fix for Android API 23 and below not accepting `null` for `Mac.init` key
-       parameter [[core #38]][core-38]
+       parameter [[core PR #38]][38-core]
  - Updates `kotlincrypto.hash` to `0.2.5` [[#31]][31]
  - Updates `kotlin` to `1.8.21` [[#31]][31]
  - `Hmac` now **always** copies provided key bytes and blanks the copy
@@ -141,10 +150,7 @@
 ## Version 0.1.0 (2023-03-05)
  - Initial Release
 
-[discussion-3]: https://github.com/orgs/KotlinCrypto/discussions/3
-[core-38]: https://github.com/KotlinCrypto/core/pull/38
-[core-44]: https://github.com/KotlinCrypto/core/pull/44
-[core-46]: https://github.com/KotlinCrypto/core/pull/46
+[3-discussion]: https://github.com/orgs/KotlinCrypto/discussions/3
 [21]: https://github.com/KotlinCrypto/MACs/pull/21
 [23]: https://github.com/KotlinCrypto/MACs/pull/23
 [26]: https://github.com/KotlinCrypto/MACs/pull/26
@@ -152,10 +158,13 @@
 [32]: https://github.com/KotlinCrypto/MACs/pull/32
 [33]: https://github.com/KotlinCrypto/MACs/pull/33
 [36]: https://github.com/KotlinCrypto/MACs/pull/36
+[38-core]: https://github.com/KotlinCrypto/core/pull/38
 [38]: https://github.com/KotlinCrypto/MACs/pull/38
 [40]: https://github.com/KotlinCrypto/MACs/pull/40
 [41]: https://github.com/KotlinCrypto/MACs/pull/41
 [42]: https://github.com/KotlinCrypto/MACs/pull/42
+[44-core]: https://github.com/KotlinCrypto/core/pull/44
+[46-core]: https://github.com/KotlinCrypto/core/pull/46
 [46]: https://github.com/KotlinCrypto/MACs/pull/46
 [47]: https://github.com/KotlinCrypto/MACs/pull/47
 [50]: https://github.com/KotlinCrypto/MACs/pull/50
@@ -163,3 +172,7 @@
 [54-comment]: https://github.com/KotlinCrypto/MACs/pull/54#issuecomment-2554991551
 [55]: https://github.com/KotlinCrypto/MACs/pull/55
 [56]: https://github.com/KotlinCrypto/MACs/pull/56
+[70]: https://github.com/KotlinCrypto/MACs/pull/70
+[71]: https://github.com/KotlinCrypto/MACs/pull/71
+[72]: https://github.com/KotlinCrypto/MACs/pull/72
+[73]: https://github.com/KotlinCrypto/MACs/pull/73
