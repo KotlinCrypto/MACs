@@ -26,11 +26,12 @@ echo "$REPO_NAME.kotlincrypto.org" > "$DIR_SCRIPT/$REPO_NAME/CNAME"
 
 cd ..
 ./gradlew clean -DKMP_TARGETS_ALL
-./gradlew dokkaHtmlMultiModule --no-build-cache -DKMP_TARGETS_ALL
-cp -aR build/dokka/htmlMultiModule/* gh-pages/$REPO_NAME
+./gradlew dokkaGenerate --no-build-cache -DKMP_TARGETS_ALL
+cp -aR build/dokka/html/* gh-pages/$REPO_NAME
 
 cd "$DIR_SCRIPT/$REPO_NAME"
 sed -i "s|module:|module:library/|g" "package-list"
+sed -i "s|module:library/hmac|module:library/hmac/hmac|g" "package-list"
 
 git add --all
 git commit -S --message "Update dokka docs"
