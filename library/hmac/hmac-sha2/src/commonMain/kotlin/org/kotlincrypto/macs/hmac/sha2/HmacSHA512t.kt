@@ -17,6 +17,8 @@
 
 package org.kotlincrypto.macs.hmac.sha2
 
+import org.kotlincrypto.error.InvalidKeyException
+import org.kotlincrypto.error.InvalidParameterException
 import org.kotlincrypto.hash.sha2.SHA512t
 import org.kotlincrypto.macs.hmac.Hmac
 
@@ -28,8 +30,8 @@ public class HmacSHA512t: Hmac {
     /**
      * Creates a new instance of [HmacSHA512t].
      *
-     * @throws [IllegalArgumentException] when:
-     *  - [key] is empty
+     * @throws [InvalidKeyException] if [key] size is less than 1
+     * @throws [InvalidParameterException] when:
      *  - [t] is less than 8
      *  - [t] is greater than or equal to 512
      *  - [t] is not a factor of 8

@@ -19,6 +19,8 @@ package org.kotlincrypto.macs.kmac
 
 import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.core.xof.Xof
+import org.kotlincrypto.error.InvalidKeyException
+import org.kotlincrypto.error.InvalidParameterException
 import org.kotlincrypto.hash.sha3.CSHAKE256
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
@@ -36,7 +38,7 @@ public class KMAC256: Kmac {
      * Creates a new [KMAC256] [Mac] instance with a default output length
      * of 64 bytes.
      *
-     * @throws [IllegalArgumentException] if [key] is empty.
+     * @throws [InvalidKeyException] if [key] size is less than 1
      * */
     public constructor(
         key: ByteArray,
@@ -49,7 +51,8 @@ public class KMAC256: Kmac {
      * @param [S] A user selected customization bit string to define a variant
      *   of the function. When no customization is desired, [S] is set to an
      *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
-     * @throws [IllegalArgumentException] if [key] is empty.
+     *
+     * @throws [InvalidKeyException] if [key] size is less than 1
      * */
     public constructor(
         key: ByteArray,
@@ -63,8 +66,9 @@ public class KMAC256: Kmac {
      *   of the function. When no customization is desired, [S] is set to an
      *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
      * @param [outputLength] The number of bytes returned when [doFinal] is invoked
-     * @throws [IllegalArgumentException] if [key] is empty, or [outputLength]
-     *   is negative.
+     *
+     * @throws [InvalidKeyException] if [key] size is less than 1
+     * @throws [InvalidParameterException] if [outputLength] is negative
      * */
     public constructor(
         key: ByteArray,
@@ -72,6 +76,7 @@ public class KMAC256: Kmac {
         outputLength: Int,
     ): this(key, S, outputLength, xofMode = false)
 
+    @Throws(InvalidKeyException::class, InvalidParameterException::class)
     private constructor(
         key: ByteArray,
         S: ByteArray?,
@@ -103,7 +108,8 @@ public class KMAC256: Kmac {
          * @param [S] A user selected customization bit string to define a variant
          *   of the function. When no customization is desired, [S] is set to an
          *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
-         * @throws [IllegalArgumentException] if [key] is empty.
+         *
+         * @throws [InvalidKeyException] if [key] size is less than 1
          * */
         @JvmStatic
         @JvmOverloads

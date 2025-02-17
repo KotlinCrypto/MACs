@@ -17,6 +17,7 @@
 
 package org.kotlincrypto.macs.hmac.md
 
+import org.kotlincrypto.error.InvalidKeyException
 import org.kotlincrypto.hash.md.MD5
 import org.kotlincrypto.macs.hmac.Hmac
 
@@ -28,7 +29,7 @@ public class HmacMD5: Hmac {
     /**
      * Creates a new instance of [HmacMD5].
      *
-     * @throws [IllegalArgumentException] if [key] is empty.
+     * @throws [InvalidKeyException] if [key] size is less than 1
      * */
     public constructor(key: ByteArray): super(
         key = key,

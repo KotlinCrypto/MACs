@@ -16,6 +16,8 @@
 package org.kotlincrypto.macs.blake2
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
+import org.kotlincrypto.error.InvalidKeyException
+import org.kotlincrypto.error.InvalidParameterException
 
 /**
  * BLAKE2b Keyed Hashing implementation
@@ -32,12 +34,13 @@ public class BLAKE2b: BLAKE2Mac {
      * @param [key] The secret to use for authenticating data.
      * @param [bitStrength] The number of bits returned when [doFinal] is invoked.
      *
-     * @throws [IllegalArgumentException] when:
-     *  - [key] size is less than 1
-     *  - [key] size is greater than 64
+     * @throws [InvalidParameterException] when:
      *  - [bitStrength] is less than 8
      *  - [bitStrength] is greater than 512
      *  - [bitStrength] is not a factor of 8
+     * @throws [InvalidKeyException] when:
+     *  - [key] size is less than 1
+     *  - [key] size is greater than 64
      * */
     public constructor(
         key: ByteArray,
@@ -53,13 +56,14 @@ public class BLAKE2b: BLAKE2Mac {
      *   of the function. When no customization is desired, [personalization] must be set to a
      *   null value. Must be 16 bytes in length, or null.
      *
-     * @throws [IllegalArgumentException] when:
-     *  - [key] size is less than 1
-     *  - [key] size is greater than 64
+     * @throws [InvalidParameterException] when:
      *  - [bitStrength] is less than 8
      *  - [bitStrength] is greater than 512
      *  - [bitStrength] is not a factor of 8
      *  - [personalization] is non-null and not exactly 16 bytes in length
+     * @throws [InvalidKeyException] when:
+     *  - [key] size is less than 1
+     *  - [key] size is greater than 64
      * */
     public constructor(
         key: ByteArray,

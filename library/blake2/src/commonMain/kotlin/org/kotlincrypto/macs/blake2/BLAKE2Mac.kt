@@ -17,6 +17,8 @@ package org.kotlincrypto.macs.blake2
 
 import org.kotlincrypto.core.Algorithm
 import org.kotlincrypto.core.mac.Mac
+import org.kotlincrypto.error.InvalidKeyException
+import org.kotlincrypto.error.InvalidParameterException
 import org.kotlincrypto.hash.blake2.BLAKE2Digest
 
 /**
@@ -26,7 +28,7 @@ import org.kotlincrypto.hash.blake2.BLAKE2Digest
  * */
 public sealed class BLAKE2Mac: Mac {
 
-    @Throws(IllegalArgumentException::class)
+    @Throws(InvalidKeyException::class, InvalidParameterException::class)
     protected constructor(
         key: ByteArray,
         bitStrength: Int,
@@ -38,7 +40,7 @@ public sealed class BLAKE2Mac: Mac {
 
     protected fun interface DigestFactory {
 
-        @Throws(IllegalArgumentException::class)
+        @Throws(InvalidKeyException::class, InvalidParameterException::class)
         public fun newInstance(
             bitStrength: Int,
             keyLength: Int,
@@ -59,7 +61,7 @@ public sealed class BLAKE2Mac: Mac {
         private val factory: DigestFactory
         private var digest: BLAKE2Digest
 
-        @Throws(IllegalArgumentException::class)
+        @Throws(InvalidKeyException::class, InvalidParameterException::class)
         constructor(
             key: ByteArray,
             bitStrength: Int,

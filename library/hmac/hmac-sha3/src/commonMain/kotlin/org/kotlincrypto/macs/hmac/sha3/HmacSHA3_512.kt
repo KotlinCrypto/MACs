@@ -17,6 +17,7 @@
 
 package org.kotlincrypto.macs.hmac.sha3
 
+import org.kotlincrypto.error.InvalidKeyException
 import org.kotlincrypto.hash.sha3.SHA3_512
 import org.kotlincrypto.macs.hmac.Hmac
 
@@ -28,7 +29,7 @@ public class HmacSHA3_512: Hmac {
     /**
      * Creates a new instance of [HmacSHA3_512].
      *
-     * @throws [IllegalArgumentException] if [key] is empty.
+     * @throws [InvalidKeyException] if [key] size is less than 1
      * */
     public constructor(key: ByteArray): super(
         key = key,
