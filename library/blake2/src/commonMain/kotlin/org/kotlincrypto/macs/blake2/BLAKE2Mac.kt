@@ -33,21 +33,10 @@ public sealed class BLAKE2Mac: Mac {
         key: ByteArray,
         bitStrength: Int,
         personalization: ByteArray?,
-        factory: DigestFactory,
+        factory: (bitStrength: Int, keyLength: Int, salt: ByteArray?, personalization: ByteArray?) -> BLAKE2Digest,
     ): this(Engine(key, bitStrength, personalization, factory))
 
     protected constructor(other: BLAKE2Mac): super(other)
-
-    protected fun interface DigestFactory {
-
-        @Throws(InvalidKeyException::class, InvalidParameterException::class)
-        public fun newInstance(
-            bitStrength: Int,
-            keyLength: Int,
-            salt: ByteArray?,
-            personalization: ByteArray?,
-        ): BLAKE2Digest
-    }
 
     private constructor(engine: Engine): super(engine.algorithm(), engine)
 
@@ -58,7 +47,7 @@ public sealed class BLAKE2Mac: Mac {
         private val bitStrength: Int
         private val keyBlock: ByteArray
         private val personalization: ByteArray?
-        private val factory: DigestFactory
+        private val factory: (bitStrength: Int, keyLength: Int, salt: ByteArray?, personalization: ByteArray?) -> BLAKE2Digest
         private var digest: BLAKE2Digest
 
         @Throws(InvalidKeyException::class, InvalidParameterException::class)
@@ -66,15 +55,15 @@ public sealed class BLAKE2Mac: Mac {
             key: ByteArray,
             bitStrength: Int,
             personalization: ByteArray?,
-            factory: DigestFactory,
+            factory: (bitStrength: Int, keyLength: Int, salt: ByteArray?, personalization: ByteArray?) -> BLAKE2Digest,
         ): super(key, resetOnDoFinal = false) {
             this.bitStrength = bitStrength
             this.personalization = personalization?.copyOf()
-            this.digest = factory.newInstance(
-                bitStrength = bitStrength,
-                keyLength = key.size,
-                salt = null,
-                personalization = this.personalization,
+            this.digest = factory(
+                bitStrength,
+                key.size,
+                null,
+                this.personalization,
             )
             this.factory = factory
             this.keyBlock = key.copyOf(this.digest.blockSize())
@@ -114,11 +103,11 @@ public sealed class BLAKE2Mac: Mac {
 
         override fun reset(newKey: ByteArray) {
             val oldDigest = digest
-            this.digest = factory.newInstance(
-                bitStrength = bitStrength,
-                keyLength = newKey.size,
-                salt = null,
-                personalization = personalization,
+            this.digest = factory(
+                bitStrength,
+                newKey.size,
+                null,
+                personalization,
             )
 
             newKey.copyInto(keyBlock)

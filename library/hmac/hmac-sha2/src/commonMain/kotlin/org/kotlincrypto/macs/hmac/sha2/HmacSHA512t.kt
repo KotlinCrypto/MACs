@@ -32,7 +32,7 @@ public class HmacSHA512t: Hmac {
      *
      * @throws [InvalidKeyException] if [key] size is less than 1
      * @throws [InvalidParameterException] when:
-     *  - [t] is less than 8
+     *  - [t] is less than 0
      *  - [t] is greater than or equal to 512
      *  - [t] is not a factor of 8
      *  - [t] is 384

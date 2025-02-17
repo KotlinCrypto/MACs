@@ -13,11 +13,14 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
+@file:OptIn(InternalKotlinCryptoApi::class)
+
 package org.kotlincrypto.macs.blake2
 
 import org.kotlincrypto.core.InternalKotlinCryptoApi
 import org.kotlincrypto.error.InvalidKeyException
 import org.kotlincrypto.error.InvalidParameterException
+import org.kotlincrypto.hash.blake2.BLAKE2s as BLAKE2sDigest
 
 /**
  * BLAKE2s Keyed Hashing implementation
@@ -73,26 +76,10 @@ public class BLAKE2s: BLAKE2Mac {
         key = key,
         bitStrength = bitStrength,
         personalization = personalization,
-        factory = Companion,
+        factory = ::BLAKE2sDigest,
     )
 
     private constructor(other: BLAKE2s): super(other)
 
     public override fun copy(): BLAKE2s = BLAKE2s(this)
-
-    private companion object: DigestFactory {
-
-        @OptIn(InternalKotlinCryptoApi::class)
-        override fun newInstance(
-            bitStrength: Int,
-            keyLength: Int,
-            salt: ByteArray?,
-            personalization: ByteArray?,
-        ): org.kotlincrypto.hash.blake2.BLAKE2s = org.kotlincrypto.hash.blake2.BLAKE2s(
-            bitStrength = bitStrength,
-            keyLength = keyLength,
-            salt = salt,
-            personalization = personalization,
-        )
-    }
 }
