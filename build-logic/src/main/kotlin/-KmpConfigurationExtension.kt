@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Matthew Nelson
+ * Copyright (c) 2023 KotlinCrypto
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -13,12 +13,11 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-import io.matthewnelson.kmp.configuration.ExperimentalKmpConfigurationApi
 import io.matthewnelson.kmp.configuration.extension.KmpConfigurationExtension
 import io.matthewnelson.kmp.configuration.extension.container.target.KmpConfigurationContainerDsl
 import org.gradle.api.Action
 import org.gradle.api.JavaVersion
-import org.jetbrains.kotlin.gradle.targets.js.dsl.ExperimentalWasmDsl
+import org.jetbrains.kotlin.gradle.ExperimentalWasmDsl
 
 fun KmpConfigurationExtension.configureShared(
     java9ModuleName: String? = null,
@@ -39,12 +38,10 @@ fun KmpConfigurationExtension.configureShared(
             compileSourceCompatibility = JavaVersion.VERSION_1_8
             compileTargetCompatibility = JavaVersion.VERSION_1_8
 
-            @OptIn(ExperimentalKmpConfigurationApi::class)
             java9ModuleInfoName = java9ModuleName
         }
 
         js()
-
         @OptIn(ExperimentalWasmDsl::class)
         wasmJs {
             target {
@@ -56,7 +53,6 @@ fun KmpConfigurationExtension.configureShared(
                 nodejs()
             }
         }
-
         @OptIn(ExperimentalWasmDsl::class)
         wasmWasi {
             target {

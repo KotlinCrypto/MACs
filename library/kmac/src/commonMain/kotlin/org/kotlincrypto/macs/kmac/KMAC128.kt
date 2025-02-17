@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Matthew Nelson
+ * Copyright (c) 2023 KotlinCrypto
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ package org.kotlincrypto.macs.kmac
 
 import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.core.xof.Xof
+import org.kotlincrypto.error.InvalidKeyException
+import org.kotlincrypto.error.InvalidParameterException
 import org.kotlincrypto.hash.sha3.CSHAKE128
 import kotlin.jvm.JvmOverloads
 import kotlin.jvm.JvmStatic
@@ -36,7 +38,7 @@ public class KMAC128: Kmac {
      * Creates a new [KMAC128] [Mac] instance with a default output length
      * of 32 bytes.
      *
-     * @throws [IllegalArgumentException] if [key] is empty.
+     * @throws [InvalidKeyException] if [key] size is less than 1
      * */
     public constructor(
         key: ByteArray,
@@ -49,7 +51,8 @@ public class KMAC128: Kmac {
      * @param [S] A user selected customization bit string to define a variant
      *   of the function. When no customization is desired, [S] is set to an
      *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
-     * @throws [IllegalArgumentException] if [key] is empty.
+     *
+     * @throws [InvalidKeyException] if [key] size is less than 1
      * */
     public constructor(
         key: ByteArray,
@@ -63,8 +66,9 @@ public class KMAC128: Kmac {
      *   of the function. When no customization is desired, [S] is set to an
      *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
      * @param [outputLength] The number of bytes returned when [doFinal] is invoked
-     * @throws [IllegalArgumentException] if [key] is empty, or [outputLength]
-     *   is negative.
+     *
+     * @throws [InvalidKeyException] if [key] size is less than 1
+     * @throws [InvalidParameterException] if [outputLength] is negative
      * */
     public constructor(
         key: ByteArray,
@@ -72,6 +76,7 @@ public class KMAC128: Kmac {
         outputLength: Int,
     ): this(key, S, outputLength, xofMode = false)
 
+    @Throws(InvalidKeyException::class, InvalidParameterException::class)
     private constructor(
         key: ByteArray,
         S: ByteArray?,
@@ -103,13 +108,14 @@ public class KMAC128: Kmac {
          * @param [S] A user selected customization bit string to define a variant
          *   of the function. When no customization is desired, [S] is set to an
          *   empty or null value. (e.g. "My Customization".encodeToByteArray()).
-         * @throws [IllegalArgumentException] if [key] is empty.
+         *
+         * @throws [InvalidKeyException] if [key] size is less than 1
          * */
         @JvmStatic
         @JvmOverloads
         public fun xOf(
             key: ByteArray,
             S: ByteArray? = null,
-        ): Xof<KMAC128> = KMACXof(KMAC128(key, S, 0, xofMode = true))
+        ): Xof<KMAC128> = KMACXof(KMAC128(key, S, outputLength = 0, xofMode = true))
     }
 }

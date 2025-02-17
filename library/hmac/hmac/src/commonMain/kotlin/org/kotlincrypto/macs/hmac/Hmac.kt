@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Matthew Nelson
+ * Copyright (c) 2023 KotlinCrypto
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,6 +19,8 @@ package org.kotlincrypto.macs.hmac
 
 import org.kotlincrypto.core.digest.Digest
 import org.kotlincrypto.core.mac.Mac
+import org.kotlincrypto.error.InvalidKeyException
+import org.kotlincrypto.error.InvalidParameterException
 import kotlin.experimental.xor
 
 /**
@@ -31,9 +33,10 @@ public abstract class Hmac: Mac {
      *
      * **NOTE:** [digest] must be a newly created instance.
      *
-     * @throws [IllegalArgumentException] if [key] is empty or [algorithm] is blank.
+     * @throws [InvalidKeyException] if [key] size is less than 1
+     * @throws [InvalidParameterException] if [algorithm] is blank
      * */
-    @Throws(IllegalArgumentException::class)
+    @Throws(InvalidKeyException::class, InvalidParameterException::class)
     protected constructor(
         key: ByteArray,
         algorithm: String,
@@ -72,6 +75,7 @@ public abstract class Hmac: Mac {
         private val oKey: ByteArray
         private val digest: Digest
 
+        @Throws(InvalidKeyException::class)
         constructor(key: ByteArray, digest: Digest): super(key, resetOnDoFinal = false) {
             this.digest = digest
             this.iKey = ByteArray(digest.blockSize())

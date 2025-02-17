@@ -14,10 +14,10 @@ final class org.kotlincrypto.macs.kmac/KMAC128 : org.kotlincrypto.macs.kmac/Kmac
     final fun copy(): org.kotlincrypto.macs.kmac/KMAC128 // org.kotlincrypto.macs.kmac/KMAC128.copy|copy(){}[0]
 
     final object Companion : org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory<org.kotlincrypto.macs.kmac/KMAC128> { // org.kotlincrypto.macs.kmac/KMAC128.Companion|null[0]
-        final const val MAC_LENGTH // org.kotlincrypto.macs.kmac/KMAC128.Companion.MAC_LENGTH|<get-MAC_LENGTH>(){}[0]
+        final const val MAC_LENGTH // org.kotlincrypto.macs.kmac/KMAC128.Companion.MAC_LENGTH|{}MAC_LENGTH[0]
             final fun <get-MAC_LENGTH>(): kotlin/Int // org.kotlincrypto.macs.kmac/KMAC128.Companion.MAC_LENGTH.<get-MAC_LENGTH>|<get-MAC_LENGTH>(){}[0]
 
-        final fun xOf(kotlin/ByteArray, kotlin/ByteArray? =...): org.kotlincrypto.core.xof/Xof<org.kotlincrypto.macs.kmac/KMAC128> // org.kotlincrypto.macs.kmac/KMAC128.Companion.xOf|xOf(kotlin.ByteArray;kotlin.ByteArray?){}[0]
+        final fun xOf(kotlin/ByteArray, kotlin/ByteArray? = ...): org.kotlincrypto.core.xof/Xof<org.kotlincrypto.macs.kmac/KMAC128> // org.kotlincrypto.macs.kmac/KMAC128.Companion.xOf|xOf(kotlin.ByteArray;kotlin.ByteArray?){}[0]
     }
 }
 
@@ -29,22 +29,17 @@ final class org.kotlincrypto.macs.kmac/KMAC256 : org.kotlincrypto.macs.kmac/Kmac
     final fun copy(): org.kotlincrypto.macs.kmac/KMAC256 // org.kotlincrypto.macs.kmac/KMAC256.copy|copy(){}[0]
 
     final object Companion : org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory<org.kotlincrypto.macs.kmac/KMAC256> { // org.kotlincrypto.macs.kmac/KMAC256.Companion|null[0]
-        final const val MAC_LENGTH // org.kotlincrypto.macs.kmac/KMAC256.Companion.MAC_LENGTH|<get-MAC_LENGTH>(){}[0]
+        final const val MAC_LENGTH // org.kotlincrypto.macs.kmac/KMAC256.Companion.MAC_LENGTH|{}MAC_LENGTH[0]
             final fun <get-MAC_LENGTH>(): kotlin/Int // org.kotlincrypto.macs.kmac/KMAC256.Companion.MAC_LENGTH.<get-MAC_LENGTH>|<get-MAC_LENGTH>(){}[0]
 
-        final fun xOf(kotlin/ByteArray, kotlin/ByteArray? =...): org.kotlincrypto.core.xof/Xof<org.kotlincrypto.macs.kmac/KMAC256> // org.kotlincrypto.macs.kmac/KMAC256.Companion.xOf|xOf(kotlin.ByteArray;kotlin.ByteArray?){}[0]
+        final fun xOf(kotlin/ByteArray, kotlin/ByteArray? = ...): org.kotlincrypto.core.xof/Xof<org.kotlincrypto.macs.kmac/KMAC256> // org.kotlincrypto.macs.kmac/KMAC256.Companion.xOf|xOf(kotlin.ByteArray;kotlin.ByteArray?){}[0]
     }
 }
 
 sealed class org.kotlincrypto.macs.kmac/Kmac : org.kotlincrypto.core.mac/Mac, org.kotlincrypto.core.xof/ReKeyableXofAlgorithm { // org.kotlincrypto.macs.kmac/Kmac|null[0]
-    constructor <init>(kotlin/ByteArray, kotlin/ByteArray?, kotlin/Int, kotlin/Int, kotlin/Boolean) // org.kotlincrypto.macs.kmac/Kmac.<init>|<init>(kotlin.ByteArray;kotlin.ByteArray?;kotlin.Int;kotlin.Int;kotlin.Boolean){}[0]
-    constructor <init>(org.kotlincrypto.macs.kmac/Kmac) // org.kotlincrypto.macs.kmac/Kmac.<init>|<init>(org.kotlincrypto.macs.kmac.Kmac){}[0]
-
     abstract fun copy(): org.kotlincrypto.macs.kmac/Kmac // org.kotlincrypto.macs.kmac/Kmac.copy|copy(){}[0]
 
     sealed class <#A1: org.kotlincrypto.macs.kmac/Kmac> KMACXofFactory : org.kotlincrypto.core.xof/XofFactory<#A1> { // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory|null[0]
-        constructor <init>() // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory.<init>|<init>(){}[0]
-
         final inner class KMACXof : org.kotlincrypto.core.xof/XofFactory.XofDelegate<#A1> { // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory.KMACXof|null[0]
             constructor <init>(#A1) // org.kotlincrypto.macs.kmac/Kmac.KMACXofFactory.KMACXof.<init>|<init>(2:0){}[0]
 

@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Matthew Nelson
+ * Copyright (c) 2023 KotlinCrypto
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,6 +21,8 @@ import org.kotlincrypto.core.*
 import org.kotlincrypto.core.digest.Digest
 import org.kotlincrypto.core.mac.Mac
 import org.kotlincrypto.core.xof.*
+import org.kotlincrypto.error.InvalidKeyException
+import org.kotlincrypto.error.InvalidParameterException
 import org.kotlincrypto.hash.sha3.CSHAKE128
 import org.kotlincrypto.hash.sha3.CSHAKE256
 
@@ -33,6 +35,7 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
 
     private val engine: Engine
 
+    @Throws(InvalidParameterException::class, InvalidKeyException::class)
     protected constructor(
         key: ByteArray,
         S: ByteArray?,
@@ -90,6 +93,7 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
 
         override val source: Digest
 
+        @Throws(InvalidKeyException::class, InvalidParameterException::class)
         constructor(
             key: ByteArray,
             S: ByteArray?,
@@ -132,6 +136,7 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
 
         override val source: Xof<*>
 
+        @Throws(InvalidKeyException::class, InvalidParameterException::class)
         constructor(
             key: ByteArray,
             S: ByteArray?,
@@ -186,6 +191,7 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
         private var initBlock: ByteArray
         private val outputLength: Int
 
+        @Throws(InvalidKeyException::class, InvalidParameterException::class)
         constructor(
             key: ByteArray,
             bitStrength: Int,
@@ -197,7 +203,7 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
             this.blockSize = when (bitStrength) {
                 BIT_STRENGTH_128 -> CSHAKE128.BLOCK_SIZE
                 BIT_STRENGTH_256 -> CSHAKE256.BLOCK_SIZE
-                else -> throw IllegalArgumentException("bitStrength must be $BIT_STRENGTH_128 or $BIT_STRENGTH_256")
+                else -> throw InvalidParameterException("bitStrength must be $BIT_STRENGTH_128 or $BIT_STRENGTH_256")
             }
 
             this.initBlock = newInitBlock(key, this.blockSize)

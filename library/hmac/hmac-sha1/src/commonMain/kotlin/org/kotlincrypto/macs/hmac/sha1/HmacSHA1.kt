@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2023 Matthew Nelson
+ * Copyright (c) 2023 KotlinCrypto
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,6 +17,7 @@
 
 package org.kotlincrypto.macs.hmac.sha1
 
+import org.kotlincrypto.error.InvalidKeyException
 import org.kotlincrypto.hash.sha1.SHA1
 import org.kotlincrypto.macs.hmac.Hmac
 
@@ -28,7 +29,7 @@ public class HmacSHA1: Hmac {
     /**
      * Creates a new instance of [HmacSHA1].
      *
-     * @throws [IllegalArgumentException] if [key] is empty.
+     * @throws [InvalidKeyException] if [key] size is less than 1
      * */
     public constructor(key: ByteArray): super(
         key = key,

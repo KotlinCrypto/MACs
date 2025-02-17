@@ -21,9 +21,6 @@ final class org.kotlincrypto.macs.blake2/BLAKE2s : org.kotlincrypto.macs.blake2/
 }
 
 sealed class org.kotlincrypto.macs.blake2/BLAKE2Mac : org.kotlincrypto.core.mac/Mac { // org.kotlincrypto.macs.blake2/BLAKE2Mac|null[0]
-    constructor <init>(kotlin/ByteArray, kotlin/Int, kotlin/ByteArray?, org.kotlincrypto.macs.blake2/BLAKE2Mac.DigestFactory) // org.kotlincrypto.macs.blake2/BLAKE2Mac.<init>|<init>(kotlin.ByteArray;kotlin.Int;kotlin.ByteArray?;org.kotlincrypto.macs.blake2.BLAKE2Mac.DigestFactory){}[0]
-    constructor <init>(org.kotlincrypto.macs.blake2/BLAKE2Mac) // org.kotlincrypto.macs.blake2/BLAKE2Mac.<init>|<init>(org.kotlincrypto.macs.blake2.BLAKE2Mac){}[0]
-
     abstract fun copy(): org.kotlincrypto.macs.blake2/BLAKE2Mac // org.kotlincrypto.macs.blake2/BLAKE2Mac.copy|copy(){}[0]
 
     abstract fun interface DigestFactory { // org.kotlincrypto.macs.blake2/BLAKE2Mac.DigestFactory|null[0]
