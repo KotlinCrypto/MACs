@@ -3,15 +3,15 @@ $dokka.linkExtension:html
 
 module:library/blake2
 org.kotlincrypto.macs.blake2
+module:library/hmac/hmac
+org.kotlincrypto.macs.hmac
+module:library/hmac/hmac-md
+org.kotlincrypto.macs.hmac.md
+module:library/hmac/hmac-sha1
+org.kotlincrypto.macs.hmac.sha1
+module:library/hmac/hmac-sha2
+org.kotlincrypto.macs.hmac.sha2
+module:library/hmac/hmac-sha3
+org.kotlincrypto.macs.hmac.sha3
 module:library/kmac
 org.kotlincrypto.macs.kmac
-module:library/hmac
-org.kotlincrypto.macs.hmac
-module:library/hmac-md
-org.kotlincrypto.macs.hmac.md
-module:library/hmac-sha1
-org.kotlincrypto.macs.hmac.sha1
-module:library/hmac-sha2
-org.kotlincrypto.macs.hmac.sha2
-module:library/hmac-sha3
-org.kotlincrypto.macs.hmac.sha3
