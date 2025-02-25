@@ -1,5 +1,24 @@
 # CHANGELOG
 
+## Version 0.7.0 (2025-02-25)
+ - Updates `kotlin` to `2.1.10` [[#74]][74]
+ - Updates `kotlincrypto.core` to `0.7.0` [[#74]][74]
+ - Updates `kotlincrypto.hash` to `0.7.0` [[#74]][74]
+ - Replaces `BLAKE2Mac.DigestFactory` functional interface with `KFunction` constructor 
+   invocation for `BLAKE2Digest` creation [[#76]][76]
+ - All implementations now throw `InvalidKeyException` instead of `IllegalArgumentException` on 
+   instantiation when `key` parameter is inappropriate [[#74]][74]
+     - **NOTE:** The `Mac` abstraction for `reset(newKey)` now also throws `InvalidKeyException` 
+       instead of `IllegalArgumentException`. See [[core PR #124]][124-core].
+ - The following now throw `InvalidParameterException` instead of `IllegalArgumentException` on 
+   instantiation when a parameter is inappropriate [[#74]][74]:
+     - `blake2/BLAKE2b`
+     - `blake2/BLAKE2s`
+     - `hmac/Hmac`
+     - `hmac-sha2/HmacSHA512t`
+     - `kmac/KMAC128`
+     - `kmac/KMAC256`
+
 ## Version 0.6.1 (2025-02-09)
  - Updates `kotlincrypto.core` to `0.6.1`
  - Updates `kotlincrypto.hash` to `0.6.1`
@@ -176,3 +195,6 @@
 [71]: https://github.com/KotlinCrypto/MACs/pull/71
 [72]: https://github.com/KotlinCrypto/MACs/pull/72
 [73]: https://github.com/KotlinCrypto/MACs/pull/73
+[74]: https://github.com/KotlinCrypto/MACs/pull/74
+[76]: https://github.com/KotlinCrypto/MACs/pull/76
+[124-core]: https://github.com/KotlinCrypto/core/pull/124

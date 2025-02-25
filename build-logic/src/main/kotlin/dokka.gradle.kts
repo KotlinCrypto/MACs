@@ -26,7 +26,7 @@ rootProject.dependencies { dokka(project(project.path)) }
 
 extensions.configure<DokkaExtension> {
     dokkaPublications.configureEach {
-        suppressInheritedMembers.set(true)
+        suppressObviousFunctions.set(true)
     }
 
     dokkaSourceSets.configureEach {
@@ -48,9 +48,16 @@ extensions.configure<DokkaExtension> {
             remoteLineSuffix.set("#L")
         }
 
-        documentedVisibilities(
-            VisibilityModifier.Public,
-        )
+        if (project.path == ":library:hmac:hmac") {
+            documentedVisibilities(
+                VisibilityModifier.Public,
+                VisibilityModifier.Protected,
+            )
+        } else {
+            documentedVisibilities(
+                VisibilityModifier.Public,
+            )
+        }
     }
 
     pluginsConfiguration.html {
