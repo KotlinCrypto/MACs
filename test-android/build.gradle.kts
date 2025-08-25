@@ -17,20 +17,20 @@ plugins {
     id("configuration")
 }
 
-repositories {
-    google()
-}
+repositories { google() }
 
 kmpConfiguration {
     configure {
         androidLibrary {
             android {
+                buildToolsVersion = "35.0.1"
+                compileSdk = 35
                 namespace = "org.kotlincrypto.macs"
-                compileSdk = 34
 
                 defaultConfig {
                     minSdk = 14
 
+                    testInstrumentationRunnerArguments["disableAnalytics"] = true.toString()
                     testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
                 }
             }
