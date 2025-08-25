@@ -45,7 +45,7 @@ kmpConfiguration {
                 dependencies {
                     implementation("$group:hmac:$version")
 
-                    implementation(platform("$group:bom:$version"))
+                    implementation(project.dependencies.platform("$group:bom:$version"))
                     implementation("$group:blake2")
                     implementation("$group:hmac-md")
                     implementation("$group:hmac-sha1")

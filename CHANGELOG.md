@@ -1,5 +1,10 @@
 # CHANGELOG
 
+## Version 0.7.1 (2025-08-25)
+ - Updates `kotlin` to `2.2.10` [[#78]][78]
+ - Updates `kotlincrypto.core` to `0.7.1`
+ - Updates `kotlincrypto.hash` to `0.7.1`
+
 ## Version 0.7.0 (2025-02-25)
  - Updates `kotlin` to `2.1.10` [[#74]][74]
  - Updates `kotlincrypto.core` to `0.7.0` [[#74]][74]
@@ -197,4 +202,5 @@
 [73]: https://github.com/KotlinCrypto/MACs/pull/73
 [74]: https://github.com/KotlinCrypto/MACs/pull/74
 [76]: https://github.com/KotlinCrypto/MACs/pull/76
+[78]: https://github.com/KotlinCrypto/MACs/pull/78
 [124-core]: https://github.com/KotlinCrypto/core/pull/124
