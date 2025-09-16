@@ -79,7 +79,7 @@ dependencies {
 [badge-license]: https://img.shields.io/badge/license-Apache%20License%202.0-blue.svg?style=flat
 
 <!-- TAG_DEPENDENCIES -->
-[badge-kotlin]: https://img.shields.io/badge/kotlin-2.2.10-blue.svg?logo=kotlin
+[badge-kotlin]: https://img.shields.io/badge/kotlin-2.2.20-blue.svg?logo=kotlin
 [badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.7.1-blue.svg
 [badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.7.1-blue.svg
 

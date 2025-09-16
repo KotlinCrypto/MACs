@@ -13,7 +13,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  **/
-@file:Suppress("RemoveRedundantQualifierName", "SpellCheckingInspection", "LocalVariableName")
+@file:Suppress("LocalVariableName", "RedundantVisibilityModifier", "RemoveRedundantQualifierName", "SpellCheckingInspection")
 
 package org.kotlincrypto.macs.kmac
 
@@ -50,6 +50,7 @@ public sealed class Kmac: Mac, ReKeyableXofAlgorithm {
 
     protected constructor(other: Kmac): this(other.engine.copy())
 
+    @Suppress("UNUSED")
     private constructor(engine: Kmac.Engine): super(engine.algorithm(), engine) {
         this.engine = engine
     }
