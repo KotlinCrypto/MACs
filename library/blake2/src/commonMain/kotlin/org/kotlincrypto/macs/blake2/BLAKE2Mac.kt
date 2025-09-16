@@ -38,6 +38,7 @@ public sealed class BLAKE2Mac: Mac {
 
     protected constructor(other: BLAKE2Mac): super(other)
 
+    @Suppress("RedundantVisibilityModifier", "UNUSED")
     private constructor(engine: Engine): super(engine.algorithm(), engine)
 
     public abstract override fun copy(): BLAKE2Mac
