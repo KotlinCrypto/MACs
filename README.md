@@ -81,7 +81,7 @@ dependencies {
 <!-- TAG_DEPENDENCIES -->
 [badge-kotlin]: https://img.shields.io/badge/kotlin-2.2.20-blue.svg?logo=kotlin
 [badge-core]: https://img.shields.io/badge/kotlincrypto.core-0.8.0--SNAPSHOT-blue.svg
-[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.7.1-blue.svg
+[badge-hash]: https://img.shields.io/badge/kotlincrypto.hash-0.8.0--SNAPSHOT-blue.svg
 
 <!-- TAG_PLATFORMS -->
 [badge-platform-android]: http://img.shields.io/badge/-android-6EDB8D.svg?style=flat
