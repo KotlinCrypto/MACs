@@ -142,7 +142,7 @@ public abstract class Hmac: Mac {
                 key.copyOf(blockSize)
             }
 
-            for (i in 0..<blockSize) {
+            for (i in 0 until blockSize) {
                 iKey[i] = sizedKey[i] xor I_PAD
                 oKey[i] = sizedKey[i] xor O_PAD
             }
